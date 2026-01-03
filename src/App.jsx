@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Header from './components/assets/Header';
 import Sidebar from './components/assets/Sidebar';
-import Mcp from './components/mcp';
+import Mcp from './components/Mcp';
 import Tokyo from './components/minigames/Tokyo';
 import Saitama from './components/minigames/Saitama';
 import Chiba from './components/minigames/Chiba';
