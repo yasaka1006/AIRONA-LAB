@@ -4,7 +4,6 @@ import Home from './components/Home';
 import Header from './components/assets/Header';
 import Sidebar from './components/assets/Sidebar';
 import Mcp from './components/Mcp';
-import Tokyo from './components/minigames/Tokyo';
 import Saitama from './components/minigames/Saitama';
 import Chiba from './components/minigames/Chiba';
 import Tochigi from './components/minigames/Tochigi';
@@ -14,6 +13,7 @@ import Shizuoka from './components/minigames/Shizuoka';
 import Minigames from './components/Minigames';
 import Kanagawa from './components/minigames/Kanagawa';
 import Ibaraki from './components/minigames/Ibaraki';
+import Tokyo from './components/minigames/Tokyo';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -38,7 +38,6 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/minigames" element={<Minigames />} />
                 <Route path="/mcp" element={<Mcp />} />
-                <Route path="/tokyo" element={<Tokyo />} />
                 <Route path="/saitama" element={<Saitama />} />
                 <Route path="/chiba" element={<Chiba />} />
                 <Route path="/tochigi" element={<Tochigi />} />
@@ -47,6 +46,7 @@ function App() {
                 <Route path="/gunma" element={<Gunma />} />
                 <Route path="/shizuoka" element={<Shizuoka />} />
                 <Route path="/ibaraki" element={<Ibaraki />} />
+                <Route path="/tokyo" element={<Tokyo />} />
               </Routes>
             </div>
           </div>

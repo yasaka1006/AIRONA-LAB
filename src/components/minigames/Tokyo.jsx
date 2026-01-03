@@ -1,30 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import TokyoMap from '../maps/TokyoMap';
-import confetti from 'canvas-confetti';
-import ClearModal from '../assets/ClearModal';
+import MapQuizManager from './MapQuizManager';
 
 const Tokyo = () => {
-  const [isGameStarted, setIsGameStarted] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [correctAnswers, setCorrectAnswers] = useState([]);
-  const [time, setTime] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [showCongratulations, setShowCongratulations] = useState(false);
-  const [showSurrenderModal, setShowSurrenderModal] = useState(false);
-  const [isSurrendered, setIsSurrendered] = useState(false);
-  const intervalRef = useRef(null);
 
-  // 音声ファイルの参照
-  const correctSoundRef = useRef(new Audio('/audio/correct.mp3'));
-  const wrongSoundRef = useRef(new Audio('/audio/wrong.mp3'));
-  const startOrClearSoundRef = useRef(new Audio('/audio/start_or_clear.mp3'));
-
-  // ゲームタイトル
   const gameTitle = '東京都の市区町村全部言えるかな？';
 
-  // 全63の市区町村のリスト（複数の名前に対応）
-  // id: 地図に表示される主な名前
-  // names: 入力として受け付ける複数の名前（漢字、ひらがななど）
   const allDistricts = [
     { id: '奥多摩町', names: ['奥多摩町', 'おくたままち'] },
     { id: '檜原村', names: ['檜原村', 'ひのはらむら'] },
@@ -86,298 +65,1219 @@ const Tokyo = () => {
     { id: '三宅村', names: ['三宅村', 'みやけむら'] },
     { id: '御蔵島村', names: ['御蔵島村', 'みくらじまむら'] },
     { id: '八丈町', names: ['八丈町', 'はちじょうまち'] },
-    { id: '青ヶ島村', names: ['青ヶ島村', 'あおがしまむら'] },
+    { id: '青ヶ島村', names: ['青ヶ島村', 'あおがしまむら', "青ケ島村"] },
     { id: '小笠原村', names: ['小笠原村', 'おがさわらむら'] }
   ];
 
-  // タイマーの処理
-  useEffect(() => {
-    if (isTimerRunning) {
-      intervalRef.current = setInterval(() => {
-        setTime((prev) => prev + 1);
-      }, 1000);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    }
+  const isWide = true; {/* ワイドならtrue、正方形ならfalse */ }
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isTimerRunning]);
+  const svgContent = (
+    <svg
+      width="100%"
+      viewBox={isWide ? "0 0 1280 720" : "0 0 720 720"}
+      style={{ display: 'block', width: '100%', height: 'auto' }}
+    >
 
-  // 全問正解チェック
-  useEffect(() => {
-    if (isGameStarted && correctAnswers.length === allDistricts.length) {
-      setIsTimerRunning(false);
 
-      // クリア時の音声を再生
-      startOrClearSoundRef.current.currentTime = 0;
-      startOrClearSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
+      {/* ここから下を貼り替える defはいらない*/}
+      <rect
+        x="0"
+        y="0"
+        width="1280"
+        height="720"
+        fill="#FFFFFF"
+        id="rect2" />
+      <rect
+        x="0"
+        y="0"
+        width="1280"
+        height="720"
+        fill="#CAEEFB"
+        id="rect3" />
+      <path
+        d="M1170.96 181.885 1181.39 180.841 1189.74 168.313 1182.44 151.608 1185.57 125.507 1180.35 103.582 1196 56.5991 1179.31 22.1454 1161.57-5-2.86973-3.95596-6 108.802 92.0798 60.7754 190.16 61.8194 372.755 114.022 499.007 159.96 606.477 226.78 717.078 198.59 806.811 232 949.757 176.665 1076.01 198.59 1156.35 183.974 1170.96 181.885Z"
+        stroke="#FFFFFF"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="#A0EBD2"
+        fill-rule="evenodd"
+        id="path3" />
+      <path
+        d="M273.576 317.069 256.898 289.96 204.777 275.363 151.615 246.168 126.597 196.12 101.58 142.944 85.9435 82.4693 59.8833 71 35.9081 86.64-6.83044 103.323-11 462 273.576 460.957 277.746 444.275 271.491 428.635 284 415.08 274.618 408.824 284 400.483 270.449 383.8 272.534 358.776 268.364 352.52 280.873 328.539 273.576 317.069Z"
+        stroke="#FFFFFF"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="#A0EBD2"
+        fill-rule="evenodd"
+        id="path4" />
+      <path
+        d="M1155 376 1161 390 1186 393 1186 393 1203 385 1231 367 1224 348 1212 343 1238 324 1228 307 1235 275 1258 271 1285 262 1284-5 1148-6 1190 57 1173 109 1185 140 1179 164 1182 172 1161 192 1191 250 1179 299 1160 359 1155 376Z"
+        stroke="#FFFFFF"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="#A0EBD2"
+        fill-rule="evenodd"
+        id="path5" />
+      <path
+        d="M946.803 589.589 949.935 597.93 960.376 611.484 952.023 621.91 925.922 607.313 923.834 595.845ZM1050.16 540.587 1045.99 548.927 1050.16 551.013 1031.37 561.439 1019.89 554.14 1021.97 564.566 1006.31 571.865 997.961 565.609 1008.4 577.078 1002.14 592.717 985.433 590.632 968.728 598.972 958.288 579.163 993.785 562.481 1031.37 543.714ZM274.44 306 309.938 318.511 339.171 329.98 381.977 338.321 405.99 387.323 432.091 406.09 447.751 388.366 528.142 404.005 593.917 425.9 611.666 430.07 660.736 487.414 650.295 411.303 670.132 376.897 717.114 386.281 736.951 362.301 778.712 353.96 827.782 384.195 903.997 415.474 946.803 455.093 979.168 487.414 1021.97 486.371 1062.69 509.308 1061.65 514.521 1070 523.905 1055.38 536.416 1047.03 530.16 995.873 554.14 942.627 576.035 919.658 593.759 922.79 583.333 901.909 582.291 911.306 586.461 900.865 600.015 886.249 591.674 881.028 593.759 889.381 612.526 917.57 628.165 943.671 634.421 941.583 645.89 925.922 658.401 933.231 671.955 945.759 664.657 949.935 674.04 918.614 688.637 897.733 662.571 869.544 666.742 888.337 678.211 862.236 691.764 883.117 695.935 903.997 706.361 893.557 703.233 893.557 722 584.521 720.957 523.966 463.434 272.352 466.561 270.264 450.922 273.396 442.581 267.132 433.198 276.529 416.516 270.264 406.09 277.573 398.792 268.176 383.153 270.264 367.514 264 355.003 276.529 329.98 272.352 316.426Z"
+        stroke="#FFFFFF"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="#A0EBD2"
+        fill-rule="evenodd"
+        id="path6" />
+      <path
+        d="M1.07246 459 533.014 459 592 719 0 719 1.07246 459Z"
+        fill="#CAEEFB"
+        fill-rule="evenodd"
+        id="path7" />
+      <path
+        d="M0 458 532.692 458"
+        stroke="#000000"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="none"
+        fill-rule="evenodd"
+        id="path68" />
+      <path
+        d="M533 458 592.074 719.675"
+        stroke="#000000"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="none"
+        fill-rule="evenodd"
+        id="path69" />
+      <path
+        d="M198 492 198 675.686"
+        stroke="#000000"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="none"
+        fill-rule="evenodd"
+        id="path70" />
+      <path
+        d="M387 492 387 675.686"
+        stroke="#000000"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="none"
+        fill-rule="evenodd"
+        id="path71" />
+      <path
+        d="M495 644 495 717.761"
+        stroke="#000000"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="none"
+        fill-rule="evenodd"
+        id="path72" />
+      <path
+        d="M495 645 573.669 645"
+        stroke="#000000"
+        stroke-width="2"
+        stroke-miterlimit="8"
+        fill="none"
+        fill-rule="evenodd"
+        id="path73" />
+      <text
+        fill="#7F7F7F"
+        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
+        font-weight="900"
+        font-size="21.3333"
+        transform="translate(633.086 607)"
+        id="text74">神奈川県</text>
+      <text
+        fill="#7F7F7F"
+        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
+        font-weight="900"
+        font-size="21.3333"
+        transform="translate(57.5951 317)"
+        id="text76">山梨県</text>
+      <text
+        fill="#7F7F7F"
+        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
+        font-weight="900"
+        font-size="21.3333"
+        transform="translate(763.797 72)"
+        id="text78">埼玉県</text>
+      <text
+        fill="#7F7F7F"
+        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
+        font-weight="900"
+        font-size="21.3333"
+        transform="translate(1199.22 153)"
+        id="text80">千葉県</text>
+      <g
+        id="group">
+        <g
+          id="g145">
+          <path
+            d="M137.835 18 131.2 34.599 104.659 42.3452 99.1294 35.7056 78.1176 47.8782 58.2118 63.3706 56 76.6498 63.7412 82.1827 67.0589 98.7817 82.5412 113.167 88.0705 117.594 91.3882 133.086 93.6 164.071 106.871 170.711 105.765 190.629 114.612 208.335 134.518 223.827 137.835 236 161.059 228.254 173.223 222.721 172.118 205.015 195.341 200.589 214.141 188.416 235.153 193.949 246.212 177.35 273.859 200.589 287.129 195.056 290.447 176.244 302.612 171.817 302.612 153.005 326.941 148.579 338 122.02 333.576 99.8883 322.518 94.3553 305.929 70.0101 287.129 63.3706 249.529 64.4772 224.094 55.6244 214.141 47.8782 200.871 60.0508 188.706 43.4518 186.494 48.9847 165.482 26.8528 137.835 18Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path74" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(172.914 133)"
+            id="text82">奥多摩町</text>
+        </g>
+        <g
+          id="g146">
+          <path
+            d="M137 237.028 174.049 222.416 172.326 203.506 195.589 199.208 213.683 188.034 236.946 194.051 246.424 176 273.996 200.927 289.504 194.051 298.121 200.067 293.812 207.803 306.737 216.399 309.321 223.275 321.384 236.169 321.384 261.955 319.661 270.551 330 279.146 329.138 297.197 327.415 305.792 316.214 329 296.397 328.14 286.92 318.685 273.996 316.966 258.487 305.792 255.04 296.337 242.116 290.32 230.915 294.618 219.714 288.601 201.621 288.601 180.942 271.41 151.647 259.376 137 237.028Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path8" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(221.231 254)"
+            id="text83">檜原村</text>
+        </g>
+        <g
+          id="g159">
+          <path
+            d="M648 194.457 655.03 194.995 669.63 187.997 694.504 182.075 702.074 174 717.215 177.768 721 206.838 713.43 206.838 713.43 215.99 702.688 215.56 700.488 224.283 705.677 240 697.386 239.462 689.637 228.371 682.607 229.986 682.067 225.141 668.548 234.293 660.978 235.37 663.681 229.448 659.896 221.373 659.896 210.068 649.622 203.07 648 194.457Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path21" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(656.805 209)"
+            id="text94">東村山市</text>
+        </g>
+        <path
+          d="M288.833 190.233 301.324 182.764 316.313 185.254 329.636 173.636 349.622 164.508 369.607 176.956 372.938 186.084 397.92 186.914 407.08 193.552 430.396 201.851 437.058 206 471.2 203.51 476.196 193.552 470.367 178.615 480.36 175.296 500.346 185.254 511.171 180.275 506.175 166.997 517 160.359 502.011 145.422 499.513 125.505 490.353 114.718 482.858 122.186 482.025 103.1 466.204 102.27 454.546 98.1207 437.058 103.1 418.738 98.1207 406.247 97.2909 397.087 102.27 379.6 92.3117 374.604 84.0134 368.775 92.3117 349.622 98.1207 320.476 81.5238 309.734 74 323.807 98.1207 333.8 103.93 337.131 117.207 327.971 146.251 302.156 152.89 300.491 170.317 288 177.785 288.833 190.233Z"
+          stroke="#FFFFFF"
+          stroke-width="2"
+          stroke-miterlimit="8"
+          fill="#10B981"
+          fill-rule="evenodd"
+          id="path10" />
+        <text
+          font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+          font-weight="700"
+          font-size="16"
+          transform="translate(389.633,154)"
+          id="text84">青梅市</text>
+        <g
+          id="g147" />
+        <g
+          id="g148">
+          <path
+            d="M322 182.277 328.406 174.245 350.827 163 371.113 175.316 375.383 184.955 401.541 186.561 410.083 195.129 437.842 204.768 438.376 210.658 458.662 215.477 458.662 232.077 464 236.897 457.06 246 431.436 242.787 413.286 234.219 398.872 236.897 377.519 226.723 373.248 214.406 346.023 203.161 338.015 203.697 333.744 189.774 322 182.277Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path11" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.6667"
+            transform="translate(375 213)"
+            id="text85">日の出町</text>
+        </g>
+        <g
+          id="g149">
+          <path
+            d="M288.715 188.214 288 194.286 298.37 201.071 293.721 208.929 305.522 215.714 309.455 225.357 321.613 235.714 320.898 263.929 319.11 271.071 330.553 279.286 328.765 298.571 361.305 300 361.305 287.143 367.384 283.214 369.529 266.786 392.057 260 414.585 269.286 434.61 270.714 446.768 275 453.562 266.071 485.745 272.5 501.836 267.143 505.769 260.714 519 272.5 517.57 257.5 506.484 231.071 494.327 217.857 480.381 207.5 473.587 211.786 468.938 203.929 435.683 206.786 438.543 213.214 458.926 215.714 458.926 229.643 463.574 238.929 456.423 245 432.822 241.786 414.585 234.286 399.209 236.071 378.111 224.286 375.251 212.857 349.505 202.857 338.062 202.857 335.559 191.071 319.825 180 313.031 185.357 301.946 182.143 288.715 188.214Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path9" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.6667"
+            transform="translate(374.526 255)"
+            id="text86">あきる野市</text>
+        </g>
+        <g
+          id="g195">
 
-      // Confettiを発射
-      const duration = 3000;
-      const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+          <path
+            d="M328.343 299.828 325.66 308.424 316 328.838 325.66 334.748 322.44 350.327 333.71 352.476 340.687 361.608 349.273 356.773 361.08 347.104 369.667 351.401 378.253 352.476 383.083 370.204 390.597 379.337 387.913 386.858 399.72 393.304 404.013 406.197 420.113 416.942 439.97 415.867 443.19 407.272 467.877 392.23 477.537 399.214 512.957 400.288 527.983 397.602 537.107 405.123 544.62 413.718 561.793 409.421 580.577 419.091 582.723 425 594.53 404.586 606.337 398.139 614.387 385.246 638 376.113 632.097 365.906 621.9 363.22 621.363 357.311 611.167 359.997 593.993 365.906 574.137 363.757 552.133 350.864 550.523 342.269 562.867 329.375 566.623 326.689 572.527 316.482 573.063 301.977 576.82 296.068 562.867 298.754 532.277 296.068 521.543 284.249 519.933 271.893 505.443 259.537 501.15 267.058 485.05 273.505 452.313 264.909 446.41 275.654 434.067 270.282 415.82 268.67 390.597 259 368.057 268.67 366.983 284.249 360.007 287.473 360.543 300.903 328.343 299.828Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path86" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(440.457 345)"
+            id="text87">八王子市</text>
+        </g>
+        <g
+          id="g151">
+          <path
+            d="M518 266.742 522.288 285.021 531.399 295.774 563.02 299 581.778 297.387 593.569 283.946 600 268.892 594.641 267.817 579.098 257.064 580.17 251.688 571.059 252.226 561.412 249 533.543 254.914 529.255 261.366 518 266.742Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path18" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(534.433 282)"
+            id="text88">昭島市</text>
+        </g>
+        <g
+          id="g208">
+          <path
+            d="M499 224.282 505.408 232.291 513.951 252.582 516.087 257.922 517.689 267 527.835 262.728 534.777 255.252 549.194 250.447 545.456 240.835 554 234.961 547.058 225.883 542.252 231.757 531.039 219.476 509.146 212 499 224.282Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path16" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(504.721 244)"
+            id="text89">福生市</text>
+        </g>
+        <g
+          id="g157">
+          <path
+            d="M469 179.796 474.873 192.968 470.068 203.505 473.805 212.989 479.678 207.194 498.364 223 509.576 211.936 532 220.366 530.398 209.301 522.924 202.452 520.254 189.28 509.042 184.538 509.042 184.538 497.297 185.064 479.144 174 469 179.796Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path12" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(476.718 204)"
+            id="text90">羽村市</text>
+        </g>
+        <g
+          id="g156">
+          <path
+            d="M509.326 184.518 505 168.331 516.896 158.619 526.089 162.396 535.822 157 546.637 161.856 555.83 162.396 566.104 168.331 566.104 181.82 578 180.741 575.837 190.993 568.807 195.849 562.318 187.216 555.83 206.101 549.341 219.59 542.852 232 532.578 221.748 530.956 209.338 522.304 202.324 519.059 188.835 509.326 184.518Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path13" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(518.476 184)"
+            id="text91">瑞穂町</text>
+        </g>
+        <g
+          id="g158">
+          <path
+            d="M596 202.8 605.102 192 613.134 192.54 631.874 199.56 647.402 192 649.543 203.34 660.252 211.44 659.717 222.78 664 230.34 660.252 236.82 639.37 241.14 631.339 246 617.953 238.98 615.276 224.4 608.315 220.08 610.457 203.34 596 202.8Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path15" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="12"
+            transform="translate(613 222)"
+            id="text93">東大和市</text>
+        </g>
+        <g
+          id="g155">
+          <path
+            d="M561.551 187 555.116 204.087 546 225.447 554.58 234.524 566.913 234.524 589.435 240.932 591.043 235.592 614.102 242 620 239.33 616.246 227.049 609.812 219.573 611.42 209.961 611.42 204.087 597.478 203.553 587.29 192.874 578.174 198.214 576.029 192.34 568.522 194.476 561.551 187Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path14" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="12"
+            transform="translate(549.826 221)"
+            id="text92">武蔵村山市</text>
+        </g>
+        <g
+          id="g162">
+          <path
+            d="M634 244.08 639.904 240.37 660.298 236.66 671.032 233.48 681.766 225 683.913 231.36 689.28 227.65 697.33 239.84 703.771 239.84 700.55 226.06 710.748 229.24 726.312 225 729.532 234.01 739.729 229.77 751 237.19 741.339 245.14 751 257.86 744.023 262.63 731.679 262.63 724.702 269.52 716.651 266.34 702.161 278 697.867 267.4 688.206 273.23 681.229 261.57 667.812 259.45 656.005 253.09 637.757 249.38 634 244.08Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path23" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(680.801 254)"
+            id="text95">小平市</text>
+        </g>
+        <g
+          id="g160">
+          <path
+            d="M716 177.292 745.077 166.458 751 158.875 762.308 152.375 770.385 141 779 146.417 772.538 157.25 767.154 164.833 774.154 174.042 767.692 183.25 744.538 188.667 743.461 195.167 728.923 206 719.769 203.833 716 177.292Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path22" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(723.769 182)"
+            id="text96">清瀬市</text>
+        </g>
 
-      function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+        <g
+          id="g154">
+          <path
+            d="M552.942 234 546 238.826 550.272 250.623 560.418 249.551 570.563 252.768 580.175 251.159 579.641 256.522 586.583 261.884 594.592 268.855 599.932 268.855 594.058 283.87 581.777 296.739 599.398 299.42 607.942 306.391 619.689 308 626.631 297.812 637.845 298.884 638.913 290.304 633.039 282.261 635.709 277.971 642.651 274.217 636.777 263.493 638.379 260.275 651.728 264.565 656 253.304 639.981 250.087 634.641 244.725 620.223 239.899 612.748 242.044 591.388 235.072 589.253 239.362 568.961 234.536 552.942 234Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path17" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(595.842 271)"
+            id="text99">立川市</text>
+        </g>
+        <g
+          id="g207">
+          <path
+            d="M655.873 254 652.662 262.533 638.211 259.333 638.211 264.133 642.493 271.6 635 278.533 649.451 288.133 663.366 285.467 669.789 293.467 675.676 290.267 685.845 302 708.324 295.067 711 285.467 703.507 279.067 698.155 265.733 688.521 273.2 682.099 261.467 667.648 258.8 655.873 254Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path24" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(646.709 284)"
+            id="text100">国分寺市</text>
+        </g>
+        <g
+          id="g194">
+          <path
+            d="M452 401.774 471.32 402.852 485.811 413.626 499.764 414.165 508.351 410.933 520.695 415.242 528.208 410.933 543.236 420.63 555.042 423.323 564.703 424.401 576.51 432.481 591.537 434.098 603.88 444.333 606.027 450.798 616.761 457.801 630.714 473.424 635.544 487.431 648.425 493.896 669.355 514.367 669.355 529.451 676.332 528.912 684.382 548.845 701.019 551 697.799 542.919 691.896 536.455 703.703 529.451 705.849 512.212 696.189 496.05 696.726 474.502 686.529 471.808 688.139 455.646 703.703 438.407 705.849 446.488 702.093 462.65 710.143 471.808 722.486 457.801 726.78 459.956 730 449.182 722.486 451.337 712.826 441.101 713.9 434.098 694.579 421.168 685.992 421.707 678.479 406.084 663.988 416.859 659.158 405.007 646.278 407.7 640.374 412.549 624.274 409.855 620.517 402.852 592.073 405.007 581.34 425.478 579.73 417.397 563.093 408.239 544.309 412.549 528.208 395.848 514.791 399.081 475.614 399.081 469.71 391 452 401.774Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path19" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(629.553 461)"
+            id="text102">町田市</text>
+        </g>
+        <g
+          id="g188">
+          <path
+            d="M915.262 320.992 925.48 326.373 930.32 338.212 940 362.966 935.16 385.03 916.875 376.42 910.422 377.496 916.875 395.254 910.96 407.093 933.009 409.246 935.698 430.771 928.707 431.847 916.875 420.547 903.431 423.237 906.12 434 895.364 430.233 881.382 415.703 858.796 399.559 837.822 396.869 826.529 394.178 830.831 379.648 825.453 373.191 824.916 355.97 831.369 348.436 825.991 336.059 829.218 329.064 819 320.992 824.916 310.229 831.369 307 837.822 309.691 844.813 321.53 852.88 320.992 874.391 325.835 882.458 334.445 899.129 324.22 915.262 320.992Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path40" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(841.203 371)"
+            id="text103">世田谷区</text>
+        </g>
+        <g
+          id="g187">
+          <path
+            d="M950.643 405.426 957.082 410.816 972.105 419.441 978.544 422.675 986.592 433.455 994.104 429.682 1001.08 434.533 1024.69 435.072 1033.27 442.079 1036.49 427.526 1047.76 424.292 1049.37 433.994 1045.61 439.923 1056.34 441.001 1062.25 447.469 1032.74 451.242 1043.47 456.093 1043.47 456.093 1059.56 459.327 1077.81 489.511 1088 501.369 1073.51 509.454 1068.15 517 1024.15 492.206 1011.81 495.979 1000.54 490.05 992.494 497.057 986.592 493.823 976.934 503.525 956.009 502.986 958.155 489.511 964.057 481.965 956.009 476.036C950.477 473.813 952.57 473.88 950.107 473.88L934.011 469.568 924.353 453.937 923.28 443.157 912.549 433.455 905.61 432.806 904 422.026 917.914 418.363 930.255 431.838 937.23 430.221 933.474 411.356 939.376 408.122 936.838 400 950.643 405.426Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path45" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(969.394 465)"
+            id="text104">大田区</text>
+        </g>
 
-      const interval = setInterval(function () {
-        const timeLeft = animationEnd - Date.now();
+        <g
+          id="g186">
+          <path
+            d="M976.152 374 971.348 384.242 954.414 386.326 959.073 394.484 950 404.188 978.286 423.594 985.758 434.375 993.23 429.523 1002.84 434.914 1025.79 435.453 1032.72 443 1035.93 427.367 1045 424.672 1038.06 417.664 1028.45 400.414 1026.32 385.32 997.5 386.398 992.163 375.078 976.152 374Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path46" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(974.942 409)"
+            id="text105">品川区</text>
+        </g>
+        <g
+          id="g183">
+          <path
+            d="M975.981 373.781 977.593 366.194 988.333 360.232 984.037 342.89 969 333.677 973.833 320.671 977.055 320.671 981.352 313.084 994.778 312 1007.67 320.671 1030.76 326.632 1032.37 336.929 1027.54 341.806 1026.46 371.071 1051.7 373.239 1056 379.742 1049.02 385.161 1045.8 396 1037.74 382.452 1045.26 374.864 1026.46 372.697 1025.39 384.619 994.778 386.787 991.018 375.406 975.981 373.781Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path47" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(991.068 357)"
+            id="text106">港区</text>
+        </g>
+        <g
+          id="g180">
+          <path
+            d="M1088.11 399.429 1101.59 408 1109.13 422.464 1112.9 432.107 1105.36 430.5 1094.58 431.036 1083.26 438 1068.71 434.786 1068.17 427.286 1064.94 424.071 1073.56 410.679ZM1104.82 273 1120.45 282.643 1135 287.464 1135 297.643 1132.31 311.571 1132.84 326.036 1131.23 359.786 1125.84 361.393 1122.6 388.714 1116.68 404.25 1104.28 380.679 1099.43 363 1077.87 370.5 1076.8 390.321 1069.79 386.571 1062.78 381.75 1074.1 394.607 1069.25 401.036 1060.63 388.179 1056.86 390.857 1066.56 405.857 1057.4 413.357 1045 395.143 1049.31 383.357 1055.78 379.071 1050.93 369.964 1056.32 368.357 1070.33 366.214 1074.64 356.036 1070.33 354.429 1063.32 343.714 1064.4 334.607 1059.01 319.607 1068.71 306.214 1068.17 299.25 1082.19 303.536 1092.96 295.5 1101.59 293.357Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path57" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(1072.27 344)"
+            id="text107">江東区</text>
+        </g>
+        <g
+          id="g182">
+          <path
+            d="M1164.2 232.878 1156.12 263.304 1159.89 269.709 1144.83 266.507 1135.68 270.777 1127.61 259.034 1122.23 261.703 1125.46 271.311 1119 281.453 1134.07 287.324 1131.38 308.676 1132.99 330.561 1131.38 360.986 1135.14 364.723 1138.91 370.595 1145.36 363.655 1156.12 377 1156.66 365.79 1164.2 370.061 1181.95 347.108 1181.95 320.419 1179.26 314.547 1183.03 307.074 1198.63 307.074 1218 292.128 1216.39 272.912 1206.16 270.777 1198.63 259.034 1191.64 249.959 1196.48 235.547 1193.25 225.939 1184.1 219 1174.42 229.142 1164.2 232.878Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path58" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(1139.01 299)"
+            id="text108">江戸川区</text>
+        </g>
+        <g
+          id="g170">
+          <path
+            d="M1134.34 154 1144.52 162.055 1149.88 155.074 1169.17 156.148 1162.2 166.889 1165.96 177.63 1179.89 172.796 1189 176.018 1188.46 181.926 1171.31 190.519 1183.64 218.444 1172.92 228.648 1164.35 232.944 1156.31 261.944 1158.45 270 1145.59 267.315 1135.41 270 1128.44 259.259 1112.9 243.685 1101.11 224.889 1092 211.463 1094.68 205.018 1102.72 212 1112.36 200.185 1130.59 188.907 1136.48 197.5 1146.13 197.5 1142.38 182.463 1129.51 165.278 1134.34 154Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path50" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(1120.4 224)"
+            id="text109">葛飾区</text>
+        </g>
+        <g
+          id="g169">
+          <path
+            d="M1007.29 174.317 1007.29 174.317 1017.47 168.402 1022.83 170.553 1030.86 151.734 1022.83 143.131 1020.68 134.528 1044.26 127 1050.69 142.055 1075.88 144.744 1088.74 138.292 1104.81 132.377 1101.06 154.96 1113.92 158.186 1124.1 150.658 1133.75 154.96 1129.46 166.789 1142.32 185.608 1145 198.513 1138.03 197.975 1130 190.447 1110.71 204.965 1102.67 213.03 1095.7 205.502 1093.02 212.492 1101.6 227.01 1094.63 234 1082.31 232.925 1069.98 232.925 1060.34 224.322 1064.66 213.175 1050.15 212.492 1022.83 211.955 1015.86 204.965 1028.18 197.437 1028.18 190.985 1007.39 196.253 1002 181.197 1007.29 174.317Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path49" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(1050.4 187)"
+            id="text110">足立区</text>
+        </g>
+        <g
+          id="g167">
+          <path
+            d="M867 181.621 888.014 155.895 917.11 150 925.192 155.359 953.749 151.072 947.283 170.902 959.676 175.726 967.219 199.307 985 213.778 981.767 226.641 972.068 221.281 963.448 231.464 952.132 228.248 939.74 232 934.352 227.712 923.648 224.605 928.425 213.242 920.881 193.948 881.548 195.02 879.393 188.588 867 181.621Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path38" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(899.028 187)"
+            id="text111">板橋区</text>
+        </g>
+        <g
+          id="g166">
+          <path
+            d="M798 200.038 814.655 190.9 831.847 178 840.443 180.688 836.145 193.05 848.502 191.975 857.098 188.213 865.157 196.813 869.455 181.225 878.588 188.213 882.349 194.125 921.031 194.125 928.553 214.013 923.718 224.763 935 227.988 932.314 244.65 923.18 238.2 915.122 247.875 892.02 252.175 881.812 250.025 875.365 235.513 867.843 240.888 845.278 245.725 831.847 259.163 823.788 257.55 816.267 264 801.224 254.863 800.149 230.675 802.835 208.638 798 200.038Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path35" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(840.496 221)"
+            id="text112">練馬区</text>
+        </g>
+        <g
+          id="g189">
+          <path
+            d="M817 263.56 822.393 257.651 831.56 259.8 845.042 245.297 868.77 241 869.848 246.371 874.162 251.743 873.084 259.263 893.576 270.006 900.586 273.229 909.754 273.229 916.225 290.417 920 295.251 914.607 303.309 908.675 304.92 916.764 320.497 899.508 325.331 882.251 335 872.545 324.794 852.052 321.034 846.12 322.646 838.031 309.217 831.021 307.069 827.785 294.714 829.403 283.434 835.335 281.286 828.864 273.766 817 263.56Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path36" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(848.477 296)"
+            id="text113">杉並区</text>
+        </g>
+        <g
+          id="g177">
+          <path
+            d="M875.928 236 869 239.733 870.599 245.067 873.796 250.933 873.796 259.467 903.638 273.867 909.5 272.8 915.895 292.533 918.559 295.2 915.362 302.133 909.5 305.333 914.296 316 926.553 306.4 940.408 295.2 944.671 278.667 950 270.667 937.211 267.467 929.217 257.333 932.415 245.6 923.888 238.667 915.895 247.733 892.447 252 881.789 249.333 875.928 236Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path37" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(901.346 277)"
+            id="text114">中野区</text>
+        </g>
+        <g
+          id="g178">
+          <path
+            d="M963.385 252.607 969.846 268.207 983.308 264.441 991.385 274.124 1011.31 273.586 1014 284.883 994.615 302.634 993 313.393 983.308 313.931 980.077 322 975.231 321.462 972.539 308.552 961.231 301.559 952.077 306.4 942.923 306.938 939.692 294.566 944.539 278.428 950.462 270.359 936.462 266.055 930 257.448 932.154 244 937.538 254.759 958 256.91 963.385 252.607Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path44" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(956.04 290)"
+            id="text115">新宿区</text>
+        </g>
+        <g
+          id="g184">
+          <path
+            d="M915 315.182 940.228 296 943.449 308.255 950.426 307.19 960.625 301.328 972.434 308.788 975.654 321.044 968.676 333.832 985.316 345.555 988 361.007 977.265 369 973.507 363.672 969.75 366.336 961.162 360.474 944.522 333.832 928.956 332.766 924.662 326.372 917.684 322.109 915 315.182Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path42" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.6667"
+            transform="translate(925.967 325)"
+            id="text117">渋谷区</text>
+        </g>
+        <g
+          id="g205">
+          <path
+            d="M676.129 290 676.129 290C669.712 293.506 672.342 292.522 668.595 293.773L668.595 292.156 664.291 298.086 664.829 309.406 661.062 319.648 639 321.805 645.995 337.977 650.838 341.211 668.057 346.062 677.205 346.062 686.352 352.531 701.957 349.297 720.252 352.531 727.786 355.766 736.933 351.992 747.157 359 740.162 337.977 752 324.5 750.924 317.492 743.391 309.406 747.695 300.781 736.933 291.617 735.319 304.555 716.486 304.016 707.338 296.469 684.738 302.398 676.129 290Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path26" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(676.35 328)"
+            id="text118">府中市</text>
+        </g>
+        <g
+          id="g191">
+          <path
+            d="M751.229 320.615 750.464 326.769 739 336 746.643 359.846 756.579 367.538 770.336 365.231 777.979 369.077 796.322 376 798.615 357.538 816.193 351.385 823.339 358.076 831 349.095 830.678 345.249 826.129 336 829.951 329.846 817.437 318.595 808.836 327.251 813.9 330.615 807.325 337.074 801.672 332.154 794.793 314.461 784.857 306 769.572 315.231 769.572 326.769 771.865 335.231 758.872 328.308 751.229 320.615Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path29" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(760.273 351)"
+            id="text119">調布市</text>
+        </g>
+        <g
+          id="g163">
+          <path
+            d="M745 301 743 308 749 321 772 336 772 324 770 314 785 306 796 313 802 333 807 338 814 330 809 327 818 320 820 320 825 311 833 308 828 296 822 297 812 278 810 287 796 287 786 276 777 275 783 270 760 280 762 270 754 250 760 250 745 301Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path34" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(771.782 307)"
+            id="text123">三鷹市</text>
+        </g>
+        <g
+          id="g190">
+          <path
+            d="M798.958 357.086 817.391 351 825.471 358.154 825.109 370.72 832 379.584 827.021 394 816.813 386.987 805.451 388.589 796 376.737 798.958 357.086Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path39" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(792.152 378)"
+            id="text120">狛江市</text>
+        </g>
+        <g
+          id="g193">
+          <path
+            d="M652.284 341 668.307 345.872 677.921 344.248 685.932 351.827 682.193 362.654 687 374.023 677.386 382.143 677.386 382.143 666.171 389.722 659.227 405.962 644.807 407.586 640.534 413 623.443 410.293 621.307 402.714 593 404.88 605.284 396.218 613.295 383.767 636.795 375.105 631.989 365.902 620.311 363.554C620.24 361.196 620.667 358.838 620.596 356.48L633.093 358.938 639.253 352.551 647.477 350.203 652.284 341Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path27" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(633.762 380)"
+            id="text121">多摩市</text>
+        </g>
+        <g
+          id="g192">
+          <path
+            d="M685.481 353.835 683.344 362.43 687.084 374.248 678 382.306 679.603 389.826 693.496 396.81 700.443 411.851 722.885 414 721.282 402.719 712.198 398.959 725.023 388.215 743.725 379.083 748 366.727 746.931 359.744 736.779 351.149 728.229 355.446 721.282 351.149 703.649 349 685.481 353.835Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path28" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(692.182 378)"
+            id="text122">稲城市</text>
+        </g>
+        <g
+          id="g152">
+          <path
+            d="M576.905 297 572.587 301.809 572.587 314.634 566.651 324.786 551 339.748 552.619 350.969 572.048 362.725 595.254 367 622.238 355.779 632.492 358.985 640.048 353.641 647.063 351.504 653 341.351 645.444 334.939 638.429 322.114 624.937 314.634 620.619 307.687 606.048 306.084 599.032 298.603 576.905 297Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path20" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="16"
+            transform="translate(579.562 340)"
+            id="text125">日野市</text>
+        </g>
+        <g
+          id="g153">
+          <path
+            d="M635.054 279 649.032 288.659 665.161 285.439 670 292.951 665.161 299.927 665.161 312.805 660.86 323 638.817 323 623.763 316.561 620 307.976 626.452 297.244 637.742 298.854 632.903 282.756 635.054 279Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path25" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(625.258 308)"
+            id="text126">国立市</text>
+        </g>
+        <g
+          id="g165">
+          <path
+            d="M764.231 215.633 775.538 208.086 784.692 210.242 797.077 200 803 208.086 800.308 232.344 800.846 254.984 791.692 259.836 785.769 256.602 770.692 267.922 756.154 269 751.846 260.375 741.077 245.281 749.154 235.578 740 228.57 758.308 229.109 764.231 215.633Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path31" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(745.708 246)"
+            id="text98">西東京市</text>
+        </g>
+        <g
+          id="g176">
+          <path
+            d="M935.144 228.615 935.144 228.615 933 244.769 938.895 255 957.654 257.692 962.477 253.385 969.444 269 983.915 266.846 987.131 253.923 1003.21 251.769 1005.89 244.231 1015 239.923 1011.25 230.231 998.922 230.769 993.562 224.846 984.987 232.385 981.771 225.385 972.66 220 965.157 231.308 953.366 227 947.471 230.769 935.144 228.615Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path43" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(952.286 247)"
+            id="text127">豊島区</text>
+        </g>
+        <g
+          id="g168">
+          <path
+            d="M948 170.501 953.926 150 967.158 163.512 985.784 164.05 991.105 169.963 1006.01 164.588 1008.13 172.651 1003.35 180.715 1008.67 195.23 1028.36 190.929 1029.42 198.455 1016.65 205.444 1022.5 212.433 1018.78 215.658 1029.95 225.335 1039 232.861 1034.74 242 1015.05 240.387 1011.86 230.173 997.491 228.56 993.766 223.722 985.251 232.323 980.462 224.797 984.719 212.97 965.561 198.993 959.708 176.16 948 170.501Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path48" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(976.63 202)"
+            id="text128">北区</text>
+        </g>
+        <g
+          id="g172">
+          <path
+            d="M1023.29 212 1050.64 212 1064.04 213.081 1060.83 222.27 1069.41 231.459 1093 232.541 1088.71 247.676 1073.7 247.135 1067.8 242.27 1056.54 252 1040.99 249.838 1028.65 241.73 1035.09 240.649 1038.3 234.162 1019 215.784 1023.29 212Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path51" />
+          <g
+            id="g171">
+            <text
+              font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+              font-weight="700"
+              font-size="13.3333"
+              transform="translate(1041.9 239)"
+              id="text129">荒川区</text>
+          </g>
+        </g>
+        <g
+          id="g174">
+          <path
+            d="M1102.63 227 1112.29 244.127 1130 259.648 1123.56 262.324 1125.71 272.493 1119.27 283.732 1104.24 275.169 1101.56 294.972 1093.51 297.648 1082.24 303 1064 297.648 1076.95 269.426 1090 247.135 1092.98 232.887 1102.63 227Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path53" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(1083.9 269)"
+            id="text131">墨田区</text>
+        </g>
+        <g
+          id="g175">
+          <path
+            d="M1013.98 240 1030.1 242.112 1039.78 248.978 1034.94 256.899 1039.24 265.876 1038.16 272.742 1043 280.663 1034.4 287 1019.36 280.663 1011.83 281.719 1010.76 273.798 990.376 273.691 984 265.876 986.578 254.258 1003.24 250.562C1006.82 247.041 1006.64 242.464 1013.98 240Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path52" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(994.232 267)"
+            id="text132">文京区</text>
+        </g>
+        <g
+          id="g185">
+          <path
+            d="M928.559 333 943.228 334.622 957.898 355.703C962.892 362.329 958.995 358.067 964.961 362.73 966.274 363.756 968.764 365.973 968.764 365.973L973.11 364.351 978 369.216 970.937 385.973 954.638 386.513 959.528 397.324 949.205 407.595 937.252 401.108 937.252 410.838 932.906 413 930.732 408.676 909 407.595 916.606 393.541 910.087 376.243 917.15 376.784 935.622 384.351 939.969 360.568 928.559 333Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path41" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(934.296 379)"
+            id="text133">目黒区</text>
+        </g>
+        <g
+          id="g161">
+          <path
+            d="M712.747 214.882 713.515 206.471 719.657 204.941 720.424 196.529 728.101 203.412 745.758 193.471 758.04 192.706 778 182 774.162 209.529 764.182 215.647 758.808 229.412 741.151 229.412 728.869 234 727.333 223.294 709.677 228.647 702 223.294 702.768 214.882 712.747 214.882Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path30" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="12"
+            transform="translate(712.838 217)"
+            id="text97">東久留米市</text>
+        </g>
+        <g
+          id="g164">
+          <path
+            d="M757 268.65 757 268.65 758.068 274.425 759.137 283.35 765.548 290.7 778.37 293.85 783.178 285.45 778.37 276.525 786.383 278.1 797.068 287.55 810.425 289.125 812.027 280.725 822.712 297 828.055 297 830.192 285.975 835 282.3 829.658 273.9 821.644 268.65 801.877 255 792.26 259.2 786.918 257.625 771.959 267.6 757 268.65Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path33" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(769.857 275)"
+            id="text124">武蔵野市</text>
+        </g>
+        <g
+          id="g181">
+          <path
+            d="M1056.49 293 1065.62 295.704 1070.46 307.059 1060.79 321.118 1065.62 334.637 1063.47 344.37 1071 356.807 1055.41 366 1049.5 363.837 1062.4 354.104 1058.64 343.289 1044.66 355.726 1028 342.748 1032.3 337.341 1030.15 325.444 1041.97 313.007 1041.97 296.785 1056.49 293Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path56" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="12"
+            transform="translate(1032 336)"
+            id="text134">中央区</text>
+        </g>
+        <g
+          id="g179">
+          <path
+            d="M1012.22 282.161 995.136 302.69 993 311.874 998.873 314.034 1009.55 322.138 1030.37 327 1042.65 311.333 1042.12 297.828 1056 292.966 1047.99 281.08 1043.19 281.08 1035.71 286.483 1020.23 280 1012.22 282.161Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path55" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="12"
+            transform="translate(997.082 307)"
+            id="text116">千代田区</text>
+        </g>
+        <g
+          id="g199">
+          <path
+            d="M96.1429 492 94 501.244 99.7143 509.778 96.1429 517.6 111.143 524 119 509.778 114 496.978 96.1429 492Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path59" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(119.818 514)"
+            id="text135">大島町</text>
+        </g>
+        <g
+          id="g206">
+          <path
+            d="M702 276.807 715.963 264.337 723.482 268.132 731.537 260.542 748.722 260 751.945 261.084 756.778 270.301 757.315 276.807 760 287.651 760 296.325 749.796 301.205 744.963 300.663 736.907 291.988 736.907 296.868 733.685 303.916 715.426 305 706.833 295.783 709.518 284.94 702 276.807Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path32" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(706.677 285)"
+            id="text101">小金井市</text>
+        </g>
+        <g
+          id="g200">
+          <path
+            d="M76.8462 544 72 537.158 77.5385 531 81 538.526 76.8462 544Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path60" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(82.5599 542)"
+            id="text136">利島村</text>
+        </g>
+        <g
+          id="g201">
+          <path
+            d="M80 556 69 567.429 74.1333 581 78.5333 573.143 79.2667 563.857 80 556Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path61" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(82.2303 574)"
+            id="text138">新島村</text>
+        </g>
+        <g
+          id="g202">
+          <path
+            d="M46.8235 597 44 610 44 610 51.0588 606.176 56 606.176 46.8235 597Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path62" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(55.8272 608)"
+            id="text139">神津島村</text>
+        </g>
+        <g
+          id="g203">
+          <path
+            d="M131.625 622 128.031 631.226 123 634.065 127.312 642.581 134.5 644 146 634.774 143.844 624.129 131.625 622Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path63" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(147.783 634)"
+            id="text140">三宅村</text>
+        </g>
+        <g
+          id="g173">
+          <path
+            d="M1039.44 249.476 1057.92 252.146 1069.34 242 1073.69 246.272 1090 246.806 1085.11 260.155 1079.13 267.097 1065.53 297 1055.2 291.66 1046.5 282.049 1041.61 280.981 1038.89 270.301 1037.81 262.825 1034 255.35 1039.44 249.476Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path54" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="13.3333"
+            transform="translate(1039.26 271)"
+            id="text130">台東区</text>
+        </g>
+        <g
+          id="g204">
+          <path
+            d="M151.789 649 147 656.222 153.842 662 157.947 662 160 652.611 151.789 649Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path64" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(136.649 680)"
+            id="text141">御蔵島村</text>
+        </g>
+        <path
+          d="M264.861 522.692 272.321 528.615 274.453 534.538 266.993 534.538 259 524.308ZM292.569 513 303.759 520.538 311.752 524.308 314.949 525.923 324.007 525.923 331.467 537.231 332 546.923 326.672 553.923 322.409 562 318.146 558.769 303.759 555.538 301.095 546.923 298.431 541.538 290.971 542.077 284.577 533.461 283.511 518.923Z"
+          stroke="#FFFFFF"
+          stroke-width="2"
+          stroke-miterlimit="8"
+          fill="#10B981"
+          fill-rule="evenodd"
+          id="path65" />
+        <text
+          font-family="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
+          font-weight="700"
+          font-size="14.0133px"
+          id="text142"
+          x="310"
+          y="536.6134">八丈町</text>
+        <g
+          id="g197" />
+        <g
+          id="g198">
+          <path
+            d="M289 621.011 290.667 630.363 298.444 634 304 630.363 302.889 623.609C298.259 622.743 295.296 620.838 289 621.011Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path66" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(305.308 633)"
+            id="text143">青ヶ島村</text>
+        </g>
+        <g
+          id="g196">
+          <path
+            d="M535.628 675.226C537.769 675.206 538.201 677.071 540 677.428L536.403 681 532.805 675.999C534.012 675.448 534.915 675.233 535.628 675.226ZM456 602.591 460.856 607.414 468.411 607.414 466.792 612.236 472.728 613.308 469.49 618.13 471.649 622.953 475.426 620.273 479.203 625.096 472.728 629.383 477.585 635.277 479.203 640.635 474.347 644.921 470.03 635.277 462.475 628.847 464.094 625.632 463.555 617.059 458.158 614.38ZM497.55 519.539 502.407 520.61 503.486 527.576 494.313 525.433ZM473.807 504 479.743 504.536 483.52 510.43 480.283 516.86 481.901 523.29 491.075 528.112 493.773 533.47 486.218 536.685 491.615 540.972 491.615 547.938 494.313 554.367 492.154 554.367 489.996 560.261 486.218 559.19 473.807 561.333 477.045 556.511 476.505 549.545 482.441 542.579 475.966 538.828 484.599 536.149 472.728 531.327 477.585 532.934 484.06 530.255 477.585 525.433 479.203 522.218 476.505 516.324 476.505 509.894Z"
+            stroke="#FFFFFF"
+            stroke-width="2"
+            stroke-miterlimit="8"
+            fill="#10B981"
+            fill-rule="evenodd"
+            id="path67" />
+          <text
+            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
+            font-weight="700"
+            font-size="14.0133"
+            transform="translate(449.032 588)"
+            id="text144">小笠原村</text>
+        </g>
+      </g>
 
-        if (timeLeft <= 0) {
-          return clearInterval(interval);
-        }
-
-        const particleCount = 50 * (timeLeft / duration);
-
-        // 複数の位置からconfettiを発射
-        confetti({
-          ...defaults,
-          particleCount,
-          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-        });
-        confetti({
-          ...defaults,
-          particleCount,
-          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-        });
-      }, 250);
-
-      // お祝いメッセージを表示（閉じるボタンで閉じるまで表示）
-      setShowCongratulations(true);
-    }
-  }, [correctAnswers.length, isGameStarted, allDistricts.length]);
-
-  // 主な名前のリスト（地図表示用）
-  const districtIds = allDistricts.map(district => district.id);
-
-  // クリア状態を判定
-  const isCleared = isGameStarted && correctAnswers.length === allDistricts.length;
-
-  // 降参状態またはクリア状態のときは再挑戦ボタンを表示
-  const showRetryButton = isCleared || isSurrendered;
-
-  // 時間のフォーマット
-  const formatTime = (seconds) => {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-
-  // 開始ボタンのハンドラー
-  const handleStart = () => {
-    setIsGameStarted(true);
-    setIsTimerRunning(true);
-    setCorrectAnswers([]);
-    setTime(0);
-    setInputValue('');
-    setShowCongratulations(false);
-    setIsSurrendered(false);
-
-    // 開始時の音声を再生
-    startOrClearSoundRef.current.currentTime = 0;
-    startOrClearSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
-  };
-
-  // 降参ボタンのハンドラー
-  const handleSurrender = () => {
-    if (isGameStarted && !isCleared && !isSurrendered) {
-      setShowSurrenderModal(true);
-    }
-  };
-
-  // 降参を確定するハンドラー
-  const handleConfirmSurrender = () => {
-    setIsTimerRunning(false);
-    setIsSurrendered(true);
-    setShowSurrenderModal(false);
-  };
-
-  // 降参をキャンセルするハンドラー
-  const handleCancelSurrender = () => {
-    setShowSurrenderModal(false);
-  };
-
-  // 回答ボタンのハンドラー
-  const handleAnswer = () => {
-    if (inputValue.trim()) {
-      const trimmedValue = inputValue.trim();
-      // デバッグ用: "allcomplete"と入力したら全問正解にする
-      if (trimmedValue === 'allcomplete') {
-        setCorrectAnswers(districtIds);
-        setInputValue('');
-        return;
-      }
-      checkAnswer(trimmedValue);
-    }
-  };
-
-  // 入力のハンドラー
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  // 入力確定時の処理
-  const handleInputKeyPress = (e) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
-      const trimmedValue = inputValue.trim();
-      // デバッグ用: "allcomplete"と入力したら全問正解にする
-      if (trimmedValue === 'allcomplete') {
-        setCorrectAnswers(districtIds);
-        setInputValue('');
-        return;
-      }
-      checkAnswer(trimmedValue);
-    }
-  };
-
-  // 正解判定
-  const checkAnswer = (answer) => {
-    // 入力値が地域名と一致するかチェック（複数の名前に対応）
-    const matchedDistrict = allDistricts.find(
-      (district) => district.names.includes(answer)
-    );
-
-    if (matchedDistrict) {
-      // 既に正解済みの場合は無視（idで判定）
-      if (correctAnswers.includes(matchedDistrict.id)) {
-        // 入力済みの地域を再回答したときは音声を再生し、文字は消さない
-        wrongSoundRef.current.currentTime = 0;
-        wrongSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
-        return;
-      }
-      // 主な名前（id）を正解リストに追加
-      setCorrectAnswers((prev) => [...prev, matchedDistrict.id]);
-      setInputValue('');
-
-      // 正解時の音声を再生
-      correctSoundRef.current.currentTime = 0;
-      correctSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
-    } else {
-      // 何にも該当しないときは音声を再生
-      wrongSoundRef.current.currentTime = 0;
-      wrongSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
-    }
-  };
+    </svg>
+  );
 
   return (
     <>
-      {/* 降参確認モーダル */}
-      {showSurrenderModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md mx-4 text-center animate-fadeIn">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">
-              降参しますか？
-            </h2>
-            <div className="flex gap-4 justify-center">
-              <button
-                onClick={handleConfirmSurrender}
-                className="bg-red-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-red-600 transition"
-              >
-                はい
-              </button>
-              <button
-                onClick={handleCancelSurrender}
-                className="bg-gray-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-gray-600 transition"
-              >
-                いいえ
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* お祝いメッセージモーダル */}
-      <ClearModal
-        isOpen={showCongratulations}
-        onClose={() => setShowCongratulations(false)}
-        time={time}
-        gameTitle={gameTitle}
-      />
-      <div>
-        {/* メインコンテンツエリア */}
-        <main className="w-full mt-4 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
-          {/* タイトルセクション */}
-          <div className="text-center mb-5">
-            <h2 className="text-1xl md:text-3xl font-extrabold text-slate-700 ">
-              {gameTitle}
-            </h2>
-          </div>
-
-          {/* 地図エリア */}
-          <TokyoMap
-            isGameStarted={isGameStarted}
-            correctAnswers={correctAnswers}
-            allDistricts={allDistricts}
-            showCongratulations={showCongratulations}
-            isSurrendered={isSurrendered}
-            showSurrenderModal={showSurrenderModal}
-          />
-
-          {/* 操作・統計エリア */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-t pt-5">
-            {/* 入力欄 */}
-            <div className="flex gap-2 w-full md:max-w-md">
-              <input
-                type="text"
-                placeholder={isSurrendered || isCleared ? "再挑戦は右のボタンを押してね" : isGameStarted ? "入力してEnterを押してね" : "開始を押してね"}
-                className="border-2 border-slate-300 rounded-lg px-4 py-2 grow focus:outline-none focus:border-blue-500"
-                disabled={!isGameStarted}
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyPress={handleInputKeyPress}
-              />
-              <button
-                className={`font-bold px-6 py-2 rounded-lg transition shrink-0 ${showRetryButton
-                    ? 'bg-green-500 text-white hover:bg-green-600'
-                    : isGameStarted
-                      ? 'bg-blue-500 text-white hover:bg-blue-600'
-                      : 'bg-red-500 text-white hover:bg-red-600'
-                  }`}
-                onClick={showRetryButton ? handleStart : (isGameStarted ? handleAnswer : handleStart)}
-                disabled={isSurrendered && !showRetryButton}
-              >
-                {showRetryButton ? '再挑戦' : (isGameStarted ? '回答' : '開始')}
-              </button>
-            </div>
-
-            {/* 統計数値 */}
-            <div className="flex gap-8 items-center text-slate-600">
-              <div>
-                <p className="text-[14px] uppercase tracking-widest text-slate-400">
-                  経過時間
-                </p>
-                <p className="text-xl md:text-2xl font-mono font-bold">
-                  {formatTime(time)}
-                </p>
-              </div>
-              <div>
-                <p className="text-[14px] uppercase tracking-widest text-slate-400">
-                  正解数
-                </p>
-                <p className="text-xl md:text-2xl font-mono font-bold text-red-500">
-                  {String(correctAnswers.length).padStart(2, '0')}/{districtIds.length}
-                </p>
-              </div>
-              <button
-                className="bg-slate-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-slate-600 transition shrink-0"
-                onClick={handleSurrender}
-                disabled={!isGameStarted || isCleared || isSurrendered}
-              >
-                降参
-              </button>
-            </div>
-          </div>
-        </main>
-      </div>
+      <MapQuizManager allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
+        {svgContent}
+      </MapQuizManager>
     </>
   );
 };
