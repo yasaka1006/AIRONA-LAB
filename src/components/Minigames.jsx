@@ -11,7 +11,7 @@ const Minigames = () => {
           {/* 東京ゲーム */}
           <Link to="/tokyo" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/tokyo.png" alt="東京都の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/tokyo.webp" alt="東京都の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="text-lg font-bold text-slate-800 mb-2">東京都の市区町村全部言えるかな？</h3>
@@ -22,7 +22,7 @@ const Minigames = () => {
             {/* 埼玉ゲーム */}
             <Link to="/saitama" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
               <div className="w-full h-48 bg-slate-200 overflow-hidden">
-                <img src="/thumbnail/saitama.png" alt="埼玉県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+                <img src="/thumbnail/saitama.webp" alt="埼玉県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">埼玉県の市区町村全部言えるかな？</h3>
@@ -33,7 +33,7 @@ const Minigames = () => {
           {/* 千葉ゲーム */}
           <Link to="/chiba" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/chiba.png" alt="千葉県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/chiba.webp" alt="千葉県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">千葉県の市区町村全部言えるかな？</h3>
@@ -43,7 +43,7 @@ const Minigames = () => {
 
           <Link to="/gunma" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/gunma.png" alt="群馬県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/gunma.webp" alt="群馬県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">群馬県の市区町村全部言えるかな？</h3>
@@ -53,7 +53,7 @@ const Minigames = () => {
 
           <Link to="/tochigi" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/tochigi.png" alt="栃木県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/tochigi.webp" alt="栃木県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">栃木県の市区町村全部言えるかな？</h3>
@@ -63,7 +63,7 @@ const Minigames = () => {
 
           <Link to="/kanagawa" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/kanagawa.png" alt="神奈川県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/kanagawa.webp" alt="神奈川県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">神奈川県の市区町村全部言えるかな？</h3>
@@ -73,7 +73,7 @@ const Minigames = () => {
 
           <Link to="/ibaraki" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/ibaraki.png" alt="茨城県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/ibaraki.webp" alt="茨城県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">茨城県の市区町村全部言えるかな？</h3>
@@ -83,7 +83,7 @@ const Minigames = () => {
 
           <Link to="/yamanashi" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/yamanashi.png" alt="山梨県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/yamanashi.webp" alt="山梨県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">山梨県の市区町村全部言えるかな？</h3>
@@ -93,7 +93,7 @@ const Minigames = () => {
           
           <Link to="/shizuoka" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img src="/thumbnail/shizuoka.png" alt="静岡県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
+              <img src="/thumbnail/shizuoka.webp" alt="静岡県の市区町村全部言えるかな？" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">静岡県の市区町村全部言えるかな？</h3>

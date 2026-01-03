@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import TokyoMap from '../maps/TokyoMap';
 import confetti from 'canvas-confetti';
+import ClearModal from '../assets/ClearModal';
 
 const Tokyo = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -12,11 +13,14 @@ const Tokyo = () => {
   const [showSurrenderModal, setShowSurrenderModal] = useState(false);
   const [isSurrendered, setIsSurrendered] = useState(false);
   const intervalRef = useRef(null);
-  
+
   // 音声ファイルの参照
   const correctSoundRef = useRef(new Audio('/audio/correct.mp3'));
   const wrongSoundRef = useRef(new Audio('/audio/wrong.mp3'));
   const startOrClearSoundRef = useRef(new Audio('/audio/start_or_clear.mp3'));
+
+  // ゲームタイトル
+  const gameTitle = '東京都の市区町村全部言えるかな？';
 
   // 全63の市区町村のリスト（複数の名前に対応）
   // id: 地図に表示される主な名前
@@ -110,11 +114,11 @@ const Tokyo = () => {
   useEffect(() => {
     if (isGameStarted && correctAnswers.length === allDistricts.length) {
       setIsTimerRunning(false);
-      
+
       // クリア時の音声を再生
       startOrClearSoundRef.current.currentTime = 0;
       startOrClearSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
-      
+
       // Confettiを発射
       const duration = 3000;
       const animationEnd = Date.now() + duration;
@@ -124,7 +128,7 @@ const Tokyo = () => {
         return Math.random() * (max - min) + min;
       }
 
-      const interval = setInterval(function() {
+      const interval = setInterval(function () {
         const timeLeft = animationEnd - Date.now();
 
         if (timeLeft <= 0) {
@@ -132,7 +136,7 @@ const Tokyo = () => {
         }
 
         const particleCount = 50 * (timeLeft / duration);
-        
+
         // 複数の位置からconfettiを発射
         confetti({
           ...defaults,
@@ -153,10 +157,10 @@ const Tokyo = () => {
 
   // 主な名前のリスト（地図表示用）
   const districtIds = allDistricts.map(district => district.id);
-  
+
   // クリア状態を判定
   const isCleared = isGameStarted && correctAnswers.length === allDistricts.length;
-  
+
   // 降参状態またはクリア状態のときは再挑戦ボタンを表示
   const showRetryButton = isCleared || isSurrendered;
 
@@ -177,26 +181,26 @@ const Tokyo = () => {
     setInputValue('');
     setShowCongratulations(false);
     setIsSurrendered(false);
-    
+
     // 開始時の音声を再生
     startOrClearSoundRef.current.currentTime = 0;
     startOrClearSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
   };
-  
+
   // 降参ボタンのハンドラー
   const handleSurrender = () => {
     if (isGameStarted && !isCleared && !isSurrendered) {
       setShowSurrenderModal(true);
     }
   };
-  
+
   // 降参を確定するハンドラー
   const handleConfirmSurrender = () => {
     setIsTimerRunning(false);
     setIsSurrendered(true);
     setShowSurrenderModal(false);
   };
-  
+
   // 降参をキャンセルするハンドラー
   const handleCancelSurrender = () => {
     setShowSurrenderModal(false);
@@ -253,7 +257,7 @@ const Tokyo = () => {
       // 主な名前（id）を正解リストに追加
       setCorrectAnswers((prev) => [...prev, matchedDistrict.id]);
       setInputValue('');
-      
+
       // 正解時の音声を再生
       correctSoundRef.current.currentTime = 0;
       correctSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
@@ -290,54 +294,26 @@ const Tokyo = () => {
           </div>
         </div>
       )}
-      
+
       {/* お祝いメッセージモーダル */}
-      {showCongratulations && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md mx-4 text-center animate-fadeIn relative">
-            <button
-              onClick={() => setShowCongratulations(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
-              aria-label="閉じる"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <div className="text-4xl md:text-6xl mb-4">🎉</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
-              おめでとう！
-            </h2>
-            <p className="text-lg md:text-xl text-slate-600 mb-2">
-              クリアタイムは
-            </p>
-            <p className="text-3xl md:text-4xl font-bold text-blue-600 mb-6">
-              {formatTime(time)}
-            </p>
-            <p className="text-lg md:text-xl text-slate-600 mb-6">
-              でした！
-            </p>
-            <button
-              onClick={() => setShowCongratulations(false)}
-              className="bg-blue-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-600 transition"
-            >
-              閉じる
-            </button>
-          </div>
-        </div>
-      )}
+      <ClearModal
+        isOpen={showCongratulations}
+        onClose={() => setShowCongratulations(false)}
+        time={time}
+        gameTitle={gameTitle}
+      />
       <div>
         {/* メインコンテンツエリア */}
         <main className="w-full mt-4 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
           {/* タイトルセクション */}
           <div className="text-center mb-5">
             <h2 className="text-1xl md:text-3xl font-extrabold text-slate-700 ">
-              東京都の市区町村全部言えるかな？
+              {gameTitle}
             </h2>
           </div>
 
           {/* 地図エリア */}
-          <TokyoMap 
+          <TokyoMap
             isGameStarted={isGameStarted}
             correctAnswers={correctAnswers}
             allDistricts={allDistricts}
@@ -352,21 +328,20 @@ const Tokyo = () => {
             <div className="flex gap-2 w-full md:max-w-md">
               <input
                 type="text"
-                placeholder={isSurrendered || isCleared ? "再挑戦は右のボタンを押してね" : isGameStarted ? "入力してEnterを押してね" : "開始を押してね"} 
+                placeholder={isSurrendered || isCleared ? "再挑戦は右のボタンを押してね" : isGameStarted ? "入力してEnterを押してね" : "開始を押してね"}
                 className="border-2 border-slate-300 rounded-lg px-4 py-2 grow focus:outline-none focus:border-blue-500"
                 disabled={!isGameStarted}
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyPress={handleInputKeyPress}
               />
-              <button 
-                className={`font-bold px-6 py-2 rounded-lg transition shrink-0 ${
-                  showRetryButton
+              <button
+                className={`font-bold px-6 py-2 rounded-lg transition shrink-0 ${showRetryButton
                     ? 'bg-green-500 text-white hover:bg-green-600'
                     : isGameStarted
-                    ? 'bg-blue-500 text-white hover:bg-blue-600'
-                    : 'bg-red-500 text-white hover:bg-red-600'
-                }`}
+                      ? 'bg-blue-500 text-white hover:bg-blue-600'
+                      : 'bg-red-500 text-white hover:bg-red-600'
+                  }`}
                 onClick={showRetryButton ? handleStart : (isGameStarted ? handleAnswer : handleStart)}
                 disabled={isSurrendered && !showRetryButton}
               >
@@ -392,7 +367,7 @@ const Tokyo = () => {
                   {String(correctAnswers.length).padStart(2, '0')}/{districtIds.length}
                 </p>
               </div>
-              <button 
+              <button
                 className="bg-slate-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-slate-600 transition shrink-0"
                 onClick={handleSurrender}
                 disabled={!isGameStarted || isCleared || isSurrendered}

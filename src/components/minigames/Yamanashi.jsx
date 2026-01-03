@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import confetti from 'canvas-confetti';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import ClearModal from '../assets/ClearModal';
 
 const Yamanashi = () => {
     const [isGameStarted, setIsGameStarted] = useState(false);
@@ -23,6 +24,9 @@ const Yamanashi = () => {
     const correctSoundRef = useRef(new Audio('/audio/correct.mp3'));
     const wrongSoundRef = useRef(new Audio('/audio/wrong.mp3'));
     const startOrClearSoundRef = useRef(new Audio('/audio/start_or_clear.mp3'));
+
+    // ゲームタイトル
+    const gameTitle = '山梨県の市区町村全部言えるかな？';
 
     // 市区町村のリスト（複数の名前に対応）
     const allDistricts = [
@@ -405,47 +409,19 @@ const Yamanashi = () => {
             )}
 
             {/* お祝いメッセージモーダル */}
-            {showCongratulations && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md mx-4 text-center animate-fadeIn relative">
-                        <button
-                            onClick={() => setShowCongratulations(false)}
-                            className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
-                            aria-label="閉じる"
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                        <div className="text-4xl md:text-6xl mb-4">🎉</div>
-                        <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
-                            おめでとう！
-                        </h2>
-                        <p className="text-lg md:text-xl text-slate-600 mb-2">
-                            クリアタイムは
-                        </p>
-                        <p className="text-3xl md:text-4xl font-bold text-blue-600 mb-6">
-                            {formatTime(time)}
-                        </p>
-                        <p className="text-lg md:text-xl text-slate-600 mb-6">
-                            でした！
-                        </p>
-                        <button
-                            onClick={() => setShowCongratulations(false)}
-                            className="bg-blue-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-600 transition"
-                        >
-                            閉じる
-                        </button>
-                    </div>
-                </div>
-            )}
+            <ClearModal
+                isOpen={showCongratulations}
+                onClose={() => setShowCongratulations(false)}
+                time={time}
+                gameTitle={gameTitle}
+            />
 
             {/* メインコンテンツエリア */}
             <div className="w-full mt-4 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
                 {/* タイトルセクション */}
                 <div className="text-center mb-5">
                     <h2 className="text-1xl md:text-3xl font-extrabold text-slate-700 ">
-                        山梨県の市区町村全部言えるかな？
+                        {gameTitle}
                     </h2>
                 </div>
 
@@ -1054,7 +1030,7 @@ const Yamanashi = () => {
                                                         transform="translate(597.495 422)"
                                                         id="text57">道志村</text>
                                                 </g>
-                                           
+
                                                 <g
                                                     id="g97">
                                                     <path
