@@ -60,7 +60,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             </li>
             <span className="block h-px bg-slate-300 my-4"></span>
             <li>
-              <Link to="/equipments" className="block hover:text-blue-700 transition cursor-pointer font-bold" onClick={onClose}>使用機材一覧</Link>
+              <Link to="/equipments" className="block hover:text-blue-700 transition cursor-pointer font-bold" onClick={onClose}>使用機材リスト</Link>
             </li>
             <li>
               <Link to="/mcp" className="block hover:text-blue-700 transition cursor-pointer font-bold" onClick={onClose}>Minecraft Portfolio</Link>
