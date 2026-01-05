@@ -7,7 +7,7 @@ const Minigames = () => {
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-slate-800">
           ミニゲーム一覧
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* 東京ゲーム */}
           <Link to="/tokyo" className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white">
             <div className="w-full h-48 bg-slate-200 overflow-hidden">

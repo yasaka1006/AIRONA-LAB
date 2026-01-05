@@ -29,9 +29,9 @@ const ScrollToTop = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 z-50 bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:from-slate-600 hover:to-slate-700 ${
+      className={`fixed bottom-8 right-4 md:right-10 z-50 bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:from-slate-600 hover:to-slate-700 ${
         isVisible
-          ? 'opacity-100 translate-y-0 pointer-events-auto'
+          ? 'opacity-80 translate-y-0 pointer-events-auto'
           : 'opacity-0 translate-y-4 pointer-events-none'
       }`}
       aria-label="ページトップに戻る"

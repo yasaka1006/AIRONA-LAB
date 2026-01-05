@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Links } from 'react-router-dom';
 import Home from './components/Home';
 import Header from './components/assets/Header';
 import Sidebar from './components/assets/Sidebar';
@@ -16,6 +16,7 @@ import Kanagawa from './components/minigames/Kanagawa';
 import Ibaraki from './components/minigames/Ibaraki';
 import Tokyo from './components/minigames/Tokyo';
 import Equipments from './components/Equipments';
+import Links2 from './components/Links';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -38,6 +39,7 @@ function App() {
             <div className="w-full max-w-6xl mx-auto md:main-content-centered">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/links" element={<Links2 />} />
                 <Route path="/minigames" element={<Minigames />} />
                 <Route path="/mcp" element={<Mcp />} />
                 <Route path="/equipments" element={<Equipments />} />

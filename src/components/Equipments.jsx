@@ -333,42 +333,41 @@ const Equipments = () => {
   ];
 
   return (
-    <main className="mt-4 space-y-7 mx-2">
-      {/* タイトルセクション */}
-      <section className="bg-white py-4 px-4 md:px-8 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800">
+    <main id="top" className="mt-4 space-y-7 mx-2 scroll-mt-20">
+
+      {/* タイトル・目次セクション */}
+      <section className="bg-white py-6 px-3 md:px-8 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-8">
           使用機材リスト
         </h1>
-      </section>
 
-      {/* 目次セクション */}
-      <section className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-4">
-          目次
-        </h2>
-        <div className="text-xl bg-slate-100 rounded-lg p-6 px-18 w-fit mx-auto text-slate-600 font-mono underline lg:font-bold space-y-4 flex flex-col">
+        <div className="text-xl bg-slate-100 rounded-lg p-6 px-15 w-fit mx-auto text-slate-600 font-mono lg:font-bold space-y-4 flex flex-col">
+          <h2 className="text-xl md:text-2xl font-bold text-center text-slate-800 mb-5">
+            目次
+          </h2>
           <a href="#guitars">
-            <h3>ギター</h3>
-          </a>
-          <a href="#effectors">
-            <h3>アンプ・エフェクター</h3>
+            <h3><span className="underline">ギター本体</span></h3>
           </a>
           <a href="#guitarGears">
-            <h3>ギター系小物</h3>
+            <h3><span className="underline">ギター周辺機器</span></h3>
+          </a>
+          <a href="#effectors">
+            <h3><span className="underline">アンプ・エフェクター</span></h3>
           </a>
           <a href="#deskAudioGears">
-            <h3>デスク周り</h3>
+            <h3><span className="underline">デスク周辺機器</span></h3>
           </a>
           <a href="#pcSpecs">
-            <h3>PCスペック</h3>
+            <h3><span className="underline">PCスペック</span></h3>
           </a>
           <a href="#softs">
-            <h3>ソフトウェア</h3>
+            <h3><span className="underline">ソフトウェア</span></h3>
           </a>
           <a href="#cameraGears">
-            <h3>カメラ機材</h3>
+            <h3><span className="underline">カメラ周辺機器</span></h3>
           </a>
         </div>
+
       </section>
 
       {/* Youtubeチャンネルセクション */}
@@ -380,8 +379,8 @@ const Equipments = () => {
           className="flex flex-col items-center group hover:scale-105 transition-transform duration-300"
         >
           <div className="flex items-center">
-            <div className="relative w-24 h-24 md:w-32 md:h-32 mb-3 mr-5">
-              <div className="w-full h-full rounded-full overflow-hidden shadow-lg ring-2 ring-slate-200 group-hover:ring-blue-500 transition-all duration-300">
+            <div className="relative mb-3 mr-5 w-[25%]">
+              <div className="w-16 h-16 md:w-32 md:h-32 w-full h-full rounded-full overflow-hidden shadow-lg ring-2 ring-slate-200 group-hover:ring-blue-500 transition-all duration-300">
                 <img
                   src="/thumbnail/youtube.webp"
                   alt="AironA ギターチャンネル"
@@ -395,11 +394,11 @@ const Equipments = () => {
               </div>
             </div>
 
-            <div className="md:ml-10 border-l-2 border-slate-200 pl-4 md:pl-8">
+            <div className="md:ml-10 border-l-2 border-slate-200 pl-4 md:pl-8 w-[75%]">
               <p className="font-bold text-slate-700 text-xl md:text-2xl">
-                あいろな ギター Ch
+                あいろな ギターCh
               </p>
-              <p className="text-slate-500 text-sm md:text-base ml-1">主に当チャンネルでの<br />使用機材を掲載しています</p>
+              <p className="text-slate-500 text-sm md:text-base mt-2">当チャンネルでの使用機材を掲載しています</p>
             </div>
           </div>
         </a>
@@ -407,26 +406,28 @@ const Equipments = () => {
       </section>
 
       {/* ギターセクション */}
-      <section id="guitars" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
+      <section id="guitars" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
         <div>
+          <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
           <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
             Guitars
+
             <br />
-            <span className="text-xl text-slate-500">ギター</span>
+            <span className="text-xl text-slate-500">ギター本体</span>
           </h2>
         </div>
 
         {guitars.map((guitar, index) => (
           <div key={index}>
             {index > 0 && <div className="block h-px bg-slate-200 my-6 lg:my-10"></div>}
-            <div className={`xl:flex ${index % 2 === 0 ? '' : 'xl:flex-row-reverse'} items-center gap-4 md:gap-6 xl:gap-8 mb-6 xl:mb-10`}>
-              <div className="w-full md:w-[70%] mx-auto xl:w-[51%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md">
+            <div className={`xl:flex items-center gap-4 md:gap-6 xl:gap-8 mb-6 xl:mb-10`}>
+              <div className="w-full md:w-[70%] mx-auto xl:w-[45%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md">
                 <img src={guitar.image} alt={guitar.name} className="w-full h-full object-cover" />
               </div>
-              <div className="w-full xl:w-[49%]">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mt-4 px-3">{guitar.name}</h3>
+              <div className="w-full xl:w-[55%]">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md px-3">{guitar.name}</h3>
                 <div className="px-4">
-                  <p className="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: guitar.description }}></p>
+                  <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: guitar.description }}></p>
                   <a href={guitar.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold mt-4">
                     <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
                     商品ページ
@@ -438,44 +439,13 @@ const Equipments = () => {
         ))}
       </section>
 
-      {/* エフェクター セクション */}
-      <section id="effectors" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          Effectors
-          <br />
-          <span className="text-xl text-slate-500">アンプ・エフェクター</span>
-        </h2>
-        <img src="/equipments/effector.jpg" alt="デスク" className="xl:w-[70%] mx-auto rounded-xl mb-8 shadow-lg"/>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2">
-          {effectors.map((gear, index) => (
-            <div key={index} className="p-1 lg:px-6">
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
-              <div className="flex items-center">
-                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
-                </a>
-                <div>
-                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
-                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ{gear.page}
-                  </a>
-                </div>
-              </div>
-              <span className="block h-px bg-slate-200 my-8"></span>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ギター アクセサリーセクション */}
-      <section id="guitarGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
+      <section id="guitarGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
+        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
         <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
           Guitar Accessories
           <br />
-          <span className="text-xl text-slate-500">ギター系小物</span>
+          <span className="text-xl text-slate-500">ギター周辺機器</span>
         </h2>
 
         <div className="grid grid-cols-1 xl:grid-cols-2">
@@ -501,14 +471,50 @@ const Equipments = () => {
         </div>
       </section>
 
+      {/* エフェクター セクション */}
+      <section id="effectors" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
+        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
+          Effectors
+          <br />
+          <span className="text-xl text-slate-500">アンプ・エフェクター</span>
+        </h2>
+        <img src="/equipments/effector.jpg" alt="デスク" className="xl:w-[70%] mx-auto rounded-xl mb-8 shadow-lg" />
+
+        <div className="grid grid-cols-1 xl:grid-cols-2">
+          {effectors.map((gear, index) => (
+            <div key={index} className="p-1 lg:px-6">
+              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
+              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
+              <div className="flex items-center">
+                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
+                </a>
+                <div>
+                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
+                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
+                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
+                    商品ページ{gear.page}
+                  </a>
+                </div>
+              </div>
+              <span className="block h-px bg-slate-200 my-8"></span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+
       {/* デスク アクセサリーセクション */}
-      <section id="deskAudioGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
+      <section id="deskAudioGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
+        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
         <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
           Desk Gears
           <br />
-          <span className="text-xl text-slate-500">デスク周り</span>
+          <span className="text-xl text-slate-500">デスク周辺機器</span>
         </h2>
-        <img src="/equipments/deskBanner.jpg" alt="デスク" className="xl:w-[70%] mx-auto rounded-xl mb-8 shadow-lg"/>
+        <img src="/equipments/deskBanner.jpg" alt="デスク" className="xl:w-[70%] mx-auto rounded-xl mb-8 shadow-lg" />
 
         <div className="grid grid-cols-1 xl:grid-cols-2">
           {deskGears.map((gear, index) => (
@@ -534,9 +540,12 @@ const Equipments = () => {
       </section>
 
       {/* PCパーツ セクション */}
-      <section id="pcSpecs" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
+      <section id="pcSpecs" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
+        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
         <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
           PC Specs
+          <br />
+          <span className="text-xl text-slate-500">PCスペック</span>
         </h2>
         <img src="/equipments/PCBanner.jpg" alt="PC" className="xl:w-[50%] mx-auto rounded-xl mb-6" />
 
@@ -555,9 +564,10 @@ const Equipments = () => {
           </div>
         </div>
       </section>
-      
+
       {/* ソフトウェアセクション */}
-      <section id="softs" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
+      <section id="softs" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
+        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
         <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
           Softwares
           <br />
@@ -588,11 +598,12 @@ const Equipments = () => {
       </section>
 
       {/* カメラ アクセサリーセクション */}
-      <section id="cameraGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20">
+      <section id="cameraGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
+        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
         <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
           Camera Gears
           <br />
-          <span className="text-xl text-slate-500">カメラ機材</span>
+          <span className="text-xl text-slate-500">カメラ周辺機器</span>
         </h2>
 
         <div className="grid grid-cols-1 xl:grid-cols-2">
