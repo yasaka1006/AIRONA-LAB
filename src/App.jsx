@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Header from './components/assets/Header';
 import Sidebar from './components/assets/Sidebar';
+import ScrollToTop from './components/assets/ScrollToTop';
 import Mcp from './components/Mcp';
 import Saitama from './components/minigames/Saitama';
 import Chiba from './components/minigames/Chiba';
@@ -14,6 +15,7 @@ import Minigames from './components/Minigames';
 import Kanagawa from './components/minigames/Kanagawa';
 import Ibaraki from './components/minigames/Ibaraki';
 import Tokyo from './components/minigames/Tokyo';
+import Equipments from './components/Equipments';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -38,6 +40,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/minigames" element={<Minigames />} />
                 <Route path="/mcp" element={<Mcp />} />
+                <Route path="/equipments" element={<Equipments />} />
                 <Route path="/saitama" element={<Saitama />} />
                 <Route path="/chiba" element={<Chiba />} />
                 <Route path="/tochigi" element={<Tochigi />} />
@@ -51,6 +54,7 @@ function App() {
             </div>
           </div>
         </div>
+        <ScrollToTop />
       </div>
     </>
   )

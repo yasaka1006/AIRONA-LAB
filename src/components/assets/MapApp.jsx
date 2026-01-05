@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import confetti from 'canvas-confetti';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import ClearModal from '../assets/ClearModal';
 
-const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
-    // SVG要素にrefを追加するための内部ref
-    const svgRef = useRef(null);
+const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [correctAnswers, setCorrectAnswers] = useState([]);
@@ -25,6 +22,12 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
     const correctSoundRef = useRef(new Audio('/audio/correct.mp3'));
     const wrongSoundRef = useRef(new Audio('/audio/wrong.mp3'));
     const startOrClearSoundRef = useRef(new Audio('/audio/start_or_clear.mp3'));
+
+    // 音声再生の共通関数
+    const playSound = (soundRef) => {
+        soundRef.current.currentTime = 0;
+        soundRef.current.play().catch(err => console.log('Audio play failed:', err));
+    };
 
     // タイマーの処理
     useEffect(() => {
@@ -52,8 +55,7 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
             setIsTimerRunning(false);
 
             // クリア時の音声を再生
-            startOrClearSoundRef.current.currentTime = 0;
-            startOrClearSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
+            playSound(startOrClearSoundRef);
 
             // Confettiを発射
             const duration = 3000;
@@ -94,12 +96,6 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
     // 主な名前のリスト（地図表示用）
     const districtIds = allDistricts.map(district => district.id);
 
-    // クリア状態を判定
-    const isCleared = isGameStarted && correctAnswers.length === allDistricts.length;
-
-    // 降参状態またはクリア状態のときは再挑戦ボタンを表示
-    const showRetryButton = isCleared || isSurrendered;
-
     // 時間のフォーマット
     const formatTime = (seconds) => {
         const hrs = Math.floor(seconds / 3600);
@@ -107,6 +103,28 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
         const secs = seconds % 60;
         return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
+
+    // デバッグ用：全問正解にする
+    const handleDebugComplete = (trimmedValue) => {
+        if (trimmedValue === 'allcomplete') {
+            setCorrectAnswers(districtIds);
+            setInputValue('');
+            return true;
+        }
+        return false;
+    };
+
+    // クリア状態を判定
+    const isCleared = isGameStarted && correctAnswers.length === allDistricts.length;
+
+    // 降参状態またはクリア状態のときは再挑戦ボタンを表示
+    const showRetryButton = isCleared || isSurrendered;
+
+    // Twitter共有URLを生成
+    const twitterShareUrl = useMemo(() => {
+        const text = `${gameTitle}を${formatTime(time)}でクリアしました！\nhttps://airona-lab.com`;
+        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    }, [gameTitle, time]);
 
     // 開始ボタンのハンドラー
     const handleStart = () => {
@@ -119,8 +137,7 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
         setIsSurrendered(false);
 
         // 開始時の音声を再生
-        startOrClearSoundRef.current.currentTime = 0;
-        startOrClearSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
+        playSound(startOrClearSoundRef);
     };
 
     // 降参ボタンのハンドラー
@@ -153,8 +170,7 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
             // 既に正解済みの場合は無視（idで判定）
             if (correctAnswers.includes(matchedDistrict.id)) {
                 // 入力済みの地域を再回答したときは音声を再生し、文字は消さない
-                wrongSoundRef.current.currentTime = 0;
-                wrongSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
+                playSound(wrongSoundRef);
                 return;
             }
             // 主な名前（id）を正解リストに追加
@@ -162,45 +178,30 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
             setInputValue('');
 
             // 正解時の音声を再生
-            correctSoundRef.current.currentTime = 0;
-            correctSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
+            playSound(correctSoundRef);
         } else {
             // 何にも該当しないときは音声を再生
-            wrongSoundRef.current.currentTime = 0;
-            wrongSoundRef.current.play().catch(err => console.log('Audio play failed:', err));
+            playSound(wrongSoundRef);
         }
+    };
+
+    // 回答処理の共通関数
+    const processAnswer = (trimmedValue) => {
+        if (handleDebugComplete(trimmedValue)) return;
+        checkAnswer(trimmedValue);
     };
 
     // 回答ボタンのハンドラー
     const handleAnswer = () => {
         if (inputValue.trim()) {
-            const trimmedValue = inputValue.trim();
-            // デバッグ用: "allcomplete"と入力したら全問正解にする
-            if (trimmedValue === 'allcomplete') {
-                setCorrectAnswers(districtIds);
-                setInputValue('');
-                return;
-            }
-            checkAnswer(trimmedValue);
+            processAnswer(inputValue.trim());
         }
-    };
-
-    // 入力のハンドラー
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
     };
 
     // 入力確定時の処理
     const handleInputKeyPress = (e) => {
         if (e.key === 'Enter' && inputValue.trim()) {
-            const trimmedValue = inputValue.trim();
-            // デバッグ用: "allcomplete"と入力したら全問正解にする
-            if (trimmedValue === 'allcomplete') {
-                setCorrectAnswers(districtIds);
-                setInputValue('');
-                return;
-            }
-            checkAnswer(trimmedValue);
+            processAnswer(inputValue.trim());
         }
     };
 
@@ -212,10 +213,7 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
 
     // 未正解の場合の表示用テキストを生成
     const getMaskedText = (text, isCorrect) => {
-        if (isCorrect) return text;
-        // 未正解の場合：最初の1文字＋"？？"のみ表示
-        if (!text) return '';
-        if (text.length === 0) return '';
+        if (isCorrect || !text) return text || '';
         return text[0] + '？？';
     };
 
@@ -374,13 +372,43 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
                 </div>
             )}
 
-            {/* お祝いメッセージモーダル */}
-            <ClearModal
-                isOpen={showCongratulations}
-                onClose={() => setShowCongratulations(false)}
-                time={time}
-                gameTitle={gameTitle}
-            />
+            {/* クリア時に表示するお祝いモーダル */}
+            {showCongratulations && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md mx-4 text-center animate-fadeIn relative">
+                        <button
+                            onClick={() => setShowCongratulations(false)}
+                            className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
+                            aria-label="閉じる"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div className="text-4xl md:text-6xl mb-4">🎉</div>
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
+                            全正解おめでとう！
+                        </h2>
+                        <p className="text-lg md:text-xl text-slate-600 mb-10">
+                            クリアタイムは <span className="text-3xl md:text-4xl font-bold text-blue-600 mb-6">{formatTime(time)}</span> でした！
+                        </p>
+
+                        <div className="flex gap-3 justify-center">
+                            <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
+                                <button
+                                    className="bg-black text-white text-xl font-bold px-6 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
+                                >
+                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                    共有
+                                </button>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            )}
 
             {/* メインコンテンツエリア */}
             <div className="w-full mt-4 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
@@ -477,7 +505,7 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
                                     wrapperStyle={{ width: '100%', height: '100%' }} // 表示する「窓」のサイズを固定
                                     contentStyle={{ width: '100%', height: '100%' }} // 中身のベースサイズ
                                 >
-                                   {children}
+                                    {children}
                                 </TransformComponent>
                             </>
                         )}
@@ -494,7 +522,7 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
                             className="border-2 border-slate-300 rounded-lg px-4 py-2 grow focus:outline-none focus:border-blue-500"
                             disabled={!isGameStarted || isSurrendered}
                             value={inputValue}
-                            onChange={handleInputChange}
+                            onChange={(e) => setInputValue(e.target.value)}
                             onKeyPress={handleInputKeyPress}
                         />
                         <button
@@ -529,13 +557,26 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
                                 {String(correctAnswers.length).padStart(2, '0')}/{districtIds.length}
                             </p>
                         </div>
-                        <button
+                        {!isCleared && <button
                             className="bg-slate-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-slate-600 transition shrink-0"
                             onClick={handleSurrender}
                             disabled={!isGameStarted || isCleared || isSurrendered}
                         >
                             降参
                         </button>
+                        }
+                        {isCleared &&
+                            <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
+                                <button
+                                    className="bg-black text-white font-bold px-3 py-2 rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
+                                >
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                    共有
+                                </button>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
@@ -543,4 +584,4 @@ const MapQuizManager = ({ allDistricts, children, gameTitle, isWide }) => {
     );
 };
 
-export default MapQuizManager;
+export default MapApp;

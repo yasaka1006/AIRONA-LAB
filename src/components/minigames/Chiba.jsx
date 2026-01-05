@@ -1,4 +1,4 @@
-import MapQuizManager from './MapQuizManager';
+import MapApp from '../assets/MapApp';
 
 const Chiba = () => {
 
@@ -1069,9 +1069,9 @@ const Chiba = () => {
 
     return (
         <>
-            <MapQuizManager allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
+            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
                 {svgContent}
-            </MapQuizManager>
+            </MapApp>
         </>
     );
 };
