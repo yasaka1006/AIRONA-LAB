@@ -10,7 +10,7 @@ const Equipments = () => {
     {
       name: 'Fujigen NTL10MAH',
       image: '/equipments/guitarTele.png',
-      description: 'Neo Classic SERIES<br />Color: Off White Blonde<br />2017年に購入<br />自分の貯金で初めて買ったテレキャスです<br />日本製でしっかりしてて安心感があります<br />使用ジャンル: J-POP, ボカロなど',
+      description: 'Neo Classic SERIES<br />Color: Off White Blonde<br />2017年に購入<br />自分の貯金で初めて買ったテレキャスです<br />現在は型番が変わっています<br />使用ジャンル: J-POP, ボカロなど',
       link: 'https://fujigen.shop/products/list.php?category_id=42',
     },
     {
@@ -411,7 +411,6 @@ const Equipments = () => {
           <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
           <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
             Guitars
-
             <br />
             <span className="text-xl text-slate-500">ギター本体</span>
           </h2>
@@ -421,7 +420,7 @@ const Equipments = () => {
           <div key={index}>
             {index > 0 && <div className="block h-px bg-slate-200 my-6 lg:my-10"></div>}
             <div className={`xl:flex items-center gap-4 md:gap-6 xl:gap-8 mb-6 xl:mb-10`}>
-              <div className="w-full md:w-[70%] mx-auto xl:w-[45%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md">
+              <div className="w-full md:w-[70%] mx-auto xl:w-[45%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md mb-4">
                 <img src={guitar.image} alt={guitar.name} className="w-full h-full object-cover" />
               </div>
               <div className="w-full xl:w-[55%]">
