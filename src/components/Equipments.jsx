@@ -192,7 +192,7 @@ const Equipments = () => {
       category: 'メインモニター',
       name: 'Acer VG272Xbmiipx 27型 IPS 240hz',
       image: '/equipments/monitor.png',
-      description: '必須レベル 生活からリモコンがなくせます<br />外出先からエアコンを制御したり、PC起動ができるようになります',
+      description: '144hzと240hzで迷いましたが、ブラウザとかでスクロールしたときヌメヌメ感が違いすぎてこっちにしました',
       link: 'https://amzn.to/3LjJXxC',
       page: '(Amazon)'
     },
