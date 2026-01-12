@@ -96,7 +96,7 @@ const Mcp = () => {
                     </h1>
                     <div className="masonry-container">
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[0])}
                         >
                             <img
@@ -106,7 +106,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[1])}
                         >
                             <img
@@ -116,7 +116,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[2])}
                         >
                             <img
@@ -127,7 +127,7 @@ const Mcp = () => {
                         </div>
 
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[4])}
                         >
                             <img
@@ -137,7 +137,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[5])}
                         >
                             <img
@@ -148,7 +148,7 @@ const Mcp = () => {
                         </div>
 
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[7])}
                         >
                             <img
@@ -158,7 +158,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[8])}
                         >
                             <img
@@ -168,7 +168,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[9])}
                         >
                             <img
@@ -178,7 +178,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[11])}
                         >
                             <img
@@ -188,7 +188,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[3])}
                         >
                             <img
@@ -198,7 +198,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[6])}
                         >
                             <img
@@ -209,7 +209,7 @@ const Mcp = () => {
                         </div>
                         
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[10])}
                         >
                             <img
@@ -219,7 +219,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[12])}
                         >
                             <img
@@ -230,7 +230,7 @@ const Mcp = () => {
                         </div>
 
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[13])}
                         >
                             <img
@@ -240,7 +240,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[14])}
                         >
                             <img
@@ -251,7 +251,7 @@ const Mcp = () => {
                         </div>
 
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[15])}
                         >
                             <img
@@ -261,7 +261,7 @@ const Mcp = () => {
                             />
                         </div>
                         <div
-                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                            className="masonry-item rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-100 cursor-pointer"
                             onClick={() => handleImageClick(images[16])}
                         >
                             <img

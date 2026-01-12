@@ -5,13 +5,15 @@ const Equipments = () => {
       name: 'Fender American Performer Stratocaster HSS',
       image: '/equipments/guitarStrat.png',
       description: 'Color: Satin Surf Green<br />2022年に購入<br />一番出演回数が多いメインギターです<br />とにかく見た目が好きで買いました<br />HSSピックアップと、艶無し塗装が気に入っています<br />今はあまり流通してないみたい<br />使用ジャンル: 全部',
-      link: 'https://www.soundhouse.co.jp/en/products/detail/item/260620/?srsltid=AfmBOoqoOJlArQTCa9c9Q3_CIXmVj8Gz-DgEzY_40G0N5MqgdgsMvm6v=dQw4w9WgXcQ',
+      link: 'https://amzn.to/4puvWLP',
+      link2: 'https://amzn.to/4sAbqfp'
     },
     {
       name: 'Fujigen NTL10MAH',
       image: '/equipments/guitarTele.png',
       description: 'Neo Classic SERIES<br />Color: Off White Blonde<br />2017年に購入<br />自分の貯金で初めて買ったテレキャスです<br />現在は型番が変わっています<br />使用ジャンル: J-POP, ボカロなど',
       link: 'https://fujigen.shop/products/list.php?category_id=42',
+      link2: 'https://amzn.to/49NpRFw'
     },
     {
       name: 'Gibson Lespaul Standard',
@@ -426,11 +428,20 @@ const Equipments = () => {
               <div className="w-full xl:w-[55%]">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md px-3">{guitar.name}</h3>
                 <div className="px-4">
-                  <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: guitar.description }}></p>
-                  <a href={guitar.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold mt-4">
+                  <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: guitar.description }}></p>
+                  <a href={guitar.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold">
                     <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
                     商品ページ
                   </a>
+                  {guitar.link2 && (
+                    <>
+                      <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed mt-2">代替品はこちらがおすすめ</p>
+                      <a href={guitar.link2} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold">
+                        <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
+                        商品ページ
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Header from './components/assets/Header';
 import Sidebar from './components/assets/Sidebar';
 import ScrollToTop from './components/assets/ScrollToTop';
+import Footer from './components/assets/Footer';
 import Mcp from './components/Mcp';
 import Saitama from './components/minigames/Saitama';
 import Chiba from './components/minigames/Chiba';
@@ -31,12 +32,12 @@ function App() {
 
   return (
     <>
-      <div className="bg-slate-100 min-h-screen text-slate-800">
+      <div className="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
         <Header onMenuClick={toggleSidebar} />
-        <div className="flex pt-14">
+        <div className="flex pt-14 flex-1">
           <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-          <div className="w-full flex-1 lg:mr-48">
-            <div className="w-full max-w-6xl mx-auto md:main-content-centered">
+          <div className="w-full flex-1 xl:ml-48 xl:mr-48">
+            <div className="w-full max-w-6xl mx-auto md:main-content-centered px-4">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/links" element={<Links2 />} />
@@ -56,6 +57,7 @@ function App() {
             </div>
           </div>
         </div>
+        <Footer />
         <ScrollToTop />
       </div>
     </>

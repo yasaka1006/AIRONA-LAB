@@ -5,7 +5,7 @@ const Minigames = () => {
     <>
       <div className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg mx-2 my-2">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-slate-800">
-          ミニゲーム一覧
+          クイズ&ゲーム 一覧
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* 東京ゲーム */}
