@@ -89,7 +89,7 @@ const Mcp = () => {
                 </div>
             )}
             
-            <div className="mt-4 space-y-6 mx-2">
+            <div className="my-4 space-y-6 mx-2">
                 <div className="bg-white py-8 px-4 md:px-8 rounded-xl shadow-lg">
                     <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-10">
                         Minecraft Portfolio

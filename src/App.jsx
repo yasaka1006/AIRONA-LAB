@@ -18,6 +18,7 @@ import Ibaraki from './components/minigames/Ibaraki';
 import Tokyo from './components/minigames/Tokyo';
 import Equipments from './components/Equipments';
 import Links2 from './components/Links';
+import ViewTop from './components/assets/ViewTop';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -32,12 +33,13 @@ function App() {
 
   return (
     <>
+      <ViewTop />
       <div className="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
         <Header onMenuClick={toggleSidebar} />
-        <div className="flex pt-14 flex-1">
+        <div className="flex pt-16 flex-1">
           <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
           <div className="w-full flex-1 xl:ml-48 xl:mr-48">
-            <div className="w-full max-w-6xl mx-auto md:main-content-centered px-4">
+            <div className="w-full max-w-6xl mx-auto md:main-content-centered px-2">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/links" element={<Links2 />} />

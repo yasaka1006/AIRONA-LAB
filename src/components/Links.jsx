@@ -70,7 +70,7 @@ const Links = () => {
 
   return (
     <>
-      <main className="my-6 space-y-7 mx-2">
+      <main className="my-4 space-y-7 mx-2">
         {/* タイトルセクション */}
         <section className="bg-white w-90% sm:w-[500px] mx-auto rounded-xl shadow-lg pb-3">
           <div style={{ backgroundImage: "url('/equipments/deskBanner.jpg')" }} className="bg-cover bg-center bg-no-repeat rounded-xl">
@@ -81,6 +81,7 @@ const Links = () => {
             </h1>
           </div>
 
+          {/* SNSセクション */}
           {links.map(link => (
             <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center group bg-gray-100 rounded-md my-4 px-2 py-1 relative mx-2">
               <img src={link.image} alt={link.title} className="border-2 border-slate-200 w-20 h-20 rounded-full object-cover group-hover:border-blue-400 group-hover:scale-108 transition-all duration-100" />
@@ -99,10 +100,11 @@ const Links = () => {
             </a>
           ))}
 
-          <div className="my-10"></div>
+          <div className="my-8 border-t border-slate-200"></div>
 
+          {/* 動画セクション */}
           {videoData.map(video => (
-            <div className="w-full max-w-3xl mx-auto my-4 px-2">
+            <div className="w-full max-w-3xl mx-auto my-10 px-2">
               <h2 className="text-md font-bold mb-2 text-slate-700">
                 {video.title}
               </h2>

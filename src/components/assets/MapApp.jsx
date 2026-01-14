@@ -411,7 +411,7 @@ const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
             )}
 
             {/* メインコンテンツエリア */}
-            <div className="w-full mt-4 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
+            <div className="w-full my-2 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
                 {/* タイトルセクション */}
                 <div className="text-center mb-5">
                     <h2 className="text-1xl md:text-3xl font-extrabold text-slate-700 ">

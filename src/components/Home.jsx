@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <main className="my-6 space-y-4 mx-1">
+    <main className="my-4 space-y-4 mx-1">
       {/* ウェルカムセクション */}
       <section className="bg-white py-8 px-4 md:px-8 rounded-xl shadow-lg" style={{
-       backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.05) 10px, rgba(0,0,0,0.05) 30px)'
+        backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.05) 10px, rgba(0,0,0,0.05) 30px)'
       }}>
         <div className="bg-white py-8 px-4 md:px-8 rounded-xl shadow-lg">
           <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-3">
@@ -108,32 +108,11 @@ const Home = () => {
 
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Link
-            to="/links"
-            className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
-          >
 
-            <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img
-                src="/thumbnail/links.png"
-                alt="Links"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-bold text-slate-800 mb-2">
-                Links
-              </h3>
-              <p className="text-sm text-slate-600">
-                SNS等リンク集
-              </p>
-            </div>
-          </Link>
           <Link
             to="/equipments"
             className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
           >
-
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
               <img
                 src="/thumbnail/equipments.webp"
@@ -169,6 +148,27 @@ const Home = () => {
               </p>
             </div>
           </Link>
+          <Link
+            to="/links"
+            className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
+          >
+            <div className="w-full h-48 bg-slate-200 overflow-hidden">
+              <img
+                src="/thumbnail/links.png"
+                alt="Links"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-slate-800 mb-2">
+                Links
+              </h3>
+              <p className="text-sm text-slate-600">
+                SNS等リンク集
+              </p>
+            </div>
+          </Link>
+          
         </div>
       </section>
 
