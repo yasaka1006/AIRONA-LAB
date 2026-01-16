@@ -70,7 +70,7 @@ const Minigames = () => {
               <div className="bg-slate-100 rounded-full overflow-hidden">
                 <img src="/thumbnail/nihonchizu.png" alt={game.title} className="w-full h-full object-cover" />
               </div>
-              <h3 className="text-lg font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
+              <h3 className="text-md font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
               <p className="text-sm text-slate-600 text-center">{game.description}</p>
             </Link>
           ))}
@@ -84,7 +84,7 @@ const Minigames = () => {
               <div className="bg-slate-100 rounded-full overflow-hidden">
                 <img src="/thumbnail/nihonchizu.png" alt={game.title} className="w-full h-full object-cover" />
               </div>
-              <h3 className="text-lg font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
+              <h3 className="text-md font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
               <p className="text-sm text-slate-600 text-center">{game.description}</p>
             </Link>
           ))}

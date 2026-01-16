@@ -343,7 +343,7 @@ const Equipments = () => {
           使用機材リスト
         </h1>
 
-        <div className="text-xl bg-slate-100 rounded-lg p-6 px-15 w-fit mx-auto text-slate-600 font-mono lg:font-bold space-y-4 flex flex-col">
+        <div className="text-xl bg-slate-100 rounded-lg p-6 px-10 md:px-15 w-fit mx-auto text-slate-600 font-mono lg:font-bold space-y-4 flex flex-col">
           <h2 className="text-xl md:text-2xl font-bold text-center text-slate-800 mb-5">
             目次
           </h2>
@@ -369,6 +369,9 @@ const Equipments = () => {
             <h3><span className="underline">カメラ周辺機器</span></h3>
           </a>
         </div>
+
+        <p className="text-center text-slate-500 text-xs md:text-sm mt-8 text-right">※本ページはAmazonアソシエイトを含む広告が含まれます</p>
+
 
       </section>
 

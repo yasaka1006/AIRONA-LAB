@@ -19,6 +19,7 @@ import Tokyo from './components/minigames/Tokyo';
 import Equipments from './components/Equipments';
 import Links2 from './components/Links';
 import ViewTop from './components/assets/ViewTop';
+import PrivacyPolicy from './components/minigames/PrivacyPolicy';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/shizuoka" element={<Shizuoka />} />
                 <Route path="/ibaraki" element={<Ibaraki />} />
                 <Route path="/tokyo" element={<Tokyo />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               </Routes>
             </div>
           </div>

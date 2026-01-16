@@ -104,8 +104,8 @@ const Links = () => {
 
           {/* 動画セクション */}
           {videoData.map(video => (
-            <div className="w-full max-w-3xl mx-auto my-10 px-2">
-              <h2 className="text-md font-bold mb-2 text-slate-700">
+            <div className="w-full max-w-3xl mx-auto my-12 px-2 md:px-10">
+              <h2 className="text-md font-bold mb-3 text-slate-700">
                 {video.title}
               </h2>
               <div className="relative w-full aspect-video">
@@ -121,6 +121,7 @@ const Links = () => {
               </div>
             </div>
           ))}
+
 
         </section>
       </main>
