@@ -20,6 +20,7 @@ import Equipments from './components/Equipments';
 import Links2 from './components/Links';
 import ViewTop from './components/assets/ViewTop';
 import PrivacyPolicy from './components/minigames/PrivacyPolicy';
+import Element from './components/minigames/element';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -43,10 +44,12 @@ function App() {
             <div className="w-full max-w-6xl mx-auto md:main-content-centered px-2">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/links" element={<Links2 />} />
                 <Route path="/minigames" element={<Minigames />} />
-                <Route path="/mcp" element={<Mcp />} />
                 <Route path="/equipments" element={<Equipments />} />
+                <Route path="/mcp" element={<Mcp />} />
+                <Route path="/tokyo" element={<Tokyo />} />
                 <Route path="/saitama" element={<Saitama />} />
                 <Route path="/chiba" element={<Chiba />} />
                 <Route path="/tochigi" element={<Tochigi />} />
@@ -55,8 +58,7 @@ function App() {
                 <Route path="/gunma" element={<Gunma />} />
                 <Route path="/shizuoka" element={<Shizuoka />} />
                 <Route path="/ibaraki" element={<Ibaraki />} />
-                <Route path="/tokyo" element={<Tokyo />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/element" element={<Element />} />
               </Routes>
             </div>
           </div>

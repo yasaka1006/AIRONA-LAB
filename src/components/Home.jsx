@@ -52,47 +52,26 @@ const Home = () => {
 
           {/* 埼玉ゲーム */}
           <Link
-            to="/saitama"
+            to="/element"
             className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
           >
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
               <img
-                src="/thumbnail/saitama.webp"
-                alt="埼玉県の市区町村全部言えるかな？"
+                src="/thumbnail/element.png"
+                alt="周期表の元素全部言えるかな？"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="p-4">
               <h3 className="text-lg font-bold text-slate-800 mb-2">
-                埼玉県の市区町村全部言えるかな？
+                周期表の元素全部言えるかな？
               </h3>
               <p className="text-sm text-slate-600">
-                埼玉県の全63市区町村を全て言えるか挑戦しよう！
+                周期表の全118元素を全て言えるか挑戦しよう！
               </p>
             </div>
           </Link>
 
-          {/* 千葉ゲーム */}
-          <Link
-            to="/chiba"
-            className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
-          >
-            <div className="w-full h-48 bg-slate-200 overflow-hidden">
-              <img
-                src="/thumbnail/chiba.webp"
-                alt="千葉県の市区町村全部言えるかな？"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-bold text-slate-800 mb-2">
-                千葉県の市区町村全部言えるかな？
-              </h3>
-              <p className="text-sm text-slate-600">
-                千葉県の全54市区町村を全て言えるか挑戦しよう！
-              </p>
-            </div>
-          </Link>
         </div>
         <div className="flex justify-end mt-4">
           <a href="/minigames" className="text-md text-blue-600 hover:text-blue-800">すべてみる</a>
@@ -168,7 +147,7 @@ const Home = () => {
               </p>
             </div>
           </Link>
-          
+
         </div>
       </section>
 

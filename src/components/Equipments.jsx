@@ -3,45 +3,45 @@ const Equipments = () => {
   const guitars = [
     {
       name: 'Fender American Performer Stratocaster HSS',
-      image: '/equipments/guitarStrat.png',
+      image: '/equipments/guitarStrat.webp',
       description: 'Color: Satin Surf Green<br />2022年に購入<br />一番出演回数が多いメインギターです<br />とにかく見た目が好きで買いました<br />HSSピックアップと、艶無し塗装が気に入っています<br />今はあまり流通してないみたい<br />使用ジャンル: 全部',
       link: 'https://amzn.to/4puvWLP',
       link2: 'https://amzn.to/4sAbqfp'
     },
     {
       name: 'Fujigen NTL10MAH',
-      image: '/equipments/guitarTele.png',
+      image: '/equipments/guitarTele.webp',
       description: 'Neo Classic SERIES<br />Color: Off White Blonde<br />2017年に購入<br />自分の貯金で初めて買ったテレキャスです<br />現在は型番が変わっています<br />使用ジャンル: J-POP, ボカロなど',
       link: 'https://fujigen.shop/products/list.php?category_id=42',
       link2: 'https://amzn.to/49NpRFw'
     },
     {
       name: 'Gibson Lespaul Standard',
-      image: '/equipments/guitarGibson.png',
+      image: '/equipments/guitarGibson.webp',
       description: 'Color: Unburst(淡色)<br />2023年に購入<br />ギタリストの王道<br />この絶妙な色味がいいんですよね<br />使用ジャンル: ロック, パンクなど',
       link: 'https://store.ishibashi.co.jp/search?q=Gibson+Les+Paul+Standard+Unburst',
     },
     {
       name: 'Ibanez RG450DXB',
-      image: '/equipments/guitarIbanez.png',
+      image: '/equipments/guitarIbanez.webp',
       description: 'Color: White<br />2013年に購入<br />初心者の頃から使ってます<br />このギターのパワーコードの音がめちゃくちゃ好き<br />使用ジャンル: ロック, ゲーム曲など',
       link: 'https://store.ishibashi.co.jp/search?q=RG450DXB-WH+',
     },
     {
       name: 'Epiphone Lespaul Standard',
-      image: '/equipments/guitarEpi.png',
+      image: '/equipments/guitarEpi.webp',
       description: 'Color: Trans Blue<br />2014年に購入<br />某弾いてみた投稿者に憧れてBUMP専用機として使用しています<br />ピックアップはSEYMOUR DUNCAN製に載せ替えています<br />使用ジャンル: BUMP',
       link: 'https://www.google.com/search?q=Epiphone+Lespaul+Standard+Trans+Blue&sca_esv=75d7ba9b8a0ac0c1&udm=28&biw=1920&bih=911&sxsrf=AE3TifNLiTC1qnHwG61rGLD1zx2TER0ZQA%3A1767574573309&ei=LQxbaYzUEtSi1e8P_rqp4Ac&ved=0ahUKEwjMnrm0mPORAxVUUfUHHX5dCnwQ4dUDCBE&oq=Epiphone+Lespaul+Standard+Trans+Blue&gs_lp=Ehlnd3Mtd2l6LW1vZGVsZXNzLXNob3BwaW5nIiRFcGlwaG9uZSBMZXNwYXVsIFN0YW5kYXJkIFRyYW5zIEJsdWUyBxAjGLQEGCdI9whQywFYywFwAXgBkAEAmAFYoAFYqgEBMbgBDMgBAPgBAZgCAqACXcICChAAGLADGNYEGEeYAwCIBgGQBgSSBwEyoAecArIHATG4B1vCBwMwLjLIBwOACAA&sclient=gws-wiz-modeless-shopping',
     },
     {
       name: 'Ibanez PF12MHCE',
-      image: '/equipments/guitarAco.png',
+      image: '/equipments/guitarAco.webp',
       description: 'Color: Open Pore Natural<br />2020年に購入<br />やすい。色おしゃれ。<br />使用ジャンル: J-POPなど',
       link: 'https://store.ishibashi.co.jp/ec/product/4515276967439',
     },
     {
       name: 'Bacchus WL4-AGED/RSM',
-      image: '/equipments/bass.png',
+      image: '/equipments/bass.webp',
       description: 'Color: 3TS-AGED<br />2024年に購入<br />ベースよくわからないのでとりあえずBacchus製をチョイス<br />動画でたまに出演します<br />使用ジャンル: J-POPなど',
       link: 'https://www.deviser.co.jp/products/wl4-aged-rsm',
     },
@@ -51,7 +51,7 @@ const Equipments = () => {
     {
       category: 'アンプシミュレーター',
       name: 'Positive Grid BIAS FX 2',
-      image: '/equipments/biasfx2.png',
+      image: '/equipments/biasfx2.webp',
       description: 'ギタートーンはほぼ、このソフトで作っています<br />後継機(BIAS X)が出たみたいで、もう買えないみたいです。。。<br />いずれ後継機に移行したい',
       link: 'https://jp.positivegrid.com/pages/shop',
       page: '(公式サイト)'
@@ -59,7 +59,7 @@ const Equipments = () => {
     {
       category: 'ミニアンプ',
       name: 'Positive Grid Spark GO',
-      image: '/equipments/sparkgo.png',
+      image: '/equipments/sparkgo.webp',
       description: 'サブアンプ<br />手軽に使えて便利です',
       link: 'https://amzn.to/4bitSTw',
       page: '(Amazon)'
@@ -67,7 +67,7 @@ const Equipments = () => {
     {
       category: 'チューナーペダル',
       name: 'tc electronic POLYTUNE 3 NOIR',
-      image: '/equipments/tuner.png',
+      image: '/equipments/tuner.webp',
       description: '必須級<br />もうクリップチューナーには戻れません<br />精度がめちゃいいです',
       link: 'https://amzn.to/4q8jjqR',
       page: '(Amazon)'
@@ -75,7 +75,7 @@ const Equipments = () => {
     {
       category: 'ワウペダル',
       name: 'Xotic Wah XW-1',
-      image: '/equipments/xw1.png',
+      image: '/equipments/xw1.webp',
       description: '使ってる有名人が多いので買いました',
       link: 'https://amzn.to/3Z12TV2',
       page: '(Amazon)'
@@ -83,7 +83,7 @@ const Equipments = () => {
     {
       category: 'MIDIペダル',
       name: 'M-WAVE MIDIフットコントローラー',
-      image: '/equipments/midi.png',
+      image: '/equipments/midi.webp',
       description: 'DAWの操作等に使っています<br />初期設定にクセあり',
       link: 'https://amzn.to/49o04m4',
       page: '(Amazon)'
@@ -91,7 +91,7 @@ const Equipments = () => {
     {
       category: 'コンプレッサー',
       name: '<MXR M291 Dyna Comp Mini ',
-      image: '/equipments/dynacomp.png',
+      image: '/equipments/dynacomp.webp',
       description: 'BIAS FX2でよく使ってたので買いました<br />やはり実機は全然違うです',
       link: 'https://amzn.to/496BVRX',
       page: '(Amazon)'
@@ -99,7 +99,7 @@ const Equipments = () => {
     {
       category: 'オーバードライブ',
       name: 'BOSS BD-2 Blues Driver',
-      image: '/equipments/BD2.png',
+      image: '/equipments/BD2.webp',
       description: '王道中の王道です',
       link: 'https://amzn.to/49FUmgw',
       page: '(Amazon)'
@@ -107,7 +107,7 @@ const Equipments = () => {
     {
       category: 'ディストーション',
       name: 'Limetone Audio JACKAL',
-      image: '/equipments/jackal.png',
+      image: '/equipments/jackal.webp',
       description: '島村楽器限定カラーのオレンジ版を入手しました<br />白いバージョンもほしい',
       link: 'https://amzn.to/3LuLGQQ',
       page: '(Amazon)'
@@ -115,7 +115,7 @@ const Equipments = () => {
     {
       category: 'パワーサプライ',
       name: 'VITAL AUDIO POWER CARRIER VA-08 Mk-II',
-      image: '/equipments/supply.png',
+      image: '/equipments/supply.webp',
       description: '定番です',
       link: 'https://amzn.to/4solbxd',
       page: '(Amazon)'
@@ -126,7 +126,7 @@ const Equipments = () => {
     {
       category: 'ピック',
       name: 'Jim Dunrop JazzⅢ ULTEX',
-      image: '/equipments/pick.png',
+      image: '/equipments/pick.webp',
       description: 'このタイプならこいつで間違いないです！',
       link: 'https://amzn.to/45Eji5B',
       page: '(Amazon)'
@@ -134,7 +134,7 @@ const Equipments = () => {
     {
       category: '弦',
       name: 'Elixor エリクサー OPTIWEB Light .010-.046',
-      image: '/equipments/string.png',
+      image: '/equipments/string.webp',
       description: 'ズボラなのでこれで1年は持たせます(本当は3ヶ月に1回変えたい)',
       link: 'https://amzn.to/4aF9AU0',
       page: '(Amazon)'
@@ -142,15 +142,23 @@ const Equipments = () => {
     {
       category: 'シールドケーブル',
       name: 'SOMMER CABLE The Spirit XXL Instrument',
-      image: '/equipments/cable.png',
+      image: '/equipments/cable.webp',
       description: 'ドイツメーカーで径と音が太いです',
       link: 'https://www.soundhouse.co.jp/products/detail/item/291553/',
       page: '(サウンドハウス)'
     },
     {
+      category: 'ストラップ',
+      name: 'Ibanez(アイバニーズ) DCS50-BK',
+      image: '/equipments/strap.webp',
+      description: '素材いいし長さ調整しやすいのでオススメ',
+      link: 'https://amzn.to/49IghCt',
+      page: '(Amazon)'
+    },
+    {
       category: 'カポタスト',
       name: 'SHUBB エレキ/アコギ兼用 C-3 Nickel',
-      image: '/equipments/capo.png',
+      image: '/equipments/capo.webp',
       description: 'シンプルでかっこいいし使いやすい！',
       link: 'https://amzn.to/49CI9ZT',
       page: '(Amazon)'
@@ -158,7 +166,7 @@ const Equipments = () => {
     {
       category: '弦潤滑剤',
       name: 'MUSIC NOMAD STRING FUEL MN109',
-      image: '/equipments/stringfuel.png',
+      image: '/equipments/stringfuel.webp',
       description: '押し付けて使うタイプの潤滑剤<br />塗りやすいのでおすすめ',
       link: 'https://amzn.to/4qFALml',
       page: '(Amazon)'
@@ -166,7 +174,7 @@ const Equipments = () => {
     {
       category: 'ギタースタンド',
       name: 'Leo Jaymz ギタースタンド 自動ロック式',
-      image: '/equipments/stand.png',
+      image: '/equipments/stand.webp',
       description: '吊るして使うタイプのスタンド<br />自動ロック式なので安心',
       link: 'https://amzn.to/45x0AwD',
       page: '(Amazon)'
@@ -177,7 +185,7 @@ const Equipments = () => {
     {
       category: 'マウス',
       name: 'Razer Cobra Pro',
-      image: '/equipments/mouse.png',
+      image: '/equipments/mouse.webp',
       description: '左に2ボタン、ホイール手前に2ボタンあります<br />このボタン数の無線マウスあんまない',
       link: 'https://amzn.to/4q9C6SC',
       page: '(Amazon)'
@@ -185,15 +193,23 @@ const Equipments = () => {
     {
       category: 'キーボード',
       name: 'ARCHISS Maestro2S JIS配列 静音赤軸 AS-KBM02/SRGBA',
-      image: '/equipments/keyboard.png',
+      image: '/equipments/keyboard.webp',
       description: 'サイズ感が本当にちょうどいい。<br />テンキー付きで、フルサイズに比べてマウスを内側に持てるので姿勢が楽になります。',
       link: 'https://amzn.to/3NsYcRn',
       page: '(Amazon)'
     },
     {
+      category: 'デスクチェア',
+      name: 'CORSAIR T-3 RUSH V2 Charcoal',
+      image: '/equipments/chair.webp',
+      description: 'ギター演奏のために肘置きは外してます。夏でも蒸れないのがいい。',
+      link: 'https://amzn.to/3NRe4NL',
+      page: '(Amazon)'
+    },
+    {
       category: 'メインモニター',
       name: 'Acer VG272Xbmiipx 27型 IPS 240hz',
-      image: '/equipments/monitor.png',
+      image: '/equipments/monitor.webp',
       description: '144hzと240hzで迷いましたが、ブラウザとかでスクロールしたときヌメヌメ感が違いすぎてこっちにしました',
       link: 'https://amzn.to/3LjJXxC',
       page: '(Amazon)'
@@ -201,7 +217,7 @@ const Equipments = () => {
     {
       category: 'モニターライト',
       name: 'Quntis デスクライト ClassicPro',
-      image: '/equipments/lightbar.png',
+      image: '/equipments/lightbar.webp',
       description: '今のデスク3年目にしてようやく買いましたが、バータイプに限らずライトは必須ですね。。。',
       link: 'https://amzn.to/44VHRuE',
       page: '(Amazon)'
@@ -209,7 +225,7 @@ const Equipments = () => {
     {
       category: 'ヘッドフォン',
       name: 'beyerdynamic DT 700 PRO X',
-      image: '/equipments/headphone.png',
+      image: '/equipments/headphone.webp',
       description: '秋葉原のeイヤホンで試聴して買いました',
       link: 'https://amzn.to/49DKJil',
       page: '(Amazon)'
@@ -217,7 +233,7 @@ const Equipments = () => {
     {
       category: 'モニタースピーカー',
       name: 'Edifier R1280DB',
-      image: '/equipments/speaker.png',
+      image: '/equipments/speaker.webp',
       description: 'カーテンレールにぶら下げてます。<br />ぶら下げて使うのはよくないのでやめましょう',
       link: 'https://amzn.to/3LvbcFB',
       page: '(Amazon)'
@@ -225,7 +241,7 @@ const Equipments = () => {
     {
       category: 'マイク',
       name: 'Sennheiser e935',
-      image: '/equipments/mic.png',
+      image: '/equipments/mic.webp',
       description: 'あんまないけど歌撮るとき用',
       link: 'https://amzn.to/3YqrEtL',
       page: '(Amazon)'
@@ -233,7 +249,7 @@ const Equipments = () => {
     {
       category: 'オーディオインターフェイス',
       name: 'Focusrite Scarlett Solo',
-      image: '/equipments/audiointerface.png',
+      image: '/equipments/audiointerface.webp',
       description: 'これの2世代目を使ってます<br />だいぶ価格が高騰してるので、別のを選んでもいいかも',
       link: 'https://amzn.to/49CNvEt',
       page: '(Amazon)'
@@ -241,7 +257,7 @@ const Equipments = () => {
     {
       category: 'オーディオミキサー',
       name: 'Behringer XENYX 502',
-      image: '/equipments/mixer.png',
+      image: '/equipments/mixer.webp',
       description: 'PC,Switch,Alexaの音をこれでミックスしてスピーカーに出力しています',
       link: 'https://amzn.to/4suNslS',
       page: '(Amazon)'
@@ -249,7 +265,7 @@ const Equipments = () => {
     {
       category: 'スマートスピーカー',
       name: 'Echo Dot 第3世代 チャコール',
-      image: '/equipments/alexa.png',
+      image: '/equipments/alexa.webp',
       description: 'SwitchBotと連携用に使ってます。<br />最近こいつの耳が悪くなってる',
       link: 'https://amzn.to/49kO9W5',
       page: '(Amazon)'
@@ -257,7 +273,7 @@ const Equipments = () => {
     {
       category: 'スマートリモコン',
       name: 'SwitchBot Hub Mini',
-      image: '/equipments/switchbot.png',
+      image: '/equipments/switchbot.webp',
       description: '必須レベル 生活からリモコンがなくせます<br />外出先からエアコンを制御したり、PC起動ができるようになります',
       link: 'https://amzn.to/49C1dYi',
       page: '(Amazon)'
@@ -268,7 +284,7 @@ const Equipments = () => {
     {
       category: 'DAW',
       name: 'Cakewalk Sonar',
-      image: '/equipments/cakewalk.png',
+      image: '/equipments/cakewalk.webp',
       description: '無料です<br />以前のBandlab版を使ってました<br />セッティングがこれに慣れちゃって他に移行できない',
       link: 'https://www.cakewalk.com/sonar',
       page: '(公式サイト)'
@@ -276,7 +292,7 @@ const Equipments = () => {
     {
       category: '動画編集ソフト',
       name: 'Wondershare Filmora',
-      image: '/equipments/filmora.png',
+      image: '/equipments/filmora.webp',
       description: '買い切り版を使ってます<br />そのへんのフリーソフトよりは使いやすい<br />サブスク入らないとAI機能がほぼ使えないので注意',
       link: 'https://filmora.wondershare.co.jp/ad/brand.html?fm_channel=cpc_google&gad_source=1&gad_campaignid=10254472540&gbraid=0AAAAADd-4IpIDgpdqZCceZ6tNTnq4Uutp&gclid=Cj0KCQiAvOjKBhC9ARIsAFvz5lhM-howNwwbuz0FdUtOmkLVrEMNaEZs8hURusS0y1EvDy5ByvSyv0YaAod0EALw_wcB',
       page: '(公式サイト)'
@@ -284,7 +300,7 @@ const Equipments = () => {
     {
       category: 'TAB譜製作ソフト',
       name: 'TuxGuitar',
-      image: '/equipments/tuxguitar.png',
+      image: '/equipments/tuxguitar.webp',
       description: '無料です<br />初心者のときからUltimateGuitarsでTABダウンロードして使ってました<br />アプデが入って格段に作りやすくなった',
       link: 'https://www.tuxguitar.app/#download',
       page: '(DLサイト)'
@@ -292,7 +308,7 @@ const Equipments = () => {
     {
       category: 'アンプシミュレーター',
       name: 'Positive GridBIAS FX 2',
-      image: '/equipments/biasfx2.png',
+      image: '/equipments/biasfx2.webp',
       description: 'ギタートーンはほぼ、このソフトで作っています<br />後継機(BIAS X)が出たみたいで、もう買えないみたいです。。。<br />いずれ後継機に移行したい',
       link: 'https://jp.positivegrid.com/pages/shop',
       page: '(公式サイト)'
@@ -303,7 +319,7 @@ const Equipments = () => {
     {
       category: 'メインカメラ',
       name: 'SONY ミラーレス一眼カメラ ZV-E10',
-      image: '/equipments/maincamera.png',
+      image: '/equipments/maincamera.webp',
       description: 'Sonyのエントリーモデルです<br />いずれはフルサイズに変えたい',
       link: 'https://amzn.to/4suJWIc',
       page: '(Amazon)'
@@ -311,7 +327,7 @@ const Equipments = () => {
     {
       category: 'レンズ',
       name: 'SIGMA 18-50mm F2.8 DC DN Sony Eマウント APS-C',
-      image: '/equipments/lens.png',
+      image: '/equipments/lens.webp',
       description: '特にこだわりはないけどこれ使ってます',
       link: 'https://amzn.to/49nqbcy',
       page: '(Amazon)'
@@ -319,7 +335,7 @@ const Equipments = () => {
     {
       category: '三脚',
       name: 'K&F Concept 三脚 一眼レフ 4段 160cm 360度回転',
-      image: '/equipments/tripod.png',
+      image: '/equipments/tripod.webp',
       description: '三脚は安いの使うとすぐ壊れるので<br />こういうのがいいです',
       link: 'https://amzn.to/44S0GPl',
       page: '(Amazon)'
@@ -327,7 +343,7 @@ const Equipments = () => {
     {
       category: 'アクションカメラ',
       name: 'Insta360 Ace Pro',
-      image: '/equipments/actioncamera.png',
+      image: '/equipments/actioncamera.webp',
       description: 'これでShortの主観動画を撮ってます<br />帽子マウントが必要です',
       link: ' https://amzn.to/49kO9W5',
       page: '(Amazon)'
