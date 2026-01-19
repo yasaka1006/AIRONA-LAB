@@ -20,7 +20,7 @@ import Equipments from './components/Equipments';
 import Links2 from './components/Links';
 import ViewTop from './components/assets/ViewTop';
 import PrivacyPolicy from './components/minigames/PrivacyPolicy';
-import Element from './components/minigames/element';
+import Element from './components/minigames/Element';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
