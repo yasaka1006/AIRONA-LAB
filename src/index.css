@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --font-mplus1: 'M PLUS 1', sans-serif;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

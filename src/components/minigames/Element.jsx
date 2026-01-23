@@ -400,11 +400,11 @@ const Element = () => {
         {/* 入力欄 */}
 
 
-        <div className="flex justify-center mb-4 gap-1 text-sm lg:text-base h-8 md:h-14">
+        <div className="flex justify-center mb-4 gap-1 lg:text-base h-8 md:h-14">
           <input
             ref={inputRef}
             type="text"
-            className="border-2 border-gray-300 rounded-md px-2 focus:outline-none focus:border-blue-500 lg:w-[30%]"
+            className="border-2 border-gray-300 rounded-md px-2 focus:outline-none focus:border-blue-500 w-3/5 lg:w-1/3"
             placeholder={status === 'started' ? '元素名を入力してEnter' : status === 'surrendered' ? '右のボタンで再挑戦' : '開始を押してね'}
             disabled={status === 'idle' || isSurrendered || isCleared}
             value={input}

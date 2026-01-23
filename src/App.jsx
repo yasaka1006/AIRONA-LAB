@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route, Links } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Header from './components/assets/Header';
 import Sidebar from './components/assets/Sidebar';
@@ -36,9 +36,9 @@ function App() {
   return (
     <>
       <ViewTop />
-      <div className="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
+      <div className="bg-slate-50 min-h-screen text-slate-800 flex flex-col font-mplus1">
         <Header onMenuClick={toggleSidebar} />
-        <div className="flex pt-16 flex-1">
+        <div className="flex pt-12 flex-1">
           <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
           <div className="w-full flex-1 xl:ml-48 xl:mr-48">
             <div className="w-full max-w-6xl mx-auto md:main-content-centered px-2">

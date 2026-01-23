@@ -468,7 +468,7 @@ const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
                         {({ zoomIn, zoomOut, resetTransform }) => (
                             <>
                                 {/* 1. ボタンコンテナ: relativeな親要素に対してabsoluteで配置 */}
-                                <div className="absolute top-3 right-3 md:top-5 md:right-5 z-49 flex flex-col gap-1 transition-opacity duration-300">
+                                <div className="absolute top-3 right-3 md:top-5 md:right-5 z-48 flex flex-col gap-1 transition-opacity duration-300">
                                     {/* 各ボタン：モダンなデザイン */}
                                     <button
                                         onClick={() => zoomIn()}

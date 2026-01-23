@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -7,18 +6,18 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* オーバーレイ（モバイル・タブレット用） */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-[50] xl:hidden"
+          className="fixed inset-0 bg-black/50 z-[49] xl:hidden"
           onClick={onClose}
         />
       )}
 
       {/* サイドバー */}
       <div className={`
-        fixed top-16 left-0 h-[calc(100vh-4rem)] bg-gray-200 text-slate-800 py-4 z-50
+        fixed top-12 left-0 h-[calc(100vh-3rem)] bg-gray-200 text-slate-800 py-4 z-50
         transform transition-transform duration-300 ease-in-out
         w-48 overflow-y-auto
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        xl:translate-x-0 xl:fixed xl:top-14 xl:h-[calc(100vh-3.5rem)] xl:z-40
+        xl:translate-x-0 xl:fixed xl:top-12 xl:h-[calc(100vh-3.5rem)] xl:z-40
         xl:block
       `}
         style={{ marginTop: 0 }}

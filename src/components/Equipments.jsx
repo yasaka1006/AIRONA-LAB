@@ -90,7 +90,7 @@ const Equipments = () => {
     },
     {
       category: 'コンプレッサー',
-      name: '<MXR M291 Dyna Comp Mini ',
+      name: 'MXR M291 Dyna Comp Mini ',
       image: '/equipments/dynacomp.webp',
       description: 'BIAS FX2でよく使ってたので買いました<br />やはり実機は全然違うです',
       link: 'https://amzn.to/496BVRX',
@@ -359,7 +359,7 @@ const Equipments = () => {
           使用機材リスト
         </h1>
 
-        <div className="text-xl bg-slate-100 rounded-lg p-6 px-10 md:px-15 w-fit mx-auto text-slate-600 font-mono lg:font-bold space-y-4 flex flex-col">
+        <div className="text-xl bg-slate-100 rounded-lg p-6 px-10 md:px-15 w-fit mx-auto text-cyan-700 lg:font-bold space-y-4 flex flex-col">
           <h2 className="text-xl md:text-2xl font-bold text-center text-slate-800 mb-5">
             目次
           </h2>
