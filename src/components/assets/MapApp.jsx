@@ -515,11 +515,11 @@ const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
                 {/* 操作・統計エリア */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-t pt-5">
                     {/* 入力欄 */}
-                    <div className="flex gap-2 w-full md:max-w-md">
+                    <div className="flex gap-2 w-full max-w-full md:max-w-md px-2 md:px-0">
                         <input
                             type="text"
                             placeholder={isSurrendered || isCleared ? "再挑戦は右のボタンを押してね" : isGameStarted ? "入力してEnterを押してね" : "開始を押してね"}
-                            className="border-2 border-slate-300 rounded-lg px-4 py-2 grow focus:outline-none focus:border-blue-500"
+                            className="border-2 border-slate-300 rounded-lg px-4 py-2 grow focus:outline-none focus:border-blue-500 min-w-0"
                             disabled={!isGameStarted || isSurrendered}
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}

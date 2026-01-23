@@ -9,7 +9,7 @@ const Header = ({ onMenuClick }) => {
   }, []);
 
   return (
-    <header className="bg-cyan-900 text-slate-100 px-2 shadow-xs fixed top-0 left-0 right-0 z-50 w-full h-12 border-b-5 border-orange-300">
+    <header className="bg-cyan-950 text-slate-100 px-2 shadow-xs fixed top-0 left-0 right-0 z-50 w-full h-12 border-b-5 border-orange-300">
       <div className="flex items-center justify-between xl:justify-start h-full max-w-7xl mx-auto xl:max-w-none lg:px-2">
         {/* ハンバーガーメニューボタン（モバイル・タブレット用） */}
         <button
