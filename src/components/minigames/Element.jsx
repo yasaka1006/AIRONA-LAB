@@ -298,6 +298,27 @@ const Element = () => {
     }
   }, [elements, currentTime]);
 
+  // statusがidle以外のときにbeforeunloadイベントを設定
+  useEffect(() => {
+    if (status === 'idle') {
+      return; // idleのときはイベントを設定しない
+    }
+
+    const handleBeforeUnload = (e) => {
+      // モダンブラウザでは、preventDefault()とreturnValueの設定が必要
+      e.preventDefault();
+      // Chromeでは空文字列、他のブラウザでは任意の文字列
+      e.returnValue = '';
+      return '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [status]);
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSubmit();

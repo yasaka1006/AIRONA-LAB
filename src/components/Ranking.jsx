@@ -7,7 +7,7 @@ const Ranking = () => {
   
   const [rankings, setRankings] = useState([]);
   const [allRankings, setAllRankings] = useState([]);
-  const [selectedGameId, setSelectedGameId] = useState(urlGameId || 'all');
+  const [selectedGameId, setSelectedGameId] = useState(urlGameId || 'element');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -46,11 +46,7 @@ const Ranking = () => {
 
   useEffect(() => {
     // 選択したgameidでフィルター
-    if (selectedGameId === 'all') {
-      setRankings(allRankings);
-    } else {
-      setRankings(allRankings.filter(r => r.gameid === selectedGameId));
-    }
+    setRankings(allRankings.filter(r => r.gameid === selectedGameId));
   }, [allRankings, selectedGameId]);
 
   const fetchRankings = async () => {
@@ -191,7 +187,7 @@ const Ranking = () => {
                       <td className="px-4 py-3 font-semibold truncate" title={ranking.user}>
                         {ranking.user}
                       </td>
-                      <td className="px-4 py-3 font-mono">{formatTime(ranking.cleartime)}</td>
+                      <td className="px-4 py-3 font-bold text-cyan-500">{formatTime(ranking.cleartime)}</td>
                       <td className="px-4 py-3 text-gray-600 text-sm">{formatDate(ranking.data)}</td>
                     </tr>
                   ))}

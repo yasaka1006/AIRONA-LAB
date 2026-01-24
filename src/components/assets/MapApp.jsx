@@ -50,6 +50,28 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
         };
     }, [isTimerRunning]);
 
+
+    // isGameStartedがtrueのときにbeforeunloadイベントを設定
+    useEffect(() => {
+        if (!isGameStarted) {
+            return; // ゲームが開始されていないときはイベントを設定しない
+        }
+
+        const handleBeforeUnload = (e) => {
+            // モダンブラウザでは、preventDefault()とreturnValueの設定が必要
+            e.preventDefault();
+            // Chromeでは空文字列、他のブラウザでは任意の文字列
+            e.returnValue = '';
+            return '';
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [isGameStarted]);
+
     // 全問正解チェック
     useEffect(() => {
         if (isGameStarted && correctAnswers.length === allDistricts.length) {
