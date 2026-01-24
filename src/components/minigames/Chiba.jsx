@@ -112,42 +112,36 @@ const Chiba = () => {
                 id="path5" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                 fontWeight="900"
                 fontSize="18"
                 transform="translate(25 245)"
                 id="text59">東京都</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                 fontWeight="900"
                 fontSize="18"
                 transform="translate(81 245)"
                 id="text60" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                 fontWeight="900"
                 fontSize="18"
                 transform="translate(26 115)"
                 id="text61">埼玉県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                 fontWeight="900"
                 fontSize="18"
                 transform="translate(82 115)"
                 id="text62" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                 fontWeight="900"
                 fontSize="18"
                 transform="translate(316 73)"
                 id="text63">茨城県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                 fontWeight="900"
                 fontSize="18"
                 transform="translate(372 73)"
@@ -165,7 +159,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path15" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(267 308)"
@@ -182,7 +175,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path16" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(236 380)"
@@ -197,7 +189,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path28" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(200,507)"
@@ -215,7 +206,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path29" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(129 534)"
@@ -230,7 +220,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path33" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(219,582)"
@@ -246,7 +235,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path30" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(100,579)"
@@ -262,7 +250,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path31" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(134,615)"
@@ -278,7 +265,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path32" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(99,667)"
@@ -294,7 +280,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path34" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(319,563)"
@@ -310,7 +295,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path37" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(350,496)"
@@ -326,7 +310,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path17" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="14"
                     transform="translate(190,406)"
@@ -343,7 +326,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path27" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="16"
                     transform="translate(128,432)"
@@ -359,7 +341,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path58" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="14"
                     transform="translate(523,229)"
@@ -375,7 +356,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path59" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="14"
                     transform="translate(591,233)"
@@ -393,7 +373,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path35" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(282 517)"
@@ -410,7 +389,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path50" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(459 167)"
@@ -427,7 +405,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path22" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(359 183)"
@@ -444,7 +421,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path55" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(387 290)"
@@ -461,7 +437,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path21" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(271 191)"
@@ -478,7 +453,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path51" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(534 179)"
@@ -495,7 +469,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path57" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="14"
                         transform="translate(465 251)"
@@ -512,7 +485,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path53" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(422 214)"
@@ -529,7 +501,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path56" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(425 271)"
@@ -546,7 +517,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path54" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(400 238)"
@@ -563,7 +533,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path48" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(332 280)"
@@ -580,7 +549,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path52" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(357 242)"
@@ -597,7 +565,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path26" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(284 237)"
@@ -614,7 +581,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path25" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(276 265)"
@@ -631,7 +597,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path23" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(233 226)"
@@ -648,7 +613,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path19" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(210 146)"
@@ -665,7 +629,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path8" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(185 164)"
@@ -680,7 +643,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path6" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="12"
                     transform="translate(120,97)"
@@ -699,7 +661,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path7" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(122 145)"
@@ -716,7 +677,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path9" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(137 192)"
@@ -733,7 +693,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path10" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(132 234)"
@@ -750,7 +709,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path24" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(322 226)"
@@ -765,7 +723,6 @@ const Chiba = () => {
                     fillRule="evenodd"
                     id="path11" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                     fontWeight="700"
                     fontSize="12"
                     transform="translate(129,284)"
@@ -783,7 +740,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path12" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(186 235)"
@@ -800,7 +756,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path18" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(214 182)"
@@ -817,7 +772,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path13" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(175 205)"
@@ -834,7 +788,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path14" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(198 263)"
@@ -851,7 +804,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path20" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(311 155)"
@@ -868,7 +820,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path49" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(391 139)"
@@ -885,7 +836,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path47" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(373 323)"
@@ -902,7 +852,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path46" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(418 346)"
@@ -919,7 +868,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path43" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(350 355)"
@@ -936,7 +884,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path44" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(384 393)"
@@ -953,7 +900,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path45" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(374 417)"
@@ -970,7 +916,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path38" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(382 445)"
@@ -987,7 +932,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path42" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="16"
                         transform="translate(331 389)"
@@ -1004,7 +948,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path40" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(307 436)"
@@ -1021,7 +964,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path41" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(288 395)"
@@ -1038,7 +980,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path39" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(339 454)"
@@ -1055,7 +996,6 @@ const Chiba = () => {
                         fillRule="evenodd"
                         id="path36" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         fontWeight="700"
                         fontSize="12"
                         transform="translate(363 542)"

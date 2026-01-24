@@ -146,50 +146,43 @@ const Saitama = () => {
                 id="path71" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(137 183)"
                 id="text71">群馬県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(1027 62)"
                 id="text73">栃木県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(1169 218)"
                 id="text75">茨城県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(1217 452)"
                 id="text77">千葉県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(798 713)"
                 id="text79">東京都</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(91 685)"
                 id="text81">山梨県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="14"
                 transform="translate(-1 454)"
                 id="text83">長野県</text>
@@ -206,8 +199,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path9" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(219 465)"
                         id="text85">秩父市</text>
@@ -223,8 +215,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path8" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(208 365)"
                         id="text86">小鹿野町</text>
@@ -240,8 +231,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path11" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(382 297)"
                         id="text87">皆野町</text>
@@ -257,8 +247,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path12" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(413 256)"
                         id="text88">長瀞町</text>
@@ -274,8 +263,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path14" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(433 98)"
                         id="text90">上里町</text>
@@ -291,8 +279,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path13" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(429 168)"
                         id="text91">本庄市</text>
@@ -308,8 +295,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path16" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16px"
                         id="text92"
                         x="464"
@@ -326,8 +312,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path15" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(569 180)"
                         id="text93">深谷市</text>
@@ -343,8 +328,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path17" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(512 262)"
                         id="text94">寄居町</text>
@@ -360,8 +344,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path19" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(566 319)"
                         id="text95">小川町</text>
@@ -377,8 +360,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path18" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(481 329)"
                         id="text96">東秩父村</text>
@@ -394,8 +376,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path23" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(533 390)"
                         id="text97">ときがわ町</text>
@@ -411,8 +392,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path20" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(433 424)"
                         id="text98">横瀬町</text>
@@ -428,8 +408,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path25" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(644 406)"
                         id="text100">鳩山町</text>
@@ -445,8 +424,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path33" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(683 205)"
                         id="text103">熊谷市</text>
@@ -462,8 +440,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path35" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16px"
                         id="text104"
                         x="693"
@@ -480,8 +457,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path27" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(721 423)"
                         id="text105">坂戸市</text>
@@ -497,8 +473,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path26" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16px"
                         id="text99"
                         x="608"
@@ -515,8 +490,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path48" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(796 492)"
                         id="text107">川越市</text>
@@ -532,8 +506,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path58" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="11"
                         transform="translate(877 559)"
                         id="text109">富士見市</text>
@@ -549,8 +522,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path10" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(361 186)"
                         id="text89">神川町</text>
@@ -566,8 +538,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path34" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16px"
                         id="text102"
                         x="668"
@@ -583,8 +554,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path66" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12"
                         transform="translate(922 610)"
                         id="text110">朝霞市</text>
@@ -600,8 +570,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path62" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(886 637)"
                         id="text112">新座市</text>
@@ -617,8 +586,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path67" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12"
                         transform="translate(949 632)"
                         id="text113">和光市</text>
@@ -634,8 +602,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path32" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(625 328)"
                         id="text101">嵐山町</text>
@@ -651,8 +618,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path31" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(776 621)"
                         id="text114">所沢市</text>
@@ -668,8 +634,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path22" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(682 599)"
                         id="text115">入間市</text>
@@ -685,8 +650,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path30" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(736 556)"
                         id="text116">狭山市</text>
@@ -702,8 +666,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path29" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(695 463)"
                         id="text106">鶴ヶ島市</text>
@@ -719,8 +682,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path28" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(652 505)"
                         id="text117">日高市</text>
@@ -736,8 +698,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path21" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(526 515)"
                         id="text118">飯能市</text>
@@ -753,8 +714,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path55" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(958 501)"
                         id="text119">さいたま市</text>
@@ -770,8 +730,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path60" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(1122 508)"
                         id="text120">越谷市</text>
@@ -787,8 +746,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path61" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(1204 518)"
                         id="text121">吉川市</text>
@@ -804,8 +762,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path56" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12"
                         transform="translate(830 539)"
                         id="text108">ふじみ野市</text>
@@ -821,8 +778,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path65" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(980 602)"
                         id="text122">戸田市</text>
@@ -838,8 +794,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path63" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12"
                         transform="translate(1030 593)"
                         id="text123">蕨市</text>
@@ -855,8 +810,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path64" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(1065 574)"
                         id="text124">川口市</text>
@@ -872,8 +826,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path68" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14px"
                         id="text125"
                         x="1136"
@@ -890,8 +843,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path70" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(1206 575)"
                         id="text126">三郷市</text>
@@ -907,8 +859,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path59" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12"
                         transform="translate(919 574)"
                         id="text111">志木市</text>
@@ -924,8 +875,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path54" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(1163 463)"
                         id="text127">松伏町</text>
@@ -941,8 +891,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path53" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(1096 414)"
                         id="text128">春日部市</text>
@@ -958,8 +907,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path42" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(947 234)"
                         id="text129">加須市</text>
@@ -975,8 +923,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path43" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(977 305)"
                         id="text130">久喜市</text>
@@ -992,8 +939,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path44" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(1073 308)"
                         id="text131">幸手市</text>
@@ -1009,8 +955,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path52" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(906 417)"
                         id="text132">上尾市</text>
@@ -1026,8 +971,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path39" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(827 297)"
                         id="text133">鴻巣市</text>
@@ -1043,8 +987,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path37" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(787 218)"
                         id="text134">行田市</text>
@@ -1060,8 +1003,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path38" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(873 189)"
                         id="text135">羽生市</text>
@@ -1077,8 +1019,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path51" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12px"
                         id="text136"
                         x="945"
@@ -1095,8 +1036,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path36" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(802 407)"
                         id="text137">川島町</text>
@@ -1112,8 +1052,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path40" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(775 336)"
                         id="text138">吉見町</text>
@@ -1129,8 +1068,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path49" />
                     <text
-                        fontFamily="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14px"
                         id="text139"
                         x="875"
@@ -1147,8 +1085,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path50" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(997 398)"
                         id="text140">蓮田市</text>
@@ -1164,8 +1101,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path45" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(1000 360)"
                         id="text141">白岡市</text>
@@ -1181,8 +1117,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path41" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(857 357)"
                         id="text142">北本市</text>
@@ -1198,8 +1133,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path47" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(1093 348)"
                         id="text143">杉戸町</text>
@@ -1215,8 +1149,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path46" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(1061 371)"
                         id="text144">宮代町</text>
@@ -1232,8 +1165,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path24" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(576 430)"
                         id="text145">越生町</text>
@@ -1249,8 +1181,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path57" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="12"
                         transform="translate(846 583)"
                         id="text146">三芳町</text>
@@ -1266,8 +1197,7 @@ const Saitama = () => {
                         fillRule="evenodd"
                         id="path69" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         id="text148"
                         x="1177"

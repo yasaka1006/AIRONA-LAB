@@ -86,22 +86,19 @@ const Kanagawa = () => {
                 id="path5" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(70 514)"
                 id="text38">静岡県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(102 126)"
                 id="text40">山梨県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(647 47)"
                 id="text42">東京都</text>
@@ -118,8 +115,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path9" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(836 304)"
                         id="text44">横浜市</text>
@@ -135,8 +131,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path10" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(911 141)"
                         id="text45">川崎市</text>
@@ -152,8 +147,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path6" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(476 141)"
                         id="text46">相模原市</text>
@@ -169,8 +163,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path23" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(571 283)"
                         id="text47">厚木市</text>
@@ -186,8 +179,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path7" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(455 253)"
                         id="text48">清川村</text>
@@ -203,8 +195,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path15" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(934 567)"
                         id="text49">横須賀市</text>
@@ -220,8 +211,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path17" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(912 659)"
                         id="text50">三浦市</text>
@@ -237,8 +227,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path13" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(803 457)"
                         id="text51">鎌倉市</text>
@@ -254,8 +243,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path12" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(720 426)"
                         id="text52">藤沢市</text>
@@ -271,8 +259,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path21" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(643 448)"
                         id="text53">茅ヶ崎市</text>
@@ -288,8 +275,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path25" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(553 432)"
                         id="text54">平塚市</text>
@@ -305,8 +291,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path24" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(519 354)"
                         id="text55">伊勢原市</text>
@@ -322,8 +307,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path29" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(420 366)"
                         id="text56">秦野市</text>
@@ -339,8 +323,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path37" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(245 335)"
                         id="text57">山北町</text>
@@ -356,8 +339,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path35" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(260 475)"
                         id="text58">南足柄市</text>
@@ -373,8 +355,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path31" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(354 538)"
                         id="text59">小田原市</text>
@@ -390,8 +371,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path34" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(226 583)"
                         id="text60">箱根町</text>
@@ -407,8 +387,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path33" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(274 661)"
                         id="text61">湯河原町</text>
@@ -424,8 +403,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path32" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(366 665)"
                         id="text62">真鶴町</text>
@@ -441,8 +419,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path22" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(617 326)"
                         id="text63">海老名市</text>
@@ -458,8 +435,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path20" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(625 396)"
                         id="text64">寒川町</text>
@@ -475,8 +451,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path19" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(677 311)"
                         id="text65">綾瀬市</text>
@@ -492,8 +467,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path11" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(711 263)"
                         id="text66">大和市</text>
@@ -509,8 +483,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path18" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(654 256)"
                         id="text67">座間市</text>
@@ -526,8 +499,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path8" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(524 198)"
                         id="text68">愛川町</text>
@@ -543,8 +515,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path26" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(528 475)"
                         id="text69">大磯町</text>
@@ -560,8 +531,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path28" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(468 486)"
                         id="text70">二宮町</text>
@@ -577,8 +547,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path27" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(440 446)"
                         id="text71">中井町</text>
@@ -594,8 +563,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path30" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(382 447)"
                         id="text72">大井町</text>
@@ -611,8 +579,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path38" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(337 366)"
                         id="text73">松田町</text>
@@ -628,8 +595,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path36" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(323 447)"
                         id="text74">開成町</text>
@@ -645,8 +611,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path16" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(868 533)"
                         id="text75">葉山町</text>
@@ -662,8 +627,7 @@ const Kanagawa = () => {
                         fillRule="evenodd"
                         id="path14" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(854 491)"
                         id="text76">逗子市</text>

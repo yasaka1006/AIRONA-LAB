@@ -10,7 +10,7 @@ const Header = ({ onMenuClick }) => {
 
   return (
     <header className="bg-cyan-950 text-slate-100 px-2 shadow-xs fixed top-0 left-0 right-0 z-50 w-full h-12 border-b-5 border-orange-300">
-      <div className="flex items-center justify-between xl:justify-start h-full max-w-7xl mx-auto xl:max-w-none lg:px-2">
+      <div className="flex items-center justify-between h-full max-w-7xl mx-auto xl:max-w-none lg:px-2">
         {/* ハンバーガーメニューボタン（モバイル・タブレット用） */}
         <button
           onClick={onMenuClick}
@@ -29,8 +29,8 @@ const Header = ({ onMenuClick }) => {
             {/* <div className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-cyan-200 to-orange-300 transition-all duration-300 ${isLineVisible ? 'w-full' : 'w-0'}`}></div> */}
           </div>
         </a>
-        <a href="https://www.youtube.com/@AironA" className="xl:hidden p-[3px] bg-slate-100 rounded-lg" >
-          <img src="/thumbnail/youtube.svg" alt="YouTube" className="w-6 h-6" />
+        <a href="https://www.youtube.com/@AironA" target="_blank" rel="noopener noreferrer" className="p-[3px]" >
+          <img src="/thumbnail/youtube_white.svg" alt="YouTube" className="w-6 h-6" />
         </a>
       </div>
     </header>

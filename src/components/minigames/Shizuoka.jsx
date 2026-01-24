@@ -110,71 +110,61 @@ const Shizuoka = () => {
                 id="path7" />
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(360 124)"
                 id="text77">長野県</text>
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(424 124)"
                 id="text78" />
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(779 103)"
                 id="text79">山梨県</text>
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(843 103)"
                 id="text80" />
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(1123 170)"
                 id="text81">神奈川県</text>
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(1208 170)"
                 id="text82" />
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(115 405)"
                 id="text83">愛知県</text>
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(179 405)"
                 id="text84" />
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(91 127)"
                 id="text85">岐阜県</text>
             <text
                 fill="#7F7F7F"
-                font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                font-weight="900"
+               font-weight="900"
                 font-size="21"
                 transform="translate(155 127)"
                 id="text86" />
@@ -191,8 +181,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path19" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(578 484)"
                         id="text42">藤枝市</text>
@@ -208,8 +197,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path9" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(788 237)"
                         id="text43">富士宮市</text>
@@ -225,8 +213,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path26" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(933 236)"
                         id="text44">御殿場市</text>
@@ -242,8 +229,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path27" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(944 290)"
                         id="text45">裾野市</text>
@@ -259,8 +245,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path24" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(837 311)"
                         id="text46">富士市</text>
@@ -276,8 +261,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path32" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(965 477)"
                         id="text47">伊豆市</text>
@@ -293,8 +277,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path40" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(1063 471)"
                         id="text48">伊東市</text>
@@ -310,8 +293,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path16" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(509 500)"
                         id="text49">島田市</text>
@@ -327,8 +309,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path22" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(549 608)"
                         id="text50">牧之原市</text>
@@ -344,8 +325,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path20" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(627 532)"
                         id="text51">焼津市</text>
@@ -361,8 +341,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path21" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(604 583)"
                         id="text52">吉田町</text>
@@ -378,8 +357,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path37" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(905 595)"
                         id="text53">松崎町</text>
@@ -395,8 +373,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path36" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(895 537)"
                         id="text54">西伊豆町</text>
@@ -412,8 +389,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path42" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(985 564)"
                         id="text55">河津町</text>
@@ -429,8 +405,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path41" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(1026 538)"
                         id="text56">東伊豆町</text>
@@ -446,8 +421,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path38" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(906 647)"
                         id="text57">南伊豆町</text>
@@ -463,8 +437,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path39" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(969 616)"
                         id="text58">下田市</text>
@@ -480,8 +453,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path28" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(909 427)"
                         id="text60">沼津市</text>
@@ -497,8 +469,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path34" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(1055 370)"
                         id="text63">熱海市</text>
@@ -514,8 +485,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path33" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(1009 357)"
                         id="text61">函南町</text>
@@ -531,8 +501,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path35" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(979 403)"
                         id="text59">伊豆の国市</text>
@@ -549,8 +518,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path31" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(987 333)"
                         id="text62">三島市</text>
@@ -566,8 +534,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path29" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="12"
                         transform="translate(940 321)"
                         id="text65">長泉町</text>
@@ -583,8 +550,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path25" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(964 193)"
                         id="text66">小山町</text>
@@ -600,8 +566,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path8" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(638 335)"
                         id="text67">静岡市</text>
@@ -617,8 +582,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path10" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(498 327)"
                         id="text68">川根本町</text>
@@ -634,8 +598,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path11" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(338 449)"
                         id="text69">浜松市</text>
@@ -651,8 +614,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path12" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(168 610)"
                         id="text70">湖西市</text>
@@ -668,8 +630,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path13" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(359 606)"
                         id="text71">磐田市</text>
@@ -685,8 +646,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path15" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(422 492)"
                         id="text72">森町</text>
@@ -702,8 +662,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path17" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(451 556)"
                         id="text73">掛川市</text>
@@ -719,8 +678,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path18" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(500 590)"
                         id="text74">菊川市</text>
@@ -736,8 +694,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path23" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="16"
                         transform="translate(518 663)"
                         id="text75">御前崎市</text>
@@ -753,8 +710,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path14" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="14"
                         transform="translate(409 604)"
                         id="text76">袋井市</text>
@@ -770,8 +726,7 @@ const Shizuoka = () => {
                         fill-rule="evenodd"
                         id="path30" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        font-weight="700"
+                       font-weight="700"
                         font-size="12"
                         transform="translate(954 364)"
                         id="text64">清水町</text>

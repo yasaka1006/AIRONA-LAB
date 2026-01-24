@@ -95,7 +95,7 @@ const Ibaraki = () => {
                 fill-rule="evenodd"
                 id="path4" />
             <path
-                d="M75 505 87 532 95 538 95 562 124 603 140 643 130 658 139 719-61 722-58 440-13 437-5 447 8 443 7 433 39 440 75 505Z"
+                d="M75 505 87 532 95 538 95 562 124 603 140 643 130 658 139 740-61 722-58 440-13 437-5 447 8 443 7 433 39 440 75 505Z"
                 stroke="#FFFFFF"
                 stroke-width="2"
                 stroke-miterlimit="8"
@@ -132,7 +132,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path8" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(321 209)"
@@ -149,7 +148,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path27" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(458 590)"
@@ -166,7 +164,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path11" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(350 111)"
@@ -183,7 +180,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path41" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(532 76)"
@@ -200,7 +196,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path13" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(495 129)"
@@ -217,7 +212,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path12" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(497 195)"
@@ -234,7 +228,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path17" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(387 346)"
@@ -251,7 +244,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path9" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(330 281)"
@@ -268,7 +260,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path19" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(305 356)"
@@ -285,7 +276,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path24" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(436 460)"
@@ -302,7 +292,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path22" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(278 429)"
@@ -319,7 +308,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path39" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(196 506)"
@@ -336,7 +324,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path38" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(158 393)"
@@ -353,7 +340,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path21" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(221 369)"
@@ -370,7 +356,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path25" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(412 527)"
@@ -387,7 +372,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path20" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(394 404)"
@@ -404,7 +388,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path30" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(356 595)"
@@ -421,7 +404,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path29" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(528 632)"
@@ -438,7 +420,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path28" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(501 561)"
@@ -455,7 +436,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path31" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(287 556)"
@@ -472,7 +452,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path10" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="16"
                         transform="translate(407 191)"
@@ -489,7 +468,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path40" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="14"
                         transform="translate(277 516)"
@@ -506,7 +484,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path26" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(310 499)"
@@ -523,7 +500,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path23" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(355 440)"
@@ -540,7 +516,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path16" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="14"
                         transform="translate(453 337)"
@@ -557,7 +532,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path18" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(475 392)"
@@ -574,7 +548,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path15" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(484 295)"
@@ -591,7 +564,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path14" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="14"
                         transform="translate(417 292)"
@@ -608,7 +580,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path51" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(29 504)"
@@ -625,7 +596,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path50" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(79 497)"
@@ -642,7 +612,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path43" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(160 451)"
@@ -659,7 +628,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path32" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(341 556)"
@@ -676,7 +644,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path42" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(93 412)"
@@ -693,7 +660,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path49" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="14"
                         transform="translate(53 457)"
@@ -710,7 +676,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path47" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(115 531)"
@@ -727,7 +692,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path44" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(157 519)"
@@ -744,7 +708,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path46" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(158 597)"
@@ -761,7 +724,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path37" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(216 615)"
@@ -778,7 +740,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path48" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(109 460)"
@@ -795,7 +756,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path35" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(268 613)"
@@ -812,7 +772,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path36" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(268 581)"
@@ -829,7 +788,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path33" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(323 636)"
@@ -846,7 +804,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path45" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(169 572)"
@@ -863,7 +820,6 @@ const Ibaraki = () => {
                         fill-rule="evenodd"
                         id="path34" />
                     <text
-                        font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
                         font-weight="700"
                         font-size="12"
                         transform="translate(260 645)"
@@ -872,28 +828,24 @@ const Ibaraki = () => {
 
                 <text
                     fill="#7F7F7F"
-                    font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                     font-weight="900"
                     font-size="18"
                     transform="translate(105 225)"
                     id="text101">栃木県</text>
                 <text
                     fill="#7F7F7F"
-                    font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                     font-weight="900"
                     font-size="18"
                     transform="translate(402 35)"
                     id="text103">福島県</text>
                 <text
                     fill="#7F7F7F"
-                    font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                     font-weight="900"
                     font-size="18"
                     transform="translate(21 589)"
                     id="text105">埼玉県</text>
                 <text
                     fill="#7F7F7F"
-                    font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
                     font-weight="900"
                     font-size="18"
                     transform="translate(345 682)"

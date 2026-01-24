@@ -103,57 +103,49 @@ const Tochigi = () => {
                 id="path7" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(27 450)"
                 id="text56">群馬県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(91 450)"
                 id="text57" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(148 69)"
                 id="text58">福島県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(212 69)"
                 id="text59" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(647 556)"
                 id="text60">茨城県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(711 556)"
                 id="text61" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(30 712)"
                 id="text62">埼玉県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(94 712)"
                 id="text63" />
@@ -170,8 +162,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path8" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(191 261)"
                         id="text32">日光市</text>
@@ -187,8 +178,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path18" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(392 136)"
                         id="text33">那須塩原市</text>
@@ -204,8 +194,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path20" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(545 233)"
                         id="text34">大田原市</text>
@@ -221,8 +210,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path19" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(538 95)"
                         id="text35">那須町</text>
@@ -238,8 +226,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path17" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(344 278)"
                         id="text36">塩谷町</text>
@@ -255,8 +242,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path30" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(581 307)"
                         id="text37">那珂川町</text>
@@ -272,8 +258,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path25" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(542 526)"
                         id="text40">益子町</text>
@@ -289,8 +274,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path26" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(497 453)"
                         id="text41">芳賀町</text>
@@ -306,8 +290,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path32" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(537 379)"
                         id="text42">那須烏山市</text>
@@ -323,8 +306,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path31" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(466 336)"
                         id="text43">さくら市</text>
@@ -340,8 +322,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path29" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(406 253)"
                         id="text44">矢板市</text>
@@ -357,8 +338,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path28" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(599 483)"
                         id="text45">茂木町</text>
@@ -374,8 +354,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path21" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(390 427)"
                         id="text46">宇都宮市</text>
@@ -391,8 +370,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path9" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(241 441)"
                         id="text47">鹿沼市</text>
@@ -408,8 +386,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path23" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(468 400)"
                         id="text38">高根沢町</text>
@@ -423,8 +400,7 @@ const Tochigi = () => {
                     fillRule="evenodd"
                     id="path12" />
                 <text
-                    fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                    fontWeight="700"
+                   fontWeight="700"
                     fontSize="16"
                     transform="translate(270,591)"
                     id="text48">栃木市</text>
@@ -441,8 +417,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path13" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(335 635)"
                         id="text49">小山市</text>
@@ -458,8 +433,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path27" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(545 444)"
                         id="text39">市貝町</text>
@@ -475,8 +449,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path24" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(472 551)"
                         id="text50">真岡市</text>
@@ -492,8 +465,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path16" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(383 578)"
                         id="text51">下野市</text>
@@ -509,8 +481,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path22" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(403 533)"
                         id="text52">上三川町</text>
@@ -526,8 +497,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path15" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(345 524)"
                         id="text53">壬生町</text>
@@ -543,8 +513,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path10" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(180 556)"
                         id="text54">佐野市</text>
@@ -560,8 +529,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path11" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(115 605)"
                         id="text55">足利市</text>
@@ -577,8 +545,7 @@ const Tochigi = () => {
                         fillRule="evenodd"
                         id="path14" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(304 696)"
                         id="text64">野木町</text>

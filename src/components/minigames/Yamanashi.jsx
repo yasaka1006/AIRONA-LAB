@@ -96,71 +96,61 @@ const Yamanashi = () => {
                 id="path9" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(22 70)"
                 id="text63">長野県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(86 70)"
                 id="text64" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(541 69)"
                 id="text65">埼玉県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(605 69)"
                 id="text66" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(639 186)"
                 id="text67">東京都</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(703 186)"
                 id="text68" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(625 510)"
                 id="text69">神奈川県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(711 510)"
                 id="text70" />
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(332 641)"
                 id="text71">静岡県</text>
             <text
                 fill="#7F7F7F"
-                fontFamily="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
-                fontWeight="900"
+               fontWeight="900"
                 fontSize="21"
                 transform="translate(396 641)"
                 id="text72" />
@@ -177,8 +167,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path15" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(84 457)"
                         id="text36">早川町</text>
@@ -194,8 +183,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path19" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(134 391)"
                         id="text37">富士川町</text>
@@ -211,8 +199,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path20" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(220 398)"
                         id="text38">市川三郷町</text>
@@ -228,8 +215,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path21" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(194 500)"
                         id="text39">身延町</text>
@@ -245,8 +231,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path22" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(189 628)"
                         id="text40">南部町</text>
@@ -262,8 +247,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path24" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(364 469)"
                         id="text41">鳴沢村</text>
@@ -279,8 +263,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path23" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(338 424)"
                         id="text42">富士河口湖町</text>
@@ -296,8 +279,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path25" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(417 512)"
                         id="text43">富士吉田市</text>
@@ -313,8 +295,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path36" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(492 489)"
                         id="text44">山中湖村</text>
@@ -330,8 +311,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path26" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(355 349)"
                         id="text45">笛吹市</text>
@@ -347,8 +327,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path27" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(428 253)"
                         id="text46">甲州市</text>
@@ -364,8 +343,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path12" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(360 187)"
                         id="text47">山梨市</text>
@@ -381,8 +359,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path11" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(275 278)"
                         id="text48">甲府市</text>
@@ -398,8 +375,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path10" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(147 148)"
                         id="text49">北杜市</text>
@@ -415,8 +391,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path14" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(151 248)"
                         id="text50">韮崎市</text>
@@ -432,8 +407,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path13" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(124 318)"
                         id="text51">南アルプス市</text>
@@ -449,8 +423,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path30" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(528 305)"
                         id="text52">大月市</text>
@@ -468,8 +441,7 @@ const Yamanashi = () => {
                             fillRule="evenodd"
                             id="path31" />
                         <text
-                            fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                            fontWeight="700"
+                           fontWeight="700"
                             fontSize="16"
                             transform="translate(633 311)"
                             id="text53">上野原市</text>
@@ -486,8 +458,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path32" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(528 396)"
                         id="text54">都留市</text>
@@ -503,8 +474,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path28" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(520 172)"
                         id="text55">丹波山村</text>
@@ -520,8 +490,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path29" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(558 220)"
                         id="text56">小菅村</text>
@@ -537,8 +506,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path34" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(597 422)"
                         id="text57">道志村</text>
@@ -555,8 +523,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path17" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(245 347)"
                         id="text59">中央市</text>
@@ -572,8 +539,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path33" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(468 390)"
                         id="text60">西桂町</text>
@@ -589,8 +555,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path35" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(480 454)"
                         id="text61">忍野村</text>
@@ -606,8 +571,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path16" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="16"
                         transform="translate(220 262)"
                         id="text62">甲斐市</text>
@@ -623,8 +587,7 @@ const Yamanashi = () => {
                         fillRule="evenodd"
                         id="path18" />
                     <text
-                        fontFamily="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
-                        fontWeight="700"
+                       fontWeight="700"
                         fontSize="14"
                         transform="translate(252 323)"
                         id="text58">昭和町</text>

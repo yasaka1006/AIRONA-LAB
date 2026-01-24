@@ -181,28 +181,24 @@ const Tokyo = () => {
         id="path73" />
       <text
         fill="#7F7F7F"
-        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
         font-weight="900"
         font-size="21"
         transform="translate(633 607)"
         id="text74">神奈川県</text>
       <text
         fill="#7F7F7F"
-        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
         font-weight="900"
         font-size="21"
         transform="translate(57 317)"
         id="text76">山梨県</text>
       <text
         fill="#7F7F7F"
-        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
         font-weight="900"
         font-size="21"
         transform="translate(763 72)"
         id="text78">埼玉県</text>
       <text
         fill="#7F7F7F"
-        font-family="Noto Sans JP Black,Noto Sans JP Black_MSFontService,sans-serif"
         font-weight="900"
         font-size="21"
         transform="translate(1199 153)"
@@ -220,7 +216,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path74" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(172 133)"
@@ -237,7 +232,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path8" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(221 254)"
@@ -254,7 +248,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path21" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(656 209)"
@@ -269,7 +262,6 @@ const Tokyo = () => {
           fill-rule="evenodd"
           id="path10" />
         <text
-          font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
           font-weight="700"
           font-size="16"
           transform="translate(389,154)"
@@ -287,7 +279,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path11" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(375 213)"
@@ -304,7 +295,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path9" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(374 255)"
@@ -322,7 +312,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path86" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(440 345)"
@@ -339,7 +328,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path18" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(534 282)"
@@ -356,7 +344,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path16" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(504 244)"
@@ -373,7 +360,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path12" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(476 204)"
@@ -390,7 +376,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path13" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(518 184)"
@@ -407,7 +392,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path15" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="12"
             transform="translate(613 222)"
@@ -424,7 +408,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path14" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="12"
             transform="translate(549 221)"
@@ -441,7 +424,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path23" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(680 254)"
@@ -458,7 +440,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path22" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(723 182)"
@@ -476,7 +457,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path17" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(595 271)"
@@ -493,7 +473,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path24" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(646 284)"
@@ -510,7 +489,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path19" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(629 461)"
@@ -527,7 +505,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path40" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(841 371)"
@@ -544,7 +521,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path45" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(969 465)"
@@ -562,7 +538,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path46" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(974 409)"
@@ -579,7 +554,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path47" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(991 357)"
@@ -596,7 +570,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path57" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(1072 344)"
@@ -613,7 +586,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path58" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(1139 299)"
@@ -630,7 +602,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path50" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(1120 224)"
@@ -647,7 +618,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path49" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(1050 187)"
@@ -664,7 +634,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path38" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(899 187)"
@@ -681,7 +650,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path35" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(840 221)"
@@ -698,7 +666,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path36" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(848 296)"
@@ -715,7 +682,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path37" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(901 277)"
@@ -732,7 +698,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path44" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(956 290)"
@@ -749,7 +714,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path42" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(925 325)"
@@ -766,7 +730,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path26" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(676 328)"
@@ -783,7 +746,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path29" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(760 351)"
@@ -800,7 +762,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path34" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(771 307)"
@@ -817,7 +778,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path39" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(792 378)"
@@ -834,7 +794,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path27" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(633 380)"
@@ -851,7 +810,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path28" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(692 378)"
@@ -868,7 +826,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path20" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="16"
             transform="translate(579 340)"
@@ -885,7 +842,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path25" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(625 308)"
@@ -902,7 +858,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path31" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(745 246)"
@@ -919,7 +874,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path43" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(952 247)"
@@ -936,7 +890,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path48" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(976 202)"
@@ -955,7 +908,6 @@ const Tokyo = () => {
           <g
             id="g171">
             <text
-              font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
               font-weight="700"
               font-size="13"
               transform="translate(1041 239)"
@@ -973,7 +925,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path53" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(1083 269)"
@@ -990,7 +941,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path52" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(994 267)"
@@ -1007,7 +957,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path41" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(934 379)"
@@ -1024,7 +973,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path30" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="12"
             transform="translate(712 217)"
@@ -1041,7 +989,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path33" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(769 275)"
@@ -1058,7 +1005,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path56" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="12"
             transform="translate(1032 336)"
@@ -1075,7 +1021,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path55" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="12"
             transform="translate(997 307)"
@@ -1092,7 +1037,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path59" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(119 514)"
@@ -1109,7 +1053,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path32" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(706 285)"
@@ -1126,7 +1069,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path60" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(82 542)"
@@ -1143,7 +1085,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path61" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(82 574)"
@@ -1160,7 +1101,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path62" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(55 608)"
@@ -1177,7 +1117,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path63" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(147 634)"
@@ -1194,7 +1133,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path54" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="13"
             transform="translate(1039 271)"
@@ -1211,7 +1149,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path64" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(136 680)"
@@ -1226,7 +1163,6 @@ const Tokyo = () => {
           fill-rule="evenodd"
           id="path65" />
         <text
-          font-family="'Noto Sans JP Bold', 'Noto Sans JP Bold_MSFontService', sans-serif"
           font-weight="700"
           font-size="14px"
           id="text142"
@@ -1245,7 +1181,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path66" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(305 633)"
@@ -1262,7 +1197,6 @@ const Tokyo = () => {
             fill-rule="evenodd"
             id="path67" />
           <text
-            font-family="Noto Sans JP Bold,Noto Sans JP Bold_MSFontService,sans-serif"
             font-weight="700"
             font-size="14"
             transform="translate(449 588)"
