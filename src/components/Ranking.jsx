@@ -103,22 +103,21 @@ const Ranking = () => {
       'shizuoka': '静岡県の市区町村クイズ',
       'kanagawa': '神奈川県の市区町村クイズ',
       'ibaraki': '茨城県の市区町村クイズ',
-      // 他のゲームIDも追加可能
     };
     return gameNames[gameid] || gameid;
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">ランキング</h1>
+    <div className="w-full max-w-4xl mx-auto p-2 md:p-4">
+      <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">ランキング</h1>
 
       {/* ゲーム選択プルダウン */}
       {rankingList.length > 0 && (
-        <div className="mb-6 flex justify-center">
+        <div className="mb-4 md:mb-6 flex justify-center px-2">
           <select
             value={selectedGameId}
             onChange={(e) => setSelectedGameId(e.target.value)}
-            className="px-4 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 font-semibold"
+            className="w-full max-w-xs px-3 md:px-4 py-2 text-sm md:text-base border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 font-semibold"
           >
             {rankingList.map((gameid) => (
               <option key={gameid} value={gameid}>
@@ -130,49 +129,78 @@ const Ranking = () => {
       )}
 
       {rankings.length === 0 ? (
-        <div className="text-center text-gray-500 text-lg">
+        <div className="text-center text-gray-500 text-base md:text-lg">
           まだランキングデータがありません
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-3 text-left font-bold text-gray-700">順位</th>
-                  <th className="px-4 py-3 text-left font-bold text-gray-700">名前</th>
-                  <th className="px-4 py-3 text-left font-bold text-gray-700">クリアタイム</th>
-                  <th className="px-4 py-3 text-left font-bold text-gray-700">日付</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rankings.map((ranking, index) => (
-                  <tr
-                    key={ranking.id}
-                    className={`border-b ${index < 3
-                        ? index === 0
-                          ? 'bg-yellow-50'
-                          : index === 1
-                            ? 'bg-gray-50'
-                            : 'bg-orange-50'
-                        : 'hover:bg-gray-50'
-                      }`}
-                  >
-                    <td className="px-4 py-3 font-bold">
-                      {index === 0 && '🥇'}
-                      {index === 1 && '🥈'}
-                      {index === 2 && '🥉'}
-                      {index >= 3 && `${index + 1}位`}
-                    </td>
-                    <td className="px-4 py-3 font-semibold">{ranking.user}</td>
-                    <td className="px-4 py-3 font-mono">{formatTime(ranking.cleartime)}</td>
-                    <td className="px-4 py-3 text-gray-600">{formatDate(ranking.data)}</td>
+        <>
+          {/* デスクトップ表示: テーブル */}
+          <div className="hidden md:block bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-bold text-gray-700 w-20">順位</th>
+                    <th className="px-4 py-3 text-left font-bold text-gray-700 min-w-[120px] max-w-[200px]">名前</th>
+                    <th className="px-4 py-3 text-left font-bold text-gray-700 w-32">クリアタイム</th>
+                    <th className="px-4 py-3 text-left font-bold text-gray-700 w-28">日付</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {rankings.map((ranking, index) => (
+                    <tr
+                      key={ranking.id}
+                      className={`border-b ${index < 3
+                          ? index === 0
+                            ? 'bg-yellow-50'
+                            : index === 1
+                              ? 'bg-gray-50'
+                              : 'bg-orange-50'
+                          : 'hover:bg-gray-50'
+                        }`}
+                    >
+                      <td className="px-4 py-3 font-bold">
+                        {index + 1}位
+                      </td>
+                      <td className="px-4 py-3 font-semibold truncate" title={ranking.user}>
+                        {ranking.user}
+                      </td>
+                      <td className="px-4 py-3 font-mono">{formatTime(ranking.cleartime)}</td>
+                      <td className="px-4 py-3 text-gray-600 text-sm">{formatDate(ranking.data)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+
+          {/* モバイル表示: カード形式 */}
+          <div className="md:hidden space-y-2">
+            {rankings.map((ranking, index) => (
+              <div
+                key={ranking.id}
+                className={`bg-white rounded-lg shadow p-3 ${
+                  index < 3
+                    ? index === 0
+                      ? 'bg-yellow-50 border-2 border-yellow-300'
+                      : index === 1
+                        ? 'bg-gray-50 border-2 border-gray-300'
+                        : 'bg-orange-50 border-2 border-orange-300'
+                    : 'border border-gray-200'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-bold text-lg">{index + 1}位</span>
+                  <span className="font-mono text-sm text-blue-600">{formatTime(ranking.cleartime)}</span>
+                </div>
+                <div className="font-semibold text-base mb-1 truncate" title={ranking.user}>
+                  {ranking.user}
+                </div>
+                <div className="text-xs text-gray-600">{formatDate(ranking.data)}</div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       <div className="mt-6 text-center">
