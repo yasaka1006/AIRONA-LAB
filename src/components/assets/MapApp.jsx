@@ -58,17 +58,16 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
         }
 
         const handleBeforeUnload = (e) => {
-            // モダンブラウザでは、preventDefault()とreturnValueの設定が必要
+            // 標準的なブラウザ向けの対応
             e.preventDefault();
-            // Chromeでは空文字列、他のブラウザでは任意の文字列
-            e.returnValue = '';
-            return '';
+            // Chrome等で警告を出すために必要（空文字でOK）
+            e.returnValue = "";
         };
 
-        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener("beforeunload", handleBeforeUnload);
 
         return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, [isGameStarted]);
 
