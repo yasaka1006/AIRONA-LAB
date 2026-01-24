@@ -2,12 +2,28 @@ import { useState, useEffect } from 'react';
 
 const Ranking = () => {
   const [rankings, setRankings] = useState([]);
+  const [allRankings, setAllRankings] = useState([]);
+  const [rankingList, setRankingList] = useState([]);
+  const [selectedGameId, setSelectedGameId] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchRankings();
   }, []);
+
+  useEffect(() => {
+    // gameidの一意な値を取得してプルダウン用のリストを作成
+    const uniqueGameIds = [...new Set(allRankings.map(r => r.gameid))].filter(Boolean);
+    setRankingList(uniqueGameIds);
+    
+    // 選択したgameidでフィルター
+    if (selectedGameId === 'all') {
+      setRankings(allRankings);
+    } else {
+      setRankings(allRankings.filter(r => r.gameid === selectedGameId));
+    }
+  }, [allRankings, selectedGameId]);
 
   const fetchRankings = async () => {
     try {
@@ -22,7 +38,7 @@ const Ranking = () => {
       }
       
       const data = await response.json();
-      setRankings(data);
+      setAllRankings(data);
     } catch (err) {
       console.error('Error fetching rankings:', err);
       setError(err.message);
@@ -64,9 +80,36 @@ const Ranking = () => {
     );
   }
 
+  const getGameName = (gameid) => {
+    const gameNames = {
+      'element': '周期表クイズ',
+      'tokyo': '東京都の市区町村',
+      // 他のゲームIDも追加可能
+    };
+    return gameNames[gameid] || gameid;
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">周期表クイズ ランキング</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">ランキング</h1>
+      
+      {/* ゲーム選択プルダウン */}
+      {rankingList.length > 0 && (
+        <div className="mb-6 flex justify-center">
+          <select
+            value={selectedGameId}
+            onChange={(e) => setSelectedGameId(e.target.value)}
+            className="px-4 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 font-semibold"
+          >
+            <option value="all">すべてのゲーム</option>
+            {rankingList.map((gameid) => (
+              <option key={gameid} value={gameid}>
+                {getGameName(gameid)}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       
       {rankings.length === 0 ? (
         <div className="text-center text-gray-500 text-lg">
