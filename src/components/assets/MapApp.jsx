@@ -399,11 +399,11 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
                                 <RankingAddButton
                                     gameid={gameid}
                                     cleartime={time}
-                                    onSuccess={() => {setShowCongratulations(false);}}
+                                    onSuccess={() => { setShowCongratulations(false); }}
                                 />
                             )}
                             <button
-                                onClick={() => {setShowCongratulations(false);}}
+                                onClick={() => { setShowCongratulations(false); }}
                                 className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
                             >
                                 閉じる
@@ -414,12 +414,18 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
             )}
 
             {/* メインコンテンツエリア */}
-            <div className="w-full my-2 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg">
+            <div className="w-full my-2 bg-white py-5 px-2 md:px-5 rounded-xl shadow-lg relative">
                 {/* タイトルセクション */}
                 <div className="text-center mb-5">
                     <h2 className="text-1xl md:text-3xl font-extrabold text-slate-700 ">
                         {gameTitle}
                     </h2>
+                </div>
+
+                <div className="absolute top-3 right-0">
+                    <a href={`/ranking?gameid=${gameid}`} target="_blank" rel="noopener noreferrer">
+                        <p className="text-[7px] lg:text-base text-blue-700 hover:text-blue-800 cursor-pointer mr-3">ランキングを見る</p>
+                    </a>
                 </div>
 
                 {/* 地図エリア */}

@@ -342,6 +342,13 @@ const Element = () => {
         </div>
 
         <h1 className="text-lg lg:text-3xl font-bold text-center mt-1">周期表の元素全部言えるかな？</h1>
+
+        <div className="absolute top-3 right-0">
+          <a href={`/ranking?gameid=${gameid}`} target="_blank" rel="noopener noreferrer">
+            <p className="text-[7px] lg:text-base text-blue-600 hover:text-blue-800 cursor-pointer mr-3">ランキングを見る</p>
+          </a>
+        </div>
+
         <div
           style={{
             gridTemplateColumns: 'repeat(18, 1fr)'
@@ -475,11 +482,11 @@ const Element = () => {
                 クリアタイム: {clearTime}
               </p>
             )}
-            
+
             <div className="flex flex-col gap-3">
-              <RankingAddButton 
-                gameid={gameid} 
-                cleartime={currentTime} 
+              <RankingAddButton
+                gameid={gameid}
+                cleartime={currentTime}
                 onSuccess={() => setShowModal(false)}
               />
               <button

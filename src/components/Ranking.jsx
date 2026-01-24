@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const Ranking = () => {
+  const [searchParams] = useSearchParams();
+  const urlGameId = searchParams.get('gameid');
+  
   const [rankings, setRankings] = useState([]);
   const [allRankings, setAllRankings] = useState([]);
   const [rankingList, setRankingList] = useState([]);
-  const [selectedGameId, setSelectedGameId] = useState('all');
+  const [selectedGameId, setSelectedGameId] = useState(urlGameId || 'all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -12,11 +16,18 @@ const Ranking = () => {
     fetchRankings();
   }, []);
 
+  // URLパラメータが変更されたときに選択状態を更新
+  useEffect(() => {
+    if (urlGameId) {
+      setSelectedGameId(urlGameId);
+    }
+  }, [urlGameId]);
+
   useEffect(() => {
     // gameidの一意な値を取得してプルダウン用のリストを作成
     const uniqueGameIds = [...new Set(allRankings.map(r => r.gameid))].filter(Boolean);
     setRankingList(uniqueGameIds);
-    
+
     // 選択したgameidでフィルター
     if (selectedGameId === 'all') {
       setRankings(allRankings);
@@ -30,13 +41,13 @@ const Ranking = () => {
       setLoading(true);
       // APIのベースURLを環境変数から取得、なければデフォルト値を使用
       const apiUrl = import.meta.env.VITE_RANKING_API_URL || '/api/ranking';
-      
+
       const response = await fetch(apiUrl);
-      
+
       if (!response.ok) {
         throw new Error('ランキングの取得に失敗しました');
       }
-      
+
       const data = await response.json();
       setAllRankings(data);
     } catch (err) {
@@ -83,7 +94,15 @@ const Ranking = () => {
   const getGameName = (gameid) => {
     const gameNames = {
       'element': '周期表クイズ',
-      'tokyo': '東京都の市区町村',
+      'tokyo': '東京都の市区町村クイズ',
+      'saitama': '埼玉県の市区町村クイズ',
+      'chiba': '千葉県の市区町村クイズ',
+      'tochigi': '栃木県の市区町村クイズ',
+      'yamanashi': '山梨県の市区町村クイズ',
+      'gunma': '群馬県の市区町村クイズ',
+      'shizuoka': '静岡県の市区町村クイズ',
+      'kanagawa': '神奈川県の市区町村クイズ',
+      'ibaraki': '茨城県の市区町村クイズ',
       // 他のゲームIDも追加可能
     };
     return gameNames[gameid] || gameid;
@@ -92,7 +111,7 @@ const Ranking = () => {
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-8">ランキング</h1>
-      
+
       {/* ゲーム選択プルダウン */}
       {rankingList.length > 0 && (
         <div className="mb-6 flex justify-center">
@@ -101,7 +120,6 @@ const Ranking = () => {
             onChange={(e) => setSelectedGameId(e.target.value)}
             className="px-4 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 font-semibold"
           >
-            <option value="all">すべてのゲーム</option>
             {rankingList.map((gameid) => (
               <option key={gameid} value={gameid}>
                 {getGameName(gameid)}
@@ -110,7 +128,7 @@ const Ranking = () => {
           </select>
         </div>
       )}
-      
+
       {rankings.length === 0 ? (
         <div className="text-center text-gray-500 text-lg">
           まだランキングデータがありません
@@ -131,15 +149,14 @@ const Ranking = () => {
                 {rankings.map((ranking, index) => (
                   <tr
                     key={ranking.id}
-                    className={`border-b ${
-                      index < 3
+                    className={`border-b ${index < 3
                         ? index === 0
                           ? 'bg-yellow-50'
                           : index === 1
-                          ? 'bg-gray-50'
-                          : 'bg-orange-50'
+                            ? 'bg-gray-50'
+                            : 'bg-orange-50'
                         : 'hover:bg-gray-50'
-                    }`}
+                      }`}
                   >
                     <td className="px-4 py-3 font-bold">
                       {index === 0 && '🥇'}
@@ -157,7 +174,7 @@ const Ranking = () => {
           </div>
         </div>
       )}
-      
+
       <div className="mt-6 text-center">
         <button
           onClick={fetchRankings}
