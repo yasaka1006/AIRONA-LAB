@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import Timer from '../assets/Timer';
 
+const gameid = 'element';
+
 const Element = () => {
 
   const initialElements = [
@@ -188,6 +190,9 @@ const Element = () => {
   const [selectedElement, setSelectedElement] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [clearTime, setClearTime] = useState('');
+  const [rankingName, setRankingName] = useState('');
+  const [showRankingInput, setShowRankingInput] = useState(false);
+  const [isSubmittingRanking, setIsSubmittingRanking] = useState(false);
 
   const [status, setStatus] = useState('idle');
 
@@ -314,6 +319,44 @@ const Element = () => {
     // nameが配列で空でない要素のみ表示（id: 201, 202は除外）
     if (element.id < 200 && Array.isArray(element.name) && element.name.length > 0) {
       setSelectedElement(element);
+    }
+  };
+
+  const handleSubmitRanking = async () => {
+    if (!rankingName.trim()) {
+      alert('名前を入力してください');
+      return;
+    }
+
+    setIsSubmittingRanking(true);
+    try {
+      // APIのベースURLを環境変数から取得、なければデフォルト値を使用
+      const apiUrl = import.meta.env.VITE_RANKING_API_URL || '/api/ranking';
+      
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gameid: 'element',
+          user: rankingName.trim(),
+          cleartime: currentTime, // 秒数で送信
+        }),
+      });
+
+      if (response.ok) {
+        alert('ランキングに登録しました！');
+        setShowRankingInput(false);
+        setRankingName('');
+      } else {
+        alert('ランキングの登録に失敗しました');
+      }
+    } catch (error) {
+      console.error('Error submitting ranking:', error);
+      alert('ランキングの登録に失敗しました');
+    } finally {
+      setIsSubmittingRanking(false);
     }
   };
 
@@ -466,14 +509,64 @@ const Element = () => {
             <p className="text-center mb-6">
               全118元素を正解しました！
             </p>
-            <div className="flex justify-center">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
-              >
-                閉じる
-              </button>
-            </div>
+            {clearTime && (
+              <p className="text-center mb-4 text-lg font-semibold text-blue-600">
+                クリアタイム: {clearTime}
+              </p>
+            )}
+            
+            {!showRankingInput ? (
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => setShowRankingInput(true)}
+                  className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 font-bold"
+                >
+                  ランキングに登録する
+                </button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
+                >
+                  閉じる
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    名前を入力してください
+                  </label>
+                  <input
+                    type="text"
+                    value={rankingName}
+                    onChange={(e) => setRankingName(e.target.value)}
+                    placeholder="あなたの名前"
+                    className="w-full border-2 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
+                    maxLength={20}
+                    disabled={isSubmittingRanking}
+                  />
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleSubmitRanking}
+                    disabled={isSubmittingRanking || !rankingName.trim()}
+                    className="flex-1 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 font-bold disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  >
+                    {isSubmittingRanking ? '登録中...' : '登録する'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowRankingInput(false);
+                      setRankingName('');
+                    }}
+                    disabled={isSubmittingRanking}
+                    className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 font-bold disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  >
+                    キャンセル
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

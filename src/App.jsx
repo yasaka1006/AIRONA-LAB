@@ -13,6 +13,7 @@ import Links2 from './components/Links';
 import ViewTop from './components/assets/ViewTop';
 import PrivacyPolicy from './components/minigames/PrivacyPolicy';
 import Minigames from './components/Minigames';
+import Ranking from './components/Ranking';
 
 const Tokyo = lazy(() => import('./components/minigames/Tokyo'));
 const Saitama = lazy(() => import('./components/minigames/Saitama'));
@@ -23,6 +24,7 @@ const Gunma = lazy(() => import('./components/minigames/Gunma'));
 const Shizuoka = lazy(() => import('./components/minigames/Shizuoka'));
 const Kanagawa = lazy(() => import('./components/minigames/Kanagawa'));
 const Ibaraki = lazy(() => import('./components/minigames/Ibaraki'));
+
 const Element = lazy(() => import('./components/minigames/Element'));
 
 function App() {
@@ -63,6 +65,7 @@ function App() {
                   <Route path="/shizuoka" element={<Shizuoka />} />
                   <Route path="/ibaraki" element={<Ibaraki />} />
                   <Route path="/element" element={<Element />} />
+                  <Route path="/ranking" element={<Ranking />} />
                 </Routes>
               </Suspense>
             </div>
