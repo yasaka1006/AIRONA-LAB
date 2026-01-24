@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import confetti from 'canvas-confetti';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import RankingAddButton from './RankingAddButton';
 
-const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
+const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [correctAnswers, setCorrectAnswers] = useState([]);
@@ -375,7 +376,7 @@ const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
             {/* クリア時に表示するお祝いモーダル */}
             {showCongratulations && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md mx-4 text-center animate-fadeIn relative">
+                    <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-4 text-center animate-fadeIn relative">
                         <button
                             onClick={() => setShowCongratulations(false)}
                             className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
@@ -389,23 +390,25 @@ const MapApp = ({ allDistricts, children, gameTitle, isWide }) => {
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
                             全正解おめでとう！
                         </h2>
-                        <p className="text-lg md:text-xl text-slate-600 mb-10">
+                        <p className="text-lg md:text-xl text-slate-600 mb-8">
                             クリアタイムは <span className="text-3xl md:text-4xl font-bold text-blue-600 mb-6">{formatTime(time)}</span> でした！
                         </p>
 
-                        <div className="flex gap-3 justify-center">
-                            <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
-                                <button
-                                    className="bg-black text-white text-xl font-bold px-6 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
-                                >
-                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                    </svg>
-                                    共有
-                                </button>
-                            </a>
+                        <div className="flex flex-col gap-4">
+                            {gameid && (
+                                <RankingAddButton
+                                    gameid={gameid}
+                                    cleartime={time}
+                                    onSuccess={() => {setShowCongratulations(false);}}
+                                />
+                            )}
+                            <button
+                                onClick={() => {setShowCongratulations(false);}}
+                                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
+                            >
+                                閉じる
+                            </button>
                         </div>
-
                     </div>
                 </div>
             )}

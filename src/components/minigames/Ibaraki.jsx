@@ -1,6 +1,8 @@
 import MapApp from '../assets/MapApp';
 
 const Ibaraki = () => {
+    
+    const gameid = 'ibaraki';
 
     const gameTitle = '茨城県の市区町村全部言えるかな？';
 
@@ -857,7 +859,7 @@ const Ibaraki = () => {
 
     return (
         <>
-            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
+            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} gameid={gameid} isWide={isWide}>
                 {svgContent}
             </MapApp>
         </>

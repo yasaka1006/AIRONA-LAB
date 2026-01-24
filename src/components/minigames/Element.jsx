@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Timer from '../assets/Timer';
+import RankingAddButton from '../assets/RankingAddButton';
 
 const gameid = 'element';
 
@@ -190,9 +191,6 @@ const Element = () => {
   const [selectedElement, setSelectedElement] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [clearTime, setClearTime] = useState('');
-  const [rankingName, setRankingName] = useState('');
-  const [showRankingInput, setShowRankingInput] = useState(false);
-  const [isSubmittingRanking, setIsSubmittingRanking] = useState(false);
 
   const [status, setStatus] = useState('idle');
 
@@ -322,43 +320,6 @@ const Element = () => {
     }
   };
 
-  const handleSubmitRanking = async () => {
-    if (!rankingName.trim()) {
-      alert('名前を入力してください');
-      return;
-    }
-
-    setIsSubmittingRanking(true);
-    try {
-      // APIのベースURLを環境変数から取得、なければデフォルト値を使用
-      const apiUrl = import.meta.env.VITE_RANKING_API_URL || '/api/ranking';
-      
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          gameid: 'element',
-          user: rankingName.trim(),
-          cleartime: currentTime, // 秒数で送信
-        }),
-      });
-
-      if (response.ok) {
-        alert('ランキングに登録しました！');
-        setShowRankingInput(false);
-        setRankingName('');
-      } else {
-        alert('ランキングの登録に失敗しました');
-      }
-    } catch (error) {
-      console.error('Error submitting ranking:', error);
-      alert('ランキングの登録に失敗しました');
-    } finally {
-      setIsSubmittingRanking(false);
-    }
-  };
 
   // 正解数を計算
   const correctCount = elements.filter(el =>
@@ -404,13 +365,13 @@ const Element = () => {
                 <div className="ml-[2px] lg:ml-[4px] text-[16cqw] lg:mb-[-12px] font-normal">
                   {el.atomicNumber}
                 </div>
-                <div className={`font-bold text-center ${el.id >= 201 && el.id <= 204 ? 'text-[30cqw]' : 'text-[50cqw]'} ${isSurrendered && !el.correct ? 'text-red-900' : ''}`}>
+                <div className={`font-bold text-center ${el.id >= 201 && el.id <= 204 ? 'text-[25cqw]' : 'text-[50cqw]'} ${isSurrendered && !el.correct ? 'text-red-900' : ''}`}>
                   {el.symbol}
                 </div>
                 <div className="text-[15cqw] text-center hidden lg:block mt-[-4px]">
                   {el.atomicMass}
                 </div>
-                <div className={`${el.id === 91 || el.id === 99 ? 'text-[13cqw]' : 'text-[16cqw]'} text-center hidden lg:block ${isSurrendered && !el.correct ? 'text-red-900' : ''}`}>
+                <div className={`${el.id === 91 || el.id === 99 ? 'text-[10cqw]' : 'text-[12cqw]'} text-center hidden lg:block ${isSurrendered && !el.correct ? 'text-red-900' : ''}`}>
                   {el.name[0]}
                 </div>
               </div>
@@ -515,58 +476,19 @@ const Element = () => {
               </p>
             )}
             
-            {!showRankingInput ? (
-              <div className="flex flex-col gap-3">
-                <button
-                  onClick={() => setShowRankingInput(true)}
-                  className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 font-bold"
-                >
-                  ランキングに登録する
-                </button>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
-                >
-                  閉じる
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    名前を入力してください
-                  </label>
-                  <input
-                    type="text"
-                    value={rankingName}
-                    onChange={(e) => setRankingName(e.target.value)}
-                    placeholder="あなたの名前"
-                    className="w-full border-2 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-                    maxLength={20}
-                    disabled={isSubmittingRanking}
-                  />
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleSubmitRanking}
-                    disabled={isSubmittingRanking || !rankingName.trim()}
-                    className="flex-1 px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 font-bold disabled:bg-gray-400 disabled:cursor-not-allowed"
-                  >
-                    {isSubmittingRanking ? '登録中...' : '登録する'}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowRankingInput(false);
-                      setRankingName('');
-                    }}
-                    disabled={isSubmittingRanking}
-                    className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 font-bold disabled:bg-gray-400 disabled:cursor-not-allowed"
-                  >
-                    キャンセル
-                  </button>
-                </div>
-              </div>
-            )}
+            <div className="flex flex-col gap-3">
+              <RankingAddButton 
+                gameid={gameid} 
+                cleartime={currentTime} 
+                onSuccess={() => setShowModal(false)}
+              />
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
+              >
+                閉じる
+              </button>
+            </div>
           </div>
         </div>
       )}

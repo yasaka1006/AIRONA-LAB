@@ -11,7 +11,7 @@ import Mcp from './components/Mcp';
 import Equipments from './components/Equipments';
 import Links2 from './components/Links';
 import ViewTop from './components/assets/ViewTop';
-import PrivacyPolicy from './components/minigames/PrivacyPolicy';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import Minigames from './components/Minigames';
 import Ranking from './components/Ranking';
 

@@ -2,6 +2,8 @@ import MapApp from '../assets/MapApp';
 
 const Tokyo = () => {
 
+  const gameid = 'tokyo';
+
   const gameTitle = '東京都の市区町村全部言えるかな？';
 
   const allDistricts = [
@@ -1209,7 +1211,7 @@ const Tokyo = () => {
 
   return (
     <>
-      <MapApp allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
+      <MapApp allDistricts={allDistricts} gameTitle={gameTitle} gameid={gameid} isWide={isWide}>
         {svgContent}
       </MapApp>
     </>

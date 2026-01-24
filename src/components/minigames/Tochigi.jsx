@@ -1,6 +1,8 @@
 import MapApp from '../assets/MapApp';
 
 const Tochigi = () => {
+    
+    const gameid = 'tochigi';
 
     const gameTitle = '栃木県の市区町村全部言えるかな？';
 
@@ -558,7 +560,7 @@ const Tochigi = () => {
 
     return (
         <>
-            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
+            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} gameid={gameid} isWide={isWide}>
                 {svgContent}
             </MapApp>
         </>

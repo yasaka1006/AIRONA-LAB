@@ -1,6 +1,8 @@
 import MapApp from '../assets/MapApp';
 
 const Shizuoka = () => {
+    
+    const gameid = 'shizuoka';
 
     const gameTitle = '静岡県の市区町村全部言えるかな？';
 
@@ -739,7 +741,7 @@ const Shizuoka = () => {
 
     return (
         <>
-            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} isWide={isWide}>
+            <MapApp allDistricts={allDistricts} gameTitle={gameTitle} gameid={gameid} isWide={isWide}>
                 {svgContent}
             </MapApp>
         </>
