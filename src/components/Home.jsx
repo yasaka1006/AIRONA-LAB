@@ -9,7 +9,7 @@ const Home = () => {
       }}>
         <div className="bg-white py-8 px-4 md:px-8 rounded-xl shadow-lg">
           <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-3">
-            ようこそ！<span className="text-cyan-500 hover:text-cyan-700 transition-all duration-300">A</span>IRON<span className="text-orange-300 hover:text-orange-400 transition-all duration-300">A</span>-LABへ
+            ようこそ！<span className="text-cyan-600 hover:text-cyan-700 transition-all duration-300">A</span>IRON<span className="text-orange-400 hover:text-orange-500 transition-all duration-300">A</span>-LABへ
           </h1>
           <p className="text-center text-slate-600 text-sm md:text-lg">
             自分用ゲームとか作ってます。みなさんもぜひ遊んでみてください！

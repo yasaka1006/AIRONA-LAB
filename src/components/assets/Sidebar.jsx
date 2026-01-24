@@ -23,12 +23,13 @@ const Sidebar = ({ isOpen, onClose }) => {
         style={{ marginTop: 0 }}
       >
         <div className="space-y-1">
-          <Link to="/" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>Home</Link>
+          <Link to="/" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>トップページ</Link>
           <Link to="/minigames" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>クイズ&ゲーム</Link>
+          <Link to="/ranking" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>ランキング</Link>
           <div className="block h-[2px] bg-slate-300 my-3 mx-4"></div>
           <Link to="/equipments" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>使用機材リスト</Link>
           <Link to="/mcp" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>Minecraft Portfolio</Link>
-          <Link to="/links" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>Links</Link>
+          <Link to="/links" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>リンク</Link>
         </div>
       </div>
     </>

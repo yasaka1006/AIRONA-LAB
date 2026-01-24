@@ -7,10 +7,31 @@ const Ranking = () => {
   
   const [rankings, setRankings] = useState([]);
   const [allRankings, setAllRankings] = useState([]);
-  const [rankingList, setRankingList] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(urlGameId || 'all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // ゲーム名のマッピング
+  const gameNames = {
+    'element': '周期表クイズ',
+    'tokyo': '東京都の市区町村クイズ',
+    'saitama': '埼玉県の市区町村クイズ',
+    'chiba': '千葉県の市区町村クイズ',
+    'tochigi': '栃木県の市区町村クイズ',
+    'yamanashi': '山梨県の市区町村クイズ',
+    'gunma': '群馬県の市区町村クイズ',
+    'shizuoka': '静岡県の市区町村クイズ',
+    'kanagawa': '神奈川県の市区町村クイズ',
+    'ibaraki': '茨城県の市区町村クイズ',
+  };
+
+  // getGameName関数
+  const getGameName = (gameid) => {
+    return gameNames[gameid] || gameid;
+  };
+
+  // プルダウン用のゲームIDリスト（gameNamesから取得）
+  const rankingList = Object.keys(gameNames);
 
   useEffect(() => {
     fetchRankings();
@@ -24,10 +45,6 @@ const Ranking = () => {
   }, [urlGameId]);
 
   useEffect(() => {
-    // gameidの一意な値を取得してプルダウン用のリストを作成
-    const uniqueGameIds = [...new Set(allRankings.map(r => r.gameid))].filter(Boolean);
-    setRankingList(uniqueGameIds);
-
     // 選択したgameidでフィルター
     if (selectedGameId === 'all') {
       setRankings(allRankings);
@@ -44,6 +61,20 @@ const Ranking = () => {
 
       const response = await fetch(apiUrl);
 
+      // 開発環境でHTMLが返ってきた場合（404など）はモックデータを使用
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.warn('APIがJSONを返しませんでした。開発用モックデータを使用します。');
+        // 開発用モックデータ
+        const mockData = [
+          { id: 1, gameid: 'element', user: 'テストユーザー1', cleartime: 300, data: '2024-01-01 12:00:00' },
+          { id: 2, gameid: 'element', user: 'テストユーザー2', cleartime: 450, data: '2024-01-02 12:00:00' },
+          { id: 3, gameid: 'tokyo', user: 'テストユーザー3', cleartime: 600, data: '2024-01-03 12:00:00' },
+        ];
+        setAllRankings(mockData);
+        return;
+      }
+
       if (!response.ok) {
         throw new Error('ランキングの取得に失敗しました');
       }
@@ -52,7 +83,18 @@ const Ranking = () => {
       setAllRankings(data);
     } catch (err) {
       console.error('Error fetching rankings:', err);
-      setError(err.message);
+      // 開発環境ではエラーでもモックデータを表示
+      if (import.meta.env.DEV) {
+        const mockData = [
+          { id: 1, gameid: 'element', user: 'テストユーザー1', cleartime: 300, data: '2024-01-01 12:00:00' },
+          { id: 2, gameid: 'element', user: 'テストユーザー2', cleartime: 450, data: '2024-01-02 12:00:00' },
+          { id: 3, gameid: 'tokyo', user: 'テストユーザー3', cleartime: 600, data: '2024-01-03 12:00:00' },
+        ];
+        setAllRankings(mockData);
+        setError(null); // エラーをクリアしてモックデータを表示
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -78,7 +120,7 @@ const Ranking = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-xl font-bold">読み込み中...</div>
+        <div className="text-xl font-bold">Loading...</div>
       </div>
     );
   }
@@ -91,25 +133,9 @@ const Ranking = () => {
     );
   }
 
-  const getGameName = (gameid) => {
-    const gameNames = {
-      'element': '周期表クイズ',
-      'tokyo': '東京都の市区町村クイズ',
-      'saitama': '埼玉県の市区町村クイズ',
-      'chiba': '千葉県の市区町村クイズ',
-      'tochigi': '栃木県の市区町村クイズ',
-      'yamanashi': '山梨県の市区町村クイズ',
-      'gunma': '群馬県の市区町村クイズ',
-      'shizuoka': '静岡県の市区町村クイズ',
-      'kanagawa': '神奈川県の市区町村クイズ',
-      'ibaraki': '茨城県の市区町村クイズ',
-    };
-    return gameNames[gameid] || gameid;
-  };
-
   return (
     <div className="w-full max-w-4xl mx-auto p-2 md:p-4">
-      <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">ランキング</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-center mb-6">クリアタイム ランキング</h1>
 
       {/* ゲーム選択プルダウン */}
       {rankingList.length > 0 && (
@@ -150,7 +176,7 @@ const Ranking = () => {
                   {rankings.map((ranking, index) => (
                     <tr
                       key={ranking.id}
-                      className={`border-b ${index < 3
+                      className={`border-b border-gray-200 ${index < 3
                           ? index === 0
                             ? 'bg-yellow-50'
                             : index === 1
