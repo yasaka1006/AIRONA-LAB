@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Home from './components/Home';
 import Header from './components/assets/Header';
@@ -26,9 +26,33 @@ const Kanagawa = lazy(() => import('./components/minigames/Kanagawa'));
 const Ibaraki = lazy(() => import('./components/minigames/Ibaraki'));
 
 const Element = lazy(() => import('./components/minigames/Element'));
+const Monhan = lazy(() => import('./components/minigames/Monhan'));
+
+const PAGE_TITLES = {
+  '/': 'AIRONA-LAB',
+  '/equipments': '使用機材リスト - AIRONA-LAB',
+  '/ranking': 'ランキング - AIRONA-LAB',
+  '/tokyo': '東京都の市区町村全部言えるかな？ - AIRONA-LAB',
+  '/saitama': '埼玉クイズ - AIRONA-LAB',
+  '/chiba': '千葉県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/tochigi': '栃木県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/kanagawa': '神奈川県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/yamanashi': '山梨県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/gunma': '群馬県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/shizuoka': '静岡県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/ibaraki': '茨城県の市町村全部言えるかな？ - AIRONA-LAB',
+  '/element': '周期表の元素全部言えるかな？ - AIRONA-LAB',
+  '/monhan': 'モンハン歴代モンスター144種言えるかな？ - AIRONA-LAB',
+};
 
 function App() {
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const title = PAGE_TITLES[location.pathname] ?? 'AIRONA-LAB';
+    document.title = title;
+  }, [location.pathname]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -66,6 +90,13 @@ function App() {
                   <Route path="/ibaraki" element={<Ibaraki />} />
                   <Route path="/element" element={<Element />} />
                   <Route path="/ranking" element={<Ranking />} />
+                </Routes>
+              </Suspense>
+            </div>
+            <div className="w-full max-w-full lg:max-w-[93%] mx-auto px-2 sm:px-4 min-w-0 overflow-x-clip">
+              <Suspense fallback={<div className="flex justify-center items-center min-h-screen font-bold">Loading...</div>}>
+                <Routes>
+                  <Route path="/monhan" element={<Monhan />} />
                 </Routes>
               </Suspense>
             </div>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 import Timer from '../assets/Timer';
 import RankingAddButton from '../assets/RankingAddButton';
 
@@ -201,7 +202,8 @@ const Element = () => {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
-  const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(`周期表の元素全部言えるかな？を\n${clearTime}でクリアしました！\n`)}&url=https://airona-lab.com/element`
+  const pageUrl = typeof window !== 'undefined' ? `${window.location.origin}/element` : '';
+  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`周期表の元素全部言えるかな？を見事クリア！\nクリア時間: ${clearTime}\n正解数: 118/118\n`)}&url=${encodeURIComponent(pageUrl)}`;
 
 
   const isStarted = status === 'started';
@@ -297,11 +299,10 @@ const Element = () => {
       playSound(startOrClearSoundRef);
     }
   }, [elements, currentTime]);
-
-  // statusがidle以外のときにbeforeunloadイベントを設定
+  // isStartedのときだけ画面遷移の警告（beforeunload）を出す
   useEffect(() => {
-    if (status === 'idle') {
-      return; // idleのときはイベントを設定しない
+    if (!isStarted) {
+      return;
     }
 
     const handleBeforeUnload = (e) => {
@@ -316,7 +317,7 @@ const Element = () => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [status]);
+  }, [isStarted]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -346,6 +347,9 @@ const Element = () => {
     el.correct && el.id < 200 && Array.isArray(el.name) && el.name.length > 0
   ).length;
 
+  const shareSurrenderText = `周期表の元素全部言えるかな？に挑戦しました！\n経過時間: ${formatTime(currentTime)}\n正解数: ${correctCount}/118\n`;
+  const shareSurrenderUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareSurrenderText)}&url=${encodeURIComponent(pageUrl)}`;
+
   return (
     <>
       <section className="w-full max-w-full overflow-x-auto my-3 bg-white rounded-lg shadow mx-auto relative">
@@ -361,11 +365,11 @@ const Element = () => {
           </div>
         </div>
 
-        <h1 className="text-lg lg:text-3xl font-bold text-center mt-1">周期表の元素全部言えるかな？</h1>
+        <h1 className="text-md lg:text-3xl font-extrabold text-center mt-1">周期表の元素全部言えるかな？</h1>
 
         <div className="absolute top-3 right-0">
           <a href={`/ranking?gameid=${gameid}`} target="_blank" rel="noopener noreferrer">
-            <p className="text-[7px] lg:text-base text-blue-600 hover:text-blue-800 cursor-pointer mr-3">ランキングを見る</p>
+            <p className="text-[7px] lg:text-base text-blue-600 hover:text-blue-800 cursor-pointer lg:mr-3 mr-1">ランキングを見る</p>
           </a>
         </div>
 
@@ -475,9 +479,9 @@ const Element = () => {
               降参
             </button>
           )}
-          {isCleared && (
+          {(isCleared || isSurrendered) && (
             <a
-              href={shareUrl}
+              href={isCleared ? shareUrl : shareSurrenderUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="font-bold px-4 rounded-md bg-cyan-500 text-white hover:bg-cyan-600 cursor-pointer flex items-center justify-center"

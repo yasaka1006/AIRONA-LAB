@@ -50,7 +50,7 @@ const Home = () => {
             </div>
           </Link>
 
-          {/* 埼玉ゲーム */}
+          {/* 周期表ゲーム */}
           <Link
             to="/element"
             className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
@@ -68,6 +68,28 @@ const Home = () => {
               </h3>
               <p className="text-sm text-slate-600">
                 周期表の全118元素を全て言えるか挑戦しよう！
+              </p>
+            </div>
+          </Link>
+
+          {/* モンハンゲーム */}
+          <Link
+            to="/monhan"
+            className="block rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-100 bg-white"
+          >
+            <div className="w-full h-48 bg-slate-200 overflow-hidden">
+              <img
+                src="/thumbnail/monhan.png"
+                alt="周期表の元素全部言えるかな？"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-slate-800 mb-2">
+                モンハン歴代モンスター144種言えるかな？
+              </h3>
+              <p className="text-sm text-slate-600">
+                モンハン歴代モンスター144種を全て言えるか挑戦しよう！
               </p>
             </div>
           </Link>
@@ -140,7 +162,7 @@ const Home = () => {
             </div>
             <div className="p-4">
               <h3 className="text-lg font-bold text-slate-800 mb-2">
-                Links
+                リンク
               </h3>
               <p className="text-sm text-slate-600">
                 SNS等リンク集

@@ -50,27 +50,6 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
         };
     }, [isTimerRunning]);
 
-
-    // isGameStartedがtrueのときにbeforeunloadイベントを設定
-    useEffect(() => {
-        if (!isGameStarted) {
-            return; // ゲームが開始されていないときはイベントを設定しない
-        }
-
-        const handleBeforeUnload = (e) => {
-            // 標準的なブラウザ向けの対応
-            e.preventDefault();
-            // Chrome等で警告を出すために必要（空文字でOK）
-            e.returnValue = "";
-        };
-
-        window.addEventListener("beforeunload", handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, [isGameStarted]);
-
     // 全問正解チェック
     useEffect(() => {
         if (isGameStarted && correctAnswers.length === allDistricts.length) {
@@ -142,11 +121,27 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
     // 降参状態またはクリア状態のときは再挑戦ボタンを表示
     const showRetryButton = isCleared || isSurrendered;
 
-    // Twitter共有URLを生成
+    // プレイ中だけ画面遷移の警告（beforeunload）を出す
+    const isPlaying = isGameStarted && !isCleared && !isSurrendered;
+    useEffect(() => {
+        if (!isPlaying) return;
+
+        const handleBeforeUnload = (e) => {
+            e.preventDefault();
+            e.returnValue = '';
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [isPlaying]);
+
+    // Twitter共有URL（シンプルなaタグ用・クリア時と降参時で文言を切り替え）
     const twitterShareUrl = useMemo(() => {
-        const text = `${gameTitle}を${formatTime(time)}でクリアしました！\nhttps://airona-lab.com`;
-        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-    }, [gameTitle, time]);
+        const url = typeof window !== 'undefined' ? window.location.href : '';
+        const text = isCleared
+            ? `${gameTitle}を見事クリア！\nクリア時間: ${formatTime(time)}\n正解数: ${correctAnswers.length}/${allDistricts.length}\n`
+            : `${gameTitle}に挑戦しました！\n経過時間: ${formatTime(time)}\n正解数: ${correctAnswers.length}/${allDistricts.length}\n`;
+        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    }, [gameTitle, time, isCleared, correctAnswers.length, allDistricts.length]);
 
     // 開始ボタンのハンドラー
     const handleStart = () => {
@@ -595,18 +590,19 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
                             降参
                         </button>
                         }
-                        {isCleared &&
-                            <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
-                                <button
-                                    className="bg-black text-white font-bold px-3 py-2 rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
-                                >
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                    </svg>
-                                    共有
-                                </button>
+                        {(isCleared || isSurrendered) && (
+                            <a
+                                href={twitterShareUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-black text-white font-bold px-3 py-2 rounded-lg hover:bg-gray-800 transition flex items-center gap-2 inline-flex no-underline"
+                            >
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                </svg>
+                                共有
                             </a>
-                        }
+                        )}
                     </div>
                 </div>
             </div>
