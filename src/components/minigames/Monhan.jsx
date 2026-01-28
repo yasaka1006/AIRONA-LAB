@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import Timer from '../assets/Timer';
 import RankingAddButton from '../assets/RankingAddButton';
 
-const gameId = 'monhan';
+const gameid = 'monhan';
 
 const monsters = [
   { id: '1', name: ['ドスランポス', 'どすらんぽす'] },
@@ -284,7 +284,7 @@ const Monhan = () => {
               ref={(el) => { cardRefsMap.current[monster.id] = el; }}
               className="flex flex-col items-center @container group"
             >
-              <div className={`rounded-sm bg-slate-50 w-[99cqw] h-[99cqw] flex items-center justify-center overflow-hidden shadow-xl transition-all duration-100 hover:shadow-xl hover:scale-105 ${unansweredRevealed ? '[filter:grayscale(1)_brightness(1.2)_contrast(0.9)]' : ''}`}>
+              <div className={`rounded-sm bg-slate-50 w-[99cqw] h-[99cqw] flex items-center justify-center overflow-hidden shadow-xl ${unansweredRevealed ? '[filter:grayscale(1)_brightness(1.2)_contrast(0.9)]' : ''}`}>
                 {revealed ? (
                   <img
                     src={imagePath}
@@ -306,13 +306,19 @@ const Monhan = () => {
   };
 
   return (
-    <main className="w-full max-w-full min-w-0 my-4 space-y-3 p-3 sm:p-4 rounded-xl shadow-lg overflow-x-clip bg-gradient-to-br from-sky-50 via-slate-50 to-stone-200">
+    <main className="w-full max-w-full min-w-0 my-4 space-y-3 p-3 sm:p-4 rounded-xl shadow-lg overflow-x-clip bg-gradient-to-br from-sky-50 via-slate-50 to-stone-200 relative">
 
       <div className="text-center mb-4">
         <h1 className="md:text-3xl font-extrabold text-slate-800 mb-2 bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
           モンハン 歴代モンスター144種言えるかな？
         </h1>
-        <p className="text-xs text-slate-500">※亜種、希少種、二つ名など除く</p>
+        <p className="text-[7px] lg:text-xs text-slate-500">※小型モンスター、亜種、希少種、二つ名、特殊個体、フロンティアモンスターは除く</p>
+      </div>
+
+      <div className="absolute top-1 right-0">
+        <a href={`/ranking?gameid=${gameid}`} target="_blank" rel="noopener noreferrer">
+          <p className="text-[7px] lg:text-base text-blue-600 hover:text-blue-800 cursor-pointer lg:mr-3 mr-1">ランキングを見る</p>
+        </a>
       </div>
 
       <div className="flex flex-col sm:flex-row flex-wrap sm:items-center gap-4 p-4 bg-slate-100/95 rounded-xl border border-slate-200 sticky top-12 z-10">
@@ -425,7 +431,7 @@ const Monhan = () => {
             )}
             <div className="flex flex-col gap-4">
               <RankingAddButton
-                gameid={gameId}
+                gameid={gameid}
                 cleartime={currentTime}
                 onSuccess={() => setShowModal(false)}
               />

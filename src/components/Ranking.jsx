@@ -14,16 +14,16 @@ const Ranking = () => {
   // ゲーム名のマッピング
   const gameNames = {
     'element': '周期表クイズ',
+    'monhan': 'モンハンモンスタークイズ',
     'tokyo': '東京都の市区町村クイズ',
     'saitama': '埼玉県の市区町村クイズ',
+    'kanagawa': '神奈川県の市区町村クイズ',
     'chiba': '千葉県の市区町村クイズ',
     'tochigi': '栃木県の市区町村クイズ',
-    'yamanashi': '山梨県の市区町村クイズ',
     'gunma': '群馬県の市区町村クイズ',
-    'shizuoka': '静岡県の市区町村クイズ',
-    'kanagawa': '神奈川県の市区町村クイズ',
     'ibaraki': '茨城県の市区町村クイズ',
-    'monhan': 'モンハンモンスタークイズ',
+    'yamanashi': '山梨県の市区町村クイズ',
+    'shizuoka': '静岡県の市区町村クイズ',
   };
 
   // getGameName関数
@@ -132,7 +132,7 @@ const Ranking = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-2 md:p-4">
-      <h1 className="text-2xl md:text-3xl font-bold text-center mb-6">クリアタイム ランキング</h1>
+      <h1 className="text-2xl md:text-3xl font-extrabold text-center mb-6">クリアタイムランキング</h1>
 
       {/* ゲーム選択プルダウン */}
       {rankingList.length > 0 && (
