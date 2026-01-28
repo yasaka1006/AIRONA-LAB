@@ -410,6 +410,8 @@ const Monhan = () => {
       </div>
       <MonsterGrid startId={130} endId={144} />
 
+      <p className="text-xs text-slate-500">本サイトは個人による非公式のファンコンテンツです。使用されているモンスター名や画像等の著作権は、株式会社カプコンに帰属します。 </p>
+
       {/* 全問正解お祝いモーダル */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">

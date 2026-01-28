@@ -23,6 +23,7 @@ const Ranking = () => {
     'shizuoka': '静岡県の市区町村クイズ',
     'kanagawa': '神奈川県の市区町村クイズ',
     'ibaraki': '茨城県の市区町村クイズ',
+    'monhan': 'モンハンモンスタークイズ',
   };
 
   // getGameName関数
