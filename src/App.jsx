@@ -24,6 +24,7 @@ const Gunma = lazy(() => import('./components/minigames/Gunma'));
 const Shizuoka = lazy(() => import('./components/minigames/Shizuoka'));
 const Kanagawa = lazy(() => import('./components/minigames/Kanagawa'));
 const Ibaraki = lazy(() => import('./components/minigames/Ibaraki'));
+const Japan = lazy(() => import('./components/minigames/Japan'));
 
 const Element = lazy(() => import('./components/minigames/Element'));
 const Monhan = lazy(() => import('./components/minigames/Monhan'));
@@ -90,6 +91,7 @@ function App() {
                   <Route path="/ibaraki" element={<Ibaraki />} />
                   <Route path="/element" element={<Element />} />
                   <Route path="/ranking" element={<Ranking />} />
+                  <Route path="/japan" element={<Japan />} />
                 </Routes>
               </Suspense>
             </div>

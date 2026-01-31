@@ -15,6 +15,7 @@ const Ranking = () => {
   const gameNames = {
     'element': '周期表クイズ',
     'monhan': 'モンハンモンスタークイズ',
+    'japan': '日本の47都道府県クイズ',
     'tokyo': '東京都の市区町村クイズ',
     'saitama': '埼玉県の市区町村クイズ',
     'kanagawa': '神奈川県の市区町村クイズ',

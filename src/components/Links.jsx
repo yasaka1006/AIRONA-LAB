@@ -83,17 +83,17 @@ const Links = () => {
 
           {/* SNSセクション */}
           {links.map(link => (
-            <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center group bg-gray-100 rounded-md my-4 px-2 py-1 relative mx-2">
+            <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center group bg-slate-100 rounded-md my-4 px-2 py-1 relative mx-2">
               <img src={link.image} alt={link.title} className="border-2 border-slate-200 w-20 h-20 rounded-full object-cover group-hover:border-blue-400 group-hover:scale-108 transition-all duration-100" />
               <div className="ml-3 sm:ml-6">
-                <h2 className="text-xl font-bold mb-2 text-slate-700 group-hover:text-blue-600 transition-all duration-100">
+                <h2 className="text-xl font-extrabold mb-2 text-slate-700 group-hover:text-blue-600 transition-all duration-100">
                   {link.title}
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500">
                   {link.description}
                 </p>
               </div>
-              <div className="absolute bottom-1 right-1 bg-white rounded-full p-1.5 shadow-lg flex items-center gap-1 group-hover:bg-gray-200 transition-all duration-100">
+              <div className="absolute bottom-1 right-1 rounded-full p-1.5 flex items-center gap-1 group-hover:bg-white transition-all duration-100">
                 {link.icon && <img src={`/thumbnail/${link.icon}`} alt={link.icon} className="w-4 h-4 text-slate-600" />}
                 <img src="/thumbnail/external-link.svg" alt="外部リンク" className="w-4 h-4 text-slate-600" />
               </div>
