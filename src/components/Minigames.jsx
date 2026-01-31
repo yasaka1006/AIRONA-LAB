@@ -1,26 +1,24 @@
 import { Link } from 'react-router-dom';
 
-const GameCard = ({ game }) => {
-  return (
-    <Link to={game.link} className="group blockshadow-md overflow-hidden hover:scale-110 transition-all duration-100 bg-white">
-      <div className="bg-slate-100 rounded-full overflow-hidden">
-        <img src="/thumbnail/nihonchizu.png" alt={game.title} className="w-full h-full object-cover" />
-      </div>
-      <h3 className="text-md font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
-      <p className="text-sm text-slate-600 text-center">{game.description}</p>
-    </Link>
-  )
-}
-
 const GameSection = ({ title, games }) => {
   return (
     <>
-      <h3 className="text-2xl my-5 font-bold text-slate-800 bg-gradient-to-r from-green-300 to-cyan-100 rounded-full py-2 mx-auto w-fit px-10 shadow-sm">
+      <h3 className="text-2xl my-4 font-bold text-slate-800 bg-gradient-to-r from-green-300 to-cyan-100 rounded-full py-2 px-10 shadow-sm">
         {title}
       </h3>
-      <div className="grid grid-cols-3 lg:grid-cols-7 gap-6 md:gap-8 border-2 border-slate-100 p-4 shadow-sm">
+      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-6 md:gap-8 p-4">
         {games.map((game) => (
-          <GameCard key={game.link} game={game} />
+          <Link
+            key={game.link}
+            to={game.link}
+            className="group blockshadow-md overflow-hidden hover:scale-110 transition-all duration-100 bg-white"
+          >
+            <div className="bg-slate-100 rounded-full overflow-hidden shadow-md">
+              <img src="/thumbnail/nihonchizu.png" alt={game.title} className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-md font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
+            <p className="text-sm text-slate-600 text-center">{game.description}</p>
+          </Link>
         ))}
       </div>
     </>
@@ -97,9 +95,13 @@ const Minigames = () => {
 
   return (
     <>
+      <h1 className="text-3xl font-extrabold text-slate-800 text-center my-4">
+        クイズ&ゲーム
+      </h1>
+      
       <Link to="/monhan" className="group">
-        <section className="bg-white px-4 md:px-8 shadow-lg mx-2 my-4 mb-8 border-2 border-slate-200">
-          <div className="flex flex-col md:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-white mx-[-3%] ">
+        <section className="shadow-lg mx-2 my-4 mb-8 rounded-xl">
+          <div className="flex flex-col md:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-white rounded-xl">
             <img
               src="/thumbnail/monhan.png"
               alt="モンハン 歴代モンスター144種言えるかな？"
@@ -121,8 +123,8 @@ const Minigames = () => {
       </Link>
 
       <Link to="/element" className="group">
-        <section className="bg-white px-4 md:px-8 shadow-lg mx-2 my-4 mb-8 border-2 border-slate-200">
-          <div className="flex flex-col md:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-white mx-[-3%] ">
+        <section className="shadow-lg mx-2 my-4 mb-8 rounded-xl">
+          <div className="flex flex-col md:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-white rounded-xl">
             <img
               src="/thumbnail/element.png"
               alt="周期表タイピング"
@@ -144,12 +146,8 @@ const Minigames = () => {
       </Link>
 
       <section className="bg-white px-4 md:px-8 shadow-lg mx-2 my-4 border-2 border-slate-200 pb-4">
-        <div className="flex flex-col md:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-white mx-[-3%] border-b-2 border-slate-200">
-          <img
-            src="/thumbnail/japan2.png"
-            alt="日本の47都道府県全部言えるかな？"
-            className="w-full md:w-[42%] aspect-[16/10] object-cover"
-          />
+        <div className="flex flex-col md:flex-row overflow-hidden py-4">
+          <img src="/thumbnail/japan2.png" alt="日本の47都道府県全部言えるかな？" className="w-[42%] aspect-[16/10] object-cover shadow-lg rounded-xl hidden lg:block" />
           <div className="flex flex-col justify-center gap-2 p-5 md:p-7">
             <p className="w-fit rounded-full bg-slate-900 text-white text-xs font-bold tracking-wider px-3 py-1">
               MAP TYPING
@@ -158,12 +156,8 @@ const Minigames = () => {
               地区名をタイピングして、白地図を完成させよう
             </h3>
             <p className="text-sm md:text-base text-slate-600 leading-relaxed">
-              言えるかな？系の地図版ゲーム。<br />正解するたびに地図が埋まっていく、覚えて楽しいタイピングゲーム。
+              言えるかな？系の地図版ゲーム。<br />正解するたびに地図が埋まっていく、暗記タイピングゲーム。
             </p>
-            <Link to="/japan"
-              className="w-fit text-md font-bold tracking-wider p-3 mt-4 text-blue-600 hover:text-blue-700 transition-all duration-100 bg-slate-100 hover:scale-103">
-              ▶日本47都道府県全部言えるかな？をプレイ
-            </Link>
           </div>
         </div>
 

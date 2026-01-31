@@ -466,7 +466,7 @@ const Element = () => {
           {(isSurrendered || isCleared) && (
             <button
               onClick={startGame}
-              className="font-bold px-4 rounded-md bg-red-600 text-white hover:bg-red-700 cursor-pointer"
+              className="font-bold px-4 rounded-md bg-green-500 text-white hover:bg-green-600 cursor-pointer"
             >
               再挑戦
             </button>
@@ -492,6 +492,18 @@ const Element = () => {
         </div>
 
       </section>
+
+      {/* 遊び方 */}
+      <div className="bg-white mt-8 mb-4 py-5 px-2 md:px-5 rounded-xl shadow-lg">
+        <h3 className="lg:text-xl text-md font-extrabold text-slate-800 text-center">遊び方</h3>
+        <p className="lg:text-base text-xs font-bold text-slate-600 w-fit mx-auto my-4 leading-loose">
+          ・「開始」をクリック後、地域名を入力してEnterキーを押すと正解かどうか判定されます。<br />
+          ・元素名はひらがなでも入力可能です。例：「水素」→「すいそ」<br />
+          ・プレイ中に降参すると、未正解の元素が表示されます。<br />
+          ・全問正解するとクリアになり、ランキング登録が可能になります。<br />
+          ・繰り返しプレイすることで記憶が定着し全問正解に近づきます。頑張ってください！
+        </p>
+      </div>
 
       {/* 完了モーダル */}
       {showModal && (

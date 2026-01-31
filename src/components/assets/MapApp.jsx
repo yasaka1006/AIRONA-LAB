@@ -565,7 +565,7 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
                     </div>
 
                     {/* 統計数値 */}
-                    <div className="flex gap-8 items-center text-slate-600">
+                    <div className="flex gap-4 items-center text-slate-600">
                         <div>
                             <p className="text-[14px] uppercase tracking-widest text-slate-400">
                                 経過時間
@@ -595,16 +595,24 @@ const MapApp = ({ allDistricts, children, gameTitle, gameid, isWide }) => {
                                 href={twitterShareUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-black text-white font-bold px-3 py-2 rounded-lg hover:bg-gray-800 transition flex items-center gap-2 inline-flex no-underline"
+                                className="bg-cyan-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-cyan-600 transition shrink-0"
                             >
-                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
                                 共有
                             </a>
                         )}
                     </div>
                 </div>
+            </div>
+
+            <div className="bg-white mt-8 mb-4 py-5 px-2 md:px-5 rounded-xl shadow-lg">
+                <h3 className="lg:text-xl text-md font-extrabold text-slate-800 text-center">遊び方</h3>
+                <p className="lg:text-base text-xs font-bold text-slate-600 w-fit mx-auto my-4 leading-loose">
+                    ・「開始」をクリック後、地域名を入力してEnterキーを押すと正解かどうか判定されます。<br />
+                    ・地域名はひらがなでも入力可能です。例：「新宿区」→「しんじゅくく」<br />
+                    ・プレイ中に降参すると、未正解の地区が赤文字で表示されます。<br />
+                    ・全問正解するとクリアになり、ランキング登録が可能になります。<br />
+                    ・繰り返しプレイすることで記憶が定着し全問正解に近づきます。頑張ってください！
+                </p>
             </div>
         </>
     );

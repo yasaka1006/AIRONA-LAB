@@ -416,7 +416,18 @@ const Monhan = () => {
       </div>
       <MonsterGrid startId={130} endId={144} />
 
-      <p className="text-xs text-slate-500">本サイトは個人による非公式のファンコンテンツです。使用されているモンスター名や画像等の著作権は、株式会社カプコンに帰属します。 </p>
+      <div className="bg-white mt-8 mb-4 py-5 px-2 md:px-5 rounded-xl shadow-lg">
+        <h3 className="lg:text-xl text-md font-extrabold text-slate-800 text-center">遊び方</h3>
+        <p className="lg:text-base text-xs font-bold text-slate-600 w-fit mx-auto my-4 leading-loose">
+          ・「開始」をクリック後、モンスター名を入力してEnterキーを押すと正解かどうか判定されます。<br />
+          ・モンスター名はひらがなでも入力可能です。例：「リオレウス」→「りおれうす」<br />
+          ・プレイ中に降参すると、未正解のモンスターが赤文字で表示されます。<br />
+          ・全問正解するとクリアになり、ランキング登録が可能になります。<br />
+          ・繰り返しプレイすることで記憶が定着し全問正解に近づきます。頑張ってください！
+        </p>
+      </div>
+
+      <p className="text-xs text-slate-500">本ページは個人による非公式のファンコンテンツです。使用されているモンスター名や画像等の著作権は、株式会社カプコンに帰属します。 </p>
 
       {/* 全問正解お祝いモーダル */}
       {showModal && (

@@ -36,7 +36,7 @@ const Home = () => {
             <div className="w-full h-48 bg-slate-200 overflow-hidden">
               <img
                 src="/thumbnail/japan.png"
-                alt="東京都の市区町村全部言えるかな？"
+                alt="東京都の47都道府県全部言えるかな？"
                 className="w-full h-full object-cover"
               />
             </div>
