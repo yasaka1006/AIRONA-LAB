@@ -138,7 +138,7 @@ const Element = () => {
     { id: 96, symbol: 'Cm', name: ['キュリウム', 'きゅりうむ', 'Curium'], atomicNumber: 96, atomicMass: 247, color: 'purple', column: 10, row: 10, correct: false },
     { id: 97, symbol: 'Bk', name: ['バークリウム', 'ばーくりうむ', 'Berkelium'], atomicNumber: 97, atomicMass: 247, color: 'purple', column: 11, row: 10, correct: false },
     { id: 98, symbol: 'Cf', name: ['カリホルニウム', 'かりほるにうむ', 'Californium'], atomicNumber: 98, atomicMass: 251, color: 'purple', column: 12, row: 10, correct: false },
-    { id: 99, symbol: 'Es', name: ['アインシュタイニウム', 'あいんしゅたいにうむ', 'Einsteinium'], atomicNumber: 99, atomicMass: 252, color: 'purple', column: 13, row: 10, correct: false },
+    { id: 99, symbol: 'Es', name: ['アインスタイニウム', 'あいんすたいにうむ', 'Einsteinium'], atomicNumber: 99, atomicMass: 252, color: 'purple', column: 13, row: 10, correct: false },
     { id: 100, symbol: 'Fm', name: ['フェルミウム', 'ふぇるみうむ', 'Fermium'], atomicNumber: 100, atomicMass: 257, color: 'purple', column: 14, row: 10, correct: false },
     { id: 101, symbol: 'Md', name: ['メンデレビウム', 'めんでれびうむ', 'Mendelevium'], atomicNumber: 101, atomicMass: 258, color: 'purple', column: 15, row: 10, correct: false },
     { id: 102, symbol: 'No', name: ['ノーベリウム', 'のーべりうむ', 'Nobelium'], atomicNumber: 102, atomicMass: 259, color: 'purple', column: 16, row: 10, correct: false },
