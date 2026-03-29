@@ -34,6 +34,12 @@ const Equipments = () => {
       link: 'https://www.google.com/search?q=Epiphone+Lespaul+Standard+Trans+Blue&sca_esv=75d7ba9b8a0ac0c1&udm=28&biw=1920&bih=911&sxsrf=AE3TifNLiTC1qnHwG61rGLD1zx2TER0ZQA%3A1767574573309&ei=LQxbaYzUEtSi1e8P_rqp4Ac&ved=0ahUKEwjMnrm0mPORAxVUUfUHHX5dCnwQ4dUDCBE&oq=Epiphone+Lespaul+Standard+Trans+Blue&gs_lp=Ehlnd3Mtd2l6LW1vZGVsZXNzLXNob3BwaW5nIiRFcGlwaG9uZSBMZXNwYXVsIFN0YW5kYXJkIFRyYW5zIEJsdWUyBxAjGLQEGCdI9whQywFYywFwAXgBkAEAmAFYoAFYqgEBMbgBDMgBAPgBAZgCAqACXcICChAAGLADGNYEGEeYAwCIBgGQBgSSBwEyoAecArIHATG4B1vCBwMwLjLIBwOACAA&sclient=gws-wiz-modeless-shopping',
     },
     {
+      name: 'Gibson Lespaul Special',
+      image: '/equipments/guitarGibSpe.webp',
+      description: 'Color: TV Yellow<br />2026年に購入<br />昔から欲しくてやっと購入できました BUMPのイメージが強いですね<br />使用ジャンル: 洋楽など',
+      link: 'https://www.digimart.net/search?keywordAnd=GIBSON+LES+PAUL+SPECIAL',
+    },
+    {
       name: 'Ibanez PF12MHCE',
       image: '/equipments/guitarAco.webp',
       description: 'Color: Open Pore Natural<br />2020年に購入<br />やすい。色おしゃれ。<br />使用ジャンル: J-POPなど',
@@ -440,12 +446,13 @@ const Equipments = () => {
         {guitars.map((guitar, index) => (
           <div key={index}>
             {index > 0 && <div className="block h-px bg-slate-200 my-6 lg:my-10"></div>}
-            <div className={`xl:flex items-center gap-4 md:gap-6 xl:gap-8 mb-6 xl:mb-10`}>
-              <div className="w-full md:w-[70%] mx-auto xl:w-[45%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-600 italic mb-3 md:mb-4 bg-slate-100 p-2 rounded-md px-3 text-center">{guitar.name}</h3>
+            <div className={`xl:flex xl:items-start gap-4 md:gap-6 xl:gap-8 mb-6 xl:mb-10`}>
+              <div className="w-full md:w-[70%] mx-auto xl:w-[45%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md mb-4 xl:mb-0">
                 <img src={guitar.image} alt={guitar.name} className="w-full h-full object-cover" />
               </div>
               <div className="w-full xl:w-[55%]">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md px-3">{guitar.name}</h3>
+                
                 <div className="px-4">
                   <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: guitar.description }}></p>
                   <a href={guitar.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold">
