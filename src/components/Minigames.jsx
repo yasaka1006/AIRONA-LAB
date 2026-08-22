@@ -13,7 +13,7 @@ const GameSection = ({ title, games }) => {
             to={game.link}
             className="group blockshadow-md overflow-hidden hover:scale-110 transition-all duration-100 bg-white"
           >
-            <div className="bg-slate-100 rounded-full overflow-hidden shadow-md">
+            <div className="bg-slate-100 rounded-xl overflow-hidden shadow-sm">
               <img src="/thumbnail/nihonchizu.png" alt={game.title} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-md font-bold text-slate-800 text-center group-hover:text-blue-600 transition-all duration-100">{game.title}</h3>
@@ -95,10 +95,17 @@ const Minigames = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold text-slate-800 text-center my-4">
-        クイズ&ゲーム
-      </h1>
-      
+      <div className="flex justify-between items-center mx-2 my-4 px-4">
+        <h1 className="text-3xl font-extrabold text-slate-800 text-center">
+          ゲーム一覧
+        </h1>
+        <div className="flex justify-end">
+          <Link to="/ranking" className="font-bold xl:text-sm text-xs text-slate-600 text-center rounded-full bg-slate-100 xl:px-4 px-2 py-1 hover:bg-slate-200 transition-all duration-100">
+            各ランキングはこちら
+          </Link>
+        </div>
+      </div>
+
       <Link to="/monhan" className="group">
         <section className="shadow-lg mx-2 my-4 mb-8 rounded-xl">
           <div className="flex flex-col md:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-white rounded-xl">
@@ -109,7 +116,7 @@ const Minigames = () => {
             />
             <div className="flex flex-col justify-center gap-2 p-5 md:p-7">
               <p className="w-fit rounded-full bg-slate-900 text-white text-xs font-bold tracking-wider px-3 py-1">
-                MONHAN TYPING
+                TYPING
               </p>
               <h3 className="text-xl md:text-2xl font-extrabold text-blue-500 leading-snug group-hover:text-blue-600 group-hover:scale-103 transition-all duration-100 bg-slate-100 p-3">
                 ▶モンハン 歴代モンスター144種言えるかな？
@@ -132,7 +139,7 @@ const Minigames = () => {
             />
             <div className="flex flex-col justify-center gap-2 p-5 md:p-7">
               <p className="w-fit rounded-full bg-slate-900 text-white text-xs font-bold tracking-wider px-3 py-1">
-                ELEMENTS TYPING
+                TYPING
               </p>
               <h3 className="text-xl md:text-2xl font-extrabold text-blue-500 leading-snug group-hover:text-blue-600 group-hover:scale-103 transition-all duration-100 bg-slate-100 p-3">
                 ▶周期表の元素全部言えるかな？
@@ -150,7 +157,7 @@ const Minigames = () => {
           <img src="/thumbnail/japan2.png" alt="日本の47都道府県全部言えるかな？" className="w-[42%] aspect-[16/10] object-cover shadow-lg rounded-xl hidden lg:block" />
           <div className="flex flex-col justify-center gap-2 p-5 md:p-7">
             <p className="w-fit rounded-full bg-slate-900 text-white text-xs font-bold tracking-wider px-3 py-1">
-              MAP TYPING
+              TYPING
             </p>
             <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-snug">
               地区名をタイピングして、白地図を完成させよう

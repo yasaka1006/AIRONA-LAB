@@ -68,9 +68,9 @@ function App() {
       <ViewTop />
       <div className="bg-slate-50 min-h-screen text-slate-800 flex flex-col font-mplus1">
         <Header onMenuClick={toggleSidebar} />
+        <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
         <div className="flex pt-12 flex-1">
-          <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-          <div className="w-full flex-1 xl:ml-48 xl:mr-48">
+          <div className="w-full flex-1">
             <div className="w-full max-w-6xl mx-auto md:main-content-centered px-2">
               <Suspense fallback={<div className="flex justify-center items-center min-h-screen font-bold">Loading...</div>}>
                 <Routes>

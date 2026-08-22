@@ -1,37 +1,74 @@
 import { Link } from 'react-router-dom';
 
+const isJapanese = (navigator.languages?.[0] ?? navigator.language ?? '')
+  .toLowerCase()
+  .startsWith('ja');
+
+const labels = isJapanese
+  ? {
+      home: 'ホーム',
+      games: 'ゲーム',
+      ranking: 'ランキング',
+      equipments: '使用機材リスト',
+      mcp: 'Minecraft Portfolio',
+      links: 'リンク',
+      close: 'メニューを閉じる',
+    }
+  : {
+      home: 'Home',
+      games: 'Games',
+      ranking: 'Ranking',
+      equipments: 'Equipment',
+      mcp: 'Minecraft Portfolio',
+      links: 'Links',
+      close: 'Close menu',
+    };
+
+const menuItemClass =
+  'block font-bold text-gray-600 hover:text-gray-800 hover:bg-slate-300 rounded-md px-4 py-3 transition-colors duration-100';
+
 const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
-      {/* オーバーレイ（モバイル・タブレット用） */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-[49] xl:hidden"
           onClick={onClose}
+          aria-hidden="true"
         />
       )}
 
-      {/* サイドバー */}
-      <div className={`
-        fixed top-12 left-0 h-[calc(100vh-3rem)] bg-gray-200 text-slate-800 py-4 z-50
-        transform transition-transform duration-300 ease-in-out
-        w-48 overflow-y-auto
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        xl:translate-x-0 xl:fixed xl:top-12 xl:h-[calc(100vh-3rem)] xl:z-40
-        xl:block
-      `}
-        style={{ marginTop: 0 }}
+      <nav
+        className={`
+          fixed top-12 left-0 h-[calc(100vh-3rem)] w-56 bg-slate-200 text-slate-800 py-4 z-50
+          transform transition-transform duration-300 ease-in-out overflow-y-auto
+          xl:hidden
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
+        aria-hidden={!isOpen}
       >
-        <div className="space-y-1">
-          <Link to="/" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>トップページ</Link>
-          <Link to="/minigames" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>クイズ&ゲーム</Link>
-          <Link to="/ranking" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>ランキング</Link>
-          <div className="block h-[2px] bg-slate-300 my-3 mx-4"></div>
-          <Link to="/equipments" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>使用機材リスト</Link>
-          <Link to="/mcp" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>Minecraft Portfolio</Link>
-          <Link to="/links" className="block hover:text-blue-700 transition cursor-pointer font-bold hover:bg-slate-300 px-4 py-2" onClick={onClose}>リンク</Link>
+        <div className="space-y-1 px-2">
+          <Link to="/" className={menuItemClass} onClick={onClose}>
+            {labels.home}
+          </Link>
+          <Link to="/minigames" className={menuItemClass} onClick={onClose}>
+            {labels.games}
+          </Link>
+          <Link to="/ranking" className={menuItemClass} onClick={onClose}>
+            {labels.ranking}
+          </Link>
+          <div className="h-[2px] bg-slate-300 my-3 mx-2" />
+          <Link to="/equipments" className={menuItemClass} onClick={onClose}>
+            {labels.equipments}
+          </Link>
+          <Link to="/mcp" className={menuItemClass} onClick={onClose}>
+            {labels.mcp}
+          </Link>
+          <Link to="/links" className={menuItemClass} onClick={onClose}>
+            {labels.links}
+          </Link>
         </div>
-      </div>
+      </nav>
     </>
   );
 };
