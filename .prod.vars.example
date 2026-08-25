@@ -1,0 +1,17 @@
+# 本番 Pages Secrets 用（git に入れない）
+# 1. このファイルを .prod.vars にコピーして値を埋める
+# 2. npx wrangler pages secret bulk .prod.vars --project-name aironalab
+# COMMERCE_DEV_* は絶対に入れない
+
+STRIPE_SECRET_KEY=sk_test_xxx
+# Stripe Dashboard の Webhook（本番 URL 向け）の Signing secret。stripe listen の whsec ではない
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+STRIPE_PRICE_ID=price_xxx
+RESEND_API_KEY=re_xxx
+MAIL_FROM="AIRONA-LAB <noreply@airona-lab.com>"
+APP_BASE_URL=https://airona-lab.com
+SESSION_SECRET=generate-a-long-random-hex
+DOWNLOAD_URL_TTL_SEC=3600
+MAGIC_LINK_TTL_SEC=900
+DEMO_WEB_URL=https://tabbeast-demo.pages.dev
+DEMO_WIN_URL=

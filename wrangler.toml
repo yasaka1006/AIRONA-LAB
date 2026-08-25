@@ -1,0 +1,25 @@
+# Cloudflare Pages — AIRONA-LAB
+# database_id / bucket はダッシュボード作成後に差し替えること
+
+name = "airona-lab"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "dist"
+
+# 既存ランキング用
+[[d1_databases]]
+binding = "DB"
+database_name = "ranking"
+database_id = "bf2722de-0420-4a42-baab-6f993515cc48"
+preview_database_id = "bf2722de-0420-4a42-baab-6f993515cc48"
+
+# 販売・配信用
+[[d1_databases]]
+binding = "COMMERCE_DB"
+database_name = "airona-commerce"
+database_id = "89dee874-1fb5-440f-826e-09690860ce1e"
+preview_database_id = "89dee874-1fb5-440f-826e-09690860ce1e"
+
+[[r2_buckets]]
+binding = "PRODUCTS"
+bucket_name = "tabbeast-products"
+preview_bucket_name = "tabbeast-products"

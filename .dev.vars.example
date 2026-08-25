@@ -1,0 +1,28 @@
+# Cloudflare Pages / wrangler pages dev 用（Secrets のローカル相当）
+# このファイルをコピー: cp .dev.vars.example .dev.vars
+# .dev.vars は git に入れない
+
+STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+STRIPE_PRICE_ID=price_xxx
+RESEND_API_KEY=re_xxx
+# 検証済みドメイン推奨。テストのみなら onboarding@resend.dev
+MAIL_FROM=TABbeast <noreply@example.com>
+APP_BASE_URL=http://127.0.0.1:8788
+SESSION_SECRET=change-me-to-a-long-random-string
+DOWNLOAD_URL_TTL_SEC=3600
+MAGIC_LINK_TTL_SEC=900
+DEMO_WEB_URL=https://tabbeast-demo.pages.dev
+# DEMO Windows の公開 DL URL（未設定ならボタンは準備中表示）
+DEMO_WIN_URL=
+
+# P1 ローカル確認用（本番では付けない）
+# 1 にすると、未購入メールでもモック購入権を付けてリンクを返す
+COMMERCE_DEV_ALLOW_ANY_EMAIL=1
+COMMERCE_DEV_RETURN_LINK=1
+# Stripe 未設定時、同意＋メールで権利を付与してマイページへ（本番禁止）
+COMMERCE_DEV_FAKE_CHECKOUT=1
+# R2 に実ファイルが無いとき、小さなプレースホルダ zip を返す
+COMMERCE_DEV_FAKE_DOWNLOAD=1
+# R2 に full_web が無いとき、ゲート通過後にプレースホルダ HTML を返す
+COMMERCE_DEV_FAKE_APP=1

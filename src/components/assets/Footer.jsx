@@ -8,14 +8,20 @@ const Footer = () => {
           <p className="text-center sm:text-left">
             © 2026 AironA. All rights reserved.
           </p>
-          <p className="text-center sm:text-right">
-            AIRONA-LAB
-          </p>
-          <Link to="/privacy-policy">
-            <p className="text-center sm:text-right underline">
-              プライバシーポリシー・免責事項
-            </p>
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3 sm:justify-end">
+            <Link to="/tabbeast" className="underline">
+              TABbeast
+            </Link>
+            <Link to="/legal/terms" className="underline">
+              利用規約
+            </Link>
+            <Link to="/legal/tokushoho" className="underline">
+              特商法
+            </Link>
+            <Link to="/privacy-policy" className="underline">
+              プライバシーポリシー
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
@@ -23,4 +29,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

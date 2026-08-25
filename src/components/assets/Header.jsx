@@ -43,8 +43,8 @@ const Header = ({ onMenuClick }) => {
           </div>
         </div>
 
-        {/* モバイル時のレイアウトバランス用 */}
-        <div className="w-10 xl:hidden" aria-hidden="true" />
+        {/* 右側のバランス用（モバイルのハンバーガーと対称） */}
+        <div className="xl:hidden w-10" aria-hidden="true" />
       </div>
     </header>
   );

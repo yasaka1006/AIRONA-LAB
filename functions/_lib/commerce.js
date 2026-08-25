@@ -1,0 +1,529 @@
+/** Commerce API shared helpers (Pages Functions). */
+
+export const PRODUCT_ID_FULL = "tabbeast_full";
+export const PRODUCT_ID_DEMO = "tabbeast_demo";
+export const SESSION_COOKIE = "tb_session";
+export const SESSION_TTL_SEC = 60 * 60 * 24 * 30;
+
+export function json(data, init = {}) {
+  const headers = new Headers(init.headers);
+  headers.set("Content-Type", "application/json; charset=utf-8");
+  return new Response(JSON.stringify(data), { ...init, headers });
+}
+
+export function error(status, code, message) {
+  return json({ error: code, message }, { status });
+}
+
+export function notImplemented(feature) {
+  return error(
+    501,
+    "not_implemented",
+    `${feature} is scaffolded. Implementation comes in a later phase.`,
+  );
+}
+
+export function methodNotAllowed(allowed) {
+  return error(405, "method_not_allowed", `Allowed: ${allowed.join(", ")}`);
+}
+
+export function commerceDb(env) {
+  return env.COMMERCE_DB ?? null;
+}
+
+export function appBaseUrl(env, request) {
+  const configured = env.APP_BASE_URL?.replace(/\/$/, "");
+  if (configured) return configured;
+  const url = new URL(request.url);
+  return `${url.protocol}//${url.host}`;
+}
+
+export function magicLinkTtlSec(env) {
+  const n = Number(env.MAGIC_LINK_TTL_SEC ?? 900);
+  return Number.isFinite(n) && n > 0 ? n : 900;
+}
+
+export function isDevFlag(env, name) {
+  const v = env[name];
+  return v === "1" || v === "true" || v === "TRUE";
+}
+
+export function sameSitePost(request, env) {
+  const origin = request.headers.get("Origin");
+  if (!origin) return true;
+  try {
+    const originHost = new URL(origin).origin;
+    const requestHost = new URL(request.url).origin;
+    const configured = new URL(appBaseUrl(env, request)).origin;
+    return originHost === requestHost || originHost === configured;
+  } catch {
+    return false;
+  }
+}
+
+export function normalizeEmail(raw) {
+  if (typeof raw !== "string") return "";
+  return raw.trim().toLowerCase();
+}
+
+export function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+export async function readJson(request) {
+  try {
+    return await request.json();
+  } catch {
+    return null;
+  }
+}
+
+export function bindingStatus(env) {
+  return {
+    COMMERCE_DB: Boolean(env.COMMERCE_DB),
+    PRODUCTS: Boolean(env.PRODUCTS),
+    DB: Boolean(env.DB),
+    STRIPE_SECRET_KEY: Boolean(env.STRIPE_SECRET_KEY),
+    STRIPE_WEBHOOK_SECRET: Boolean(env.STRIPE_WEBHOOK_SECRET),
+    STRIPE_PRICE_ID: Boolean(env.STRIPE_PRICE_ID),
+    RESEND_API_KEY: Boolean(env.RESEND_API_KEY),
+    MAIL_FROM: Boolean(env.MAIL_FROM),
+    APP_BASE_URL: Boolean(env.APP_BASE_URL),
+    SESSION_SECRET: Boolean(env.SESSION_SECRET),
+    DOWNLOAD_URL_TTL_SEC: env.DOWNLOAD_URL_TTL_SEC ?? "3600",
+    MAGIC_LINK_TTL_SEC: env.MAGIC_LINK_TTL_SEC ?? "900",
+    DEMO_WEB_URL: env.DEMO_WEB_URL ?? null,
+    DEMO_WIN_URL: env.DEMO_WIN_URL ?? null,
+  };
+}
+
+export function randomHex(bytes = 32) {
+  const buf = new Uint8Array(bytes);
+  crypto.getRandomValues(buf);
+  return [...buf].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function bytesToHex(buffer) {
+  return [...new Uint8Array(buffer)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+export function downloadTtlSec(env) {
+  const n = Number(env.DOWNLOAD_URL_TTL_SEC ?? 3600);
+  return Number.isFinite(n) && n > 0 ? n : 3600;
+}
+
+export async function hmacSha256Hex(secret, message) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret || "dev-session-secret"),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signed = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(message),
+  );
+  return bytesToHex(signed);
+}
+
+function toBase64Url(text) {
+  const bytes = new TextEncoder().encode(text);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+function fromBase64Url(text) {
+  const padded = text.replace(/-/g, "+").replace(/_/g, "/");
+  const pad = "=".repeat((4 - (padded.length % 4)) % 4);
+  const bin = atob(padded + pad);
+  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+export async function createDownloadToken(env, payload) {
+  const exp = Math.floor(Date.now() / 1000) + downloadTtlSec(env);
+  const body = [
+    payload.customerId,
+    payload.channel,
+    payload.r2Key,
+    payload.filename,
+    payload.version,
+    exp,
+  ].join("|");
+  const sig = await hmacSha256Hex(env.SESSION_SECRET, body);
+  return toBase64Url(`${body}|${sig}`);
+}
+
+export async function parseDownloadToken(env, token) {
+  if (!token) return null;
+  let decoded;
+  try {
+    decoded = fromBase64Url(token);
+  } catch {
+    return null;
+  }
+  const parts = decoded.split("|");
+  if (parts.length !== 7) return null;
+  const [customerId, channel, r2Key, filename, version, expRaw, sig] = parts;
+  const body = [customerId, channel, r2Key, filename, version, expRaw].join("|");
+  const expected = await hmacSha256Hex(env.SESSION_SECRET, body);
+  if (sig !== expected) return null;
+  const exp = Number(expRaw);
+  if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return null;
+  return {
+    customerId: Number(customerId),
+    channel,
+    r2Key,
+    filename,
+    version,
+    exp,
+  };
+}
+
+export async function getLatestRelease(db, productId, channel) {
+  return db
+    .prepare(
+      `SELECT product_id, channel, version, r2_key, public_url
+       FROM releases
+       WHERE product_id = ? AND channel = ? AND is_latest = 1
+       LIMIT 1`,
+    )
+    .bind(productId, channel)
+    .first();
+}
+
+export function filenameFromR2Key(r2Key, fallback = "download.zip") {
+  if (!r2Key) return fallback;
+  const parts = r2Key.split("/").filter(Boolean);
+  const last = parts[parts.length - 1];
+  return last && last.includes(".") ? last : fallback;
+}
+
+/** Tiny placeholder zip when R2 object is missing (local only). */
+export function placeholderZipBytes(version) {
+  const name = "README.txt";
+  const content = `TABbeast placeholder package (${version})\nReplace this with a real build in R2.\n`;
+  const data = new TextEncoder().encode(content);
+  const nameBytes = new TextEncoder().encode(name);
+
+  const localHeader = new Uint8Array(30 + nameBytes.length);
+  const view = new DataView(localHeader.buffer);
+  view.setUint32(0, 0x04034b50, true);
+  view.setUint16(8, 0, true); // store
+  view.setUint32(18, data.length, true);
+  view.setUint32(22, data.length, true);
+  view.setUint16(26, nameBytes.length, true);
+  localHeader.set(nameBytes, 30);
+
+  const central = new Uint8Array(46 + nameBytes.length);
+  const cview = new DataView(central.buffer);
+  cview.setUint32(0, 0x02014b50, true);
+  cview.setUint32(16, data.length, true);
+  cview.setUint32(20, data.length, true);
+  cview.setUint16(28, nameBytes.length, true);
+  central.set(nameBytes, 46);
+
+  const end = new Uint8Array(22);
+  const eview = new DataView(end.buffer);
+  eview.setUint32(0, 0x06054b50, true);
+  eview.setUint16(8, 1, true);
+  eview.setUint16(10, 1, true);
+  eview.setUint32(12, central.length, true);
+  eview.setUint32(16, localHeader.length + data.length, true);
+
+  const out = new Uint8Array(
+    localHeader.length + data.length + central.length + end.length,
+  );
+  out.set(localHeader, 0);
+  out.set(data, localHeader.length);
+  out.set(central, localHeader.length + data.length);
+  out.set(end, localHeader.length + data.length + central.length);
+  return out;
+}
+
+export async function hashToken(token, env) {
+  const secret = env.SESSION_SECRET || "";
+  const payload = secret ? `${secret}:${token}` : token;
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(payload),
+  );
+  return bytesToHex(digest);
+}
+
+export function parseCookie(request, name) {
+  const header = request.headers.get("Cookie") || "";
+  const parts = header.split(";");
+  for (const part of parts) {
+    const trimmed = part.trim();
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    if (trimmed.slice(0, eq) === name) {
+      return decodeURIComponent(trimmed.slice(eq + 1));
+    }
+  }
+  return "";
+}
+
+function cookieSecure(request) {
+  return new URL(request.url).protocol === "https:";
+}
+
+export function sessionCookieHeader(request, rawId, { clear = false } = {}) {
+  const secure = cookieSecure(request) ? "; Secure" : "";
+  if (clear) {
+    return `${SESSION_COOKIE}=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax${secure}`;
+  }
+  return `${SESSION_COOKIE}=${encodeURIComponent(rawId)}; Path=/; Max-Age=${SESSION_TTL_SEC}; HttpOnly; SameSite=Lax${secure}`;
+}
+
+export async function getSession(env, request) {
+  const db = commerceDb(env);
+  if (!db) return null;
+  const raw = parseCookie(request, SESSION_COOKIE);
+  if (!raw) return null;
+  const sessionHash = await hashToken(raw, env);
+  const row = await db
+    .prepare(
+      `SELECT s.id AS session_id, s.customer_id, s.expires_at, c.email
+       FROM sessions s
+       JOIN customers c ON c.id = s.customer_id
+       WHERE s.session_hash = ?
+         AND datetime(s.expires_at) > datetime('now')`,
+    )
+    .bind(sessionHash)
+    .first();
+  if (!row) return null;
+  return {
+    sessionId: row.session_id,
+    customerId: row.customer_id,
+    email: row.email,
+    sessionHash,
+  };
+}
+
+export async function requireSession(env, request) {
+  const session = await getSession(env, request);
+  if (!session) {
+    return { session: null, response: error(401, "unauthorized", "Login required") };
+  }
+  return { session, response: null };
+}
+
+export async function hasActiveFullEntitlement(db, customerId) {
+  const row = await db
+    .prepare(
+      `SELECT id FROM entitlements
+       WHERE customer_id = ? AND product_id = ? AND status = 'active'
+       LIMIT 1`,
+    )
+    .bind(customerId, PRODUCT_ID_FULL)
+    .first();
+  return Boolean(row);
+}
+
+export async function findCustomerByEmail(db, email) {
+  return db
+    .prepare("SELECT id, email FROM customers WHERE email = ?")
+    .bind(email)
+    .first();
+}
+
+export async function ensureDevPurchaser(db, email) {
+  let customer = await findCustomerByEmail(db, email);
+  if (!customer) {
+    await db
+      .prepare("INSERT INTO customers (email) VALUES (?)")
+      .bind(email)
+      .run();
+    customer = await findCustomerByEmail(db, email);
+  }
+  if (!customer) return null;
+  const entitled = await hasActiveFullEntitlement(db, customer.id);
+  if (!entitled) {
+    await db
+      .prepare(
+        `INSERT INTO entitlements (customer_id, product_id, status)
+         VALUES (?, ?, 'active')`,
+      )
+      .bind(customer.id, PRODUCT_ID_FULL)
+      .run();
+  }
+  return customer;
+}
+
+export async function sendResendEmail(env, { to, subject, html }) {
+  const apiKey = env.RESEND_API_KEY;
+  const from = env.MAIL_FROM;
+  if (!apiKey || !from || apiKey.startsWith("re_xxx")) {
+    return { sent: false, reason: "not_configured" };
+  }
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ from, to, subject, html }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => "");
+    console.error("resend_failed", res.status, detail.slice(0, 500));
+    return { sent: false, status: res.status, reason: "resend_error" };
+  }
+  return { sent: true, status: res.status };
+}
+
+export async function sendMagicLinkEmail(env, { to, verifyUrl }) {
+  return sendResendEmail(env, {
+    to,
+    subject: "TABbeast ログインリンク",
+    html: `<p>TABbeast のマイページにログインするには、次のリンクを開いてください。</p>
+<p><a href="${verifyUrl}">${verifyUrl}</a></p>
+<p>このリンクは15分間有効で、1回のみ使用できます。</p>
+<p>心当たりがない場合はこのメールを無視してください。</p>`,
+  });
+}
+
+export async function sendPurchaseEmail(env, request, email) {
+  const mypage = `${appBaseUrl(env, request)}/mypage`;
+  return sendResendEmail(env, {
+    to: email,
+    subject: "TABbeast のご購入ありがとうございます",
+    html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,920）。</p>
+<p>ダウンロードとブラウザ版はマイページから利用できます。</p>
+<p><a href="${mypage}">${mypage}</a></p>
+<p>ログインは、購入時のメールアドレス宛に送るマジックリンクで行います（マイページから送信）。</p>
+<p>原則として購入後の返金はできません。</p>`,
+  });
+}
+
+export async function upsertCustomer(db, email, stripeCustomerId = null) {
+  const existing = await findCustomerByEmail(db, email);
+  if (existing) {
+    if (stripeCustomerId) {
+      await db
+        .prepare(
+          `UPDATE customers
+           SET stripe_customer_id = COALESCE(stripe_customer_id, ?),
+               updated_at = datetime('now')
+           WHERE id = ?`,
+        )
+        .bind(stripeCustomerId, existing.id)
+        .run();
+    }
+    return existing;
+  }
+  await db
+    .prepare("INSERT INTO customers (email, stripe_customer_id) VALUES (?, ?)")
+    .bind(email, stripeCustomerId)
+    .run();
+  return findCustomerByEmail(db, email);
+}
+
+export async function grantFullEntitlement(db, {
+  email,
+  stripeCustomerId = null,
+  checkoutSessionId,
+  paymentIntentId = null,
+}) {
+  if (checkoutSessionId) {
+    const dup = await db
+      .prepare(
+        "SELECT id FROM entitlements WHERE stripe_checkout_session_id = ?",
+      )
+      .bind(checkoutSessionId)
+      .first();
+    if (dup) return { granted: false, duplicate: true };
+  }
+  const customer = await upsertCustomer(db, email, stripeCustomerId);
+  if (!customer) return { granted: false };
+  await db
+    .prepare(
+      `INSERT INTO entitlements
+        (customer_id, product_id, status, stripe_checkout_session_id, stripe_payment_intent_id)
+       VALUES (?, ?, 'active', ?, ?)`,
+    )
+    .bind(
+      customer.id,
+      PRODUCT_ID_FULL,
+      checkoutSessionId || null,
+      paymentIntentId,
+    )
+    .run();
+  return { granted: true, customer };
+}
+
+export async function revokeByStripe(db, { paymentIntentId, checkoutSessionId }) {
+  if (paymentIntentId) {
+    await db
+      .prepare(
+        `UPDATE entitlements
+         SET status = 'revoked', revoked_at = datetime('now')
+         WHERE stripe_payment_intent_id = ? AND status = 'active'`,
+      )
+      .bind(paymentIntentId)
+      .run();
+  }
+  if (checkoutSessionId) {
+    await db
+      .prepare(
+        `UPDATE entitlements
+         SET status = 'revoked', revoked_at = datetime('now')
+         WHERE stripe_checkout_session_id = ? AND status = 'active'`,
+      )
+      .bind(checkoutSessionId)
+      .run();
+  }
+}
+
+export async function listEntitlements(db, customerId) {
+  const { results } = await db
+    .prepare(
+      `SELECT product_id AS productId, status
+       FROM entitlements
+       WHERE customer_id = ?
+       ORDER BY id DESC`,
+    )
+    .bind(customerId)
+    .all();
+  return results ?? [];
+}
+
+export async function latestFullReleases(db) {
+  const { results } = await db
+    .prepare(
+      `SELECT channel, version
+       FROM releases
+       WHERE product_id = ? AND is_latest = 1
+         AND channel IN ('full_win', 'full_web')`,
+    )
+    .bind(PRODUCT_ID_FULL)
+    .all();
+  const latest = {};
+  for (const row of results ?? []) {
+    latest[row.channel] = { version: row.version };
+  }
+  return latest;
+}
+
+export async function handleLogout(env, request) {
+  const db = commerceDb(env);
+  const raw = parseCookie(request, SESSION_COOKIE);
+  if (db && raw) {
+    const sessionHash = await hashToken(raw, env);
+    await db
+      .prepare("DELETE FROM sessions WHERE session_hash = ?")
+      .bind(sessionHash)
+      .run();
+  }
+  return json(
+    { ok: true },
+    { headers: { "Set-Cookie": sessionCookieHeader(request, "", { clear: true }) } },
+  );
+}

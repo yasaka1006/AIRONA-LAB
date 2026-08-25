@@ -14,6 +14,9 @@ import ViewTop from './components/assets/ViewTop';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Minigames from './components/Minigames';
 import Ranking from './components/Ranking';
+import Tabbeast from './components/Tabbeast';
+import Mypage from './components/Mypage';
+import { Terms, Tokushoho } from './components/legal/LegalPages';
 
 const Tokyo = lazy(() => import('./components/minigames/Tokyo'));
 const Saitama = lazy(() => import('./components/minigames/Saitama'));
@@ -44,6 +47,10 @@ const PAGE_TITLES = {
   '/ibaraki': '茨城県の市町村全部言えるかな？ - AIRONA-LAB',
   '/element': '周期表の元素全部言えるかな？ - AIRONA-LAB',
   '/monhan': 'モンハン歴代モンスター144種言えるかな？ - AIRONA-LAB',
+  '/tabbeast': 'Tabbeast - AIRONA-LAB',
+  '/mypage': 'マイページ - AIRONA-LAB',
+  '/legal/terms': '利用規約 - AIRONA-LAB',
+  '/legal/tokushoho': '特定商取引法に基づく表記 - AIRONA-LAB',
 };
 
 function App() {
@@ -92,6 +99,10 @@ function App() {
                   <Route path="/element" element={<Element />} />
                   <Route path="/ranking" element={<Ranking />} />
                   <Route path="/japan" element={<Japan />} />
+                  <Route path="/tabbeast" element={<Tabbeast />} />
+                  <Route path="/mypage" element={<Mypage />} />
+                  <Route path="/legal/terms" element={<Terms />} />
+                  <Route path="/legal/tokushoho" element={<Tokushoho />} />
                 </Routes>
               </Suspense>
             </div>
