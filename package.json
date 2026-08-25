@@ -14,9 +14,8 @@
     "db:commerce:seed:local": "wrangler d1 execute airona-commerce --local --file=./migrations/commerce/002_seed_releases.sql",
     "db:commerce:seed:remote": "wrangler d1 execute airona-commerce --remote --file=./migrations/commerce/002_seed_releases.sql",
     "r2:placeholder:local": "wrangler r2 object put tabbeast-products/tabbeast/full/win/0.1.0/TABbeast_0.1.0_x64.zip --file=./fixtures/TABbeast_0.1.0_x64.placeholder.zip --local",
-    "r2:placeholder:remote": "wrangler r2 object put tabbeast-products/tabbeast/full/win/0.1.0/TABbeast_0.1.0_x64.zip --file=./fixtures/TABbeast_0.1.0_x64.placeholder.zip",
-    "r2:web:placeholder:local": "wrangler r2 object put tabbeast-products/tabbeast/full/web/0.1.0/index.html --file=./fixtures/full_web/0.1.0/index.html --content-type=text/html --local",
-    "r2:web:placeholder:remote": "wrangler r2 object put tabbeast-products/tabbeast/full/web/0.1.0/index.html --file=./fixtures/full_web/0.1.0/index.html --content-type=text/html"
+    "r2:placeholder:remote": "wrangler r2 object put tabbeast-products/tabbeast/full/win/0.1.0/TABbeast_0.1.0_x64.zip --file=./fixtures/TABbeast_0.1.0_x64.placeholder.zip --remote",
+    "r2:web:placeholder:remote": "wrangler r2 object put tabbeast-products/tabbeast/full/web/0.1.0/index.html --file=./fixtures/full_web/0.1.0/index.html --content-type=text/html --remote"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
