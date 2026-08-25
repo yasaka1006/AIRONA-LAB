@@ -38,8 +38,8 @@ export async function onRequestPost(context) {
     signature,
     env.STRIPE_WEBHOOK_SECRET,
   );
-  if (!valid) {
-    return error(400, "invalid_signature", "Invalid Stripe signature");
+  if (!valid.ok) {
+    return error(400, valid.reason, `Invalid Stripe signature (${valid.reason})`);
   }
 
   let event;
