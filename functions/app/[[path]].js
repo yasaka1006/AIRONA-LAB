@@ -21,6 +21,8 @@ function contentTypeFor(path) {
   if (lower.endsWith(".png")) return "image/png";
   if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
   if (lower.endsWith(".webp")) return "image/webp";
+  if (lower.endsWith(".mp3")) return "audio/mpeg";
+  if (lower.endsWith(".wav")) return "audio/wav";
   if (lower.endsWith(".woff2")) return "font/woff2";
   if (lower.endsWith(".woff")) return "font/woff";
   if (lower.endsWith(".map")) return "application/json";
