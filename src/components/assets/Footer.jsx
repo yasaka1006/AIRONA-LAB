@@ -9,9 +9,6 @@ const Footer = () => {
             © 2026 AironA. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-3 sm:justify-end">
-            <Link to="/tabbeast" className="underline">
-              TABbeast
-            </Link>
             <Link to="/legal/terms" className="underline">
               利用規約
             </Link>

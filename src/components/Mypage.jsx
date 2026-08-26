@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetchMe, logout, requestDownload, requestMagicLink } from "../lib/commerceApi";
+import { authClient } from "../lib/authClient";
+import { fetchMe, logout, requestDownload } from "../lib/commerceApi";
 
 const Mypage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [me, setMe] = useState(undefined);
   const [email, setEmail] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
-  const [devVerifyUrl, setDevVerifyUrl] = useState("");
   const [error, setError] = useState("");
+  const [googleAvailable, setGoogleAvailable] = useState(false);
 
   const loadMe = async () => {
     try {
@@ -23,55 +25,90 @@ const Mypage = () => {
 
   useEffect(() => {
     loadMe();
+    fetch("/api/commerce/auth/providers", { credentials: "include" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.google) setGoogleAvailable(true);
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
     const auth = searchParams.get("auth");
     const checkout = searchParams.get("checkout");
-    if (auth === "invalid") {
-      setError("ログインリンクが無効か、期限切れです。もう一度送信してください。");
+    if (auth === "invalid" || searchParams.get("error")) {
+      setError("ログインに失敗しました。もう一度お試しください。");
     }
     if (checkout === "success") {
-      setNotice("購入手続きが完了しました。ログインするとダウンロードできます。");
+      setNotice("購入手続きが完了しました。権利が反映されない場合は再読み込みしてください。");
+      loadMe();
     }
-    if (auth || checkout) {
+    if (auth || checkout || searchParams.get("error")) {
       const next = new URLSearchParams(searchParams);
       next.delete("auth");
       next.delete("checkout");
+      next.delete("error");
       setSearchParams(next, { replace: true });
     }
   }, [searchParams, setSearchParams]);
 
-  const onSubmit = async (event) => {
+  const onGoogle = async () => {
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/mypage",
+      });
+    } catch (err) {
+      setError(err?.message || "Google ログインを開始できませんでした。");
+      setBusy(false);
+    }
+  };
+
+  const onMagicLink = async (event) => {
     event.preventDefault();
     setBusy(true);
     setError("");
     setNotice("");
-    setDevVerifyUrl("");
     try {
-      const result = await requestMagicLink(email);
-      if (result.devHint === "no_entitlement_email_not_sent") {
-        setNotice(
-          "このメールには購入権がないため、メールは送っていません（画面上は常に成功表示）。",
-        );
-        setError(
-          "開発メモ: Stripe で購入したメールを使うか、stripe listen で Webhook が入っているか確認してください。",
-        );
-        setDevVerifyUrl("");
-      } else if (result.devVerifyUrl) {
-        const mailOk = result.devMail?.sent;
-        setNotice(
-          mailOk
-            ? "メール送信を試みました。受信箱を確認するか、下の開発用リンクでもログインできます。"
-            : `メール送信に失敗しました（${result.devMail?.reason || "unknown"}）。下の開発用リンクでログインできます。ターミナルに resend_failed が出ていないか確認してください。`,
-        );
-        setDevVerifyUrl(result.devVerifyUrl);
-      } else {
-        setNotice(
-          "入力されたアドレスにログイン用リンクを送りました。届かない場合は、購入に使ったメールか迷惑メールフォルダを確認してください。",
-        );
-        setDevVerifyUrl("");
+      const { error: authError } = await authClient.signIn.magicLink({
+        email,
+        callbackURL: "/mypage",
+        newUserCallbackURL: "/mypage",
+        errorCallbackURL: "/mypage?auth=invalid",
+      });
+      if (authError) {
+        throw new Error(authError.message || "Failed to send magic link");
       }
+      setNotice(
+        "入力されたアドレスにログイン用リンクを送りました。届かない場合は迷惑メールフォルダを確認してください。",
+      );
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onChangeEmail = async (event) => {
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const { error: authError } = await authClient.changeEmail({
+        newEmail,
+        callbackURL: "/mypage",
+      });
+      if (authError) {
+        throw new Error(authError.message || "Failed to change email");
+      }
+      setNotice(
+        "確認メールを送りました。現在のメール（または新メール）の案内に従って変更を完了してください。",
+      );
+      setNewEmail("");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -120,7 +157,7 @@ const Mypage = () => {
           マイページ
         </h1>
         <p className="text-sm text-slate-500 mb-6">
-          TABbeast のダウンロードとブラウザ版は、購入後にここから利用できます。
+          アカウント作成・ログインのあと、購入・ダウンロード・ブラウザ版を利用できます。
         </p>
 
         {error ? (
@@ -137,35 +174,46 @@ const Mypage = () => {
         {me === undefined ? (
           <p className="text-slate-500 font-bold">読み込み中...</p>
         ) : me === null ? (
-          <form onSubmit={onSubmit} className="flex flex-col gap-4">
-            <label className="text-sm font-bold text-slate-600">
-              購入時のメールアドレス
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-base font-normal text-slate-800"
-                placeholder="you@example.com"
-                autoComplete="email"
-              />
-            </label>
-            <button
-              type="submit"
-              disabled={busy}
-              className="bg-slate-800 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-slate-700 disabled:opacity-60"
-            >
-              {busy ? "送信中..." : "ログインリンクを送る"}
-            </button>
-            {devVerifyUrl ? (
-              <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
-                開発用リンク（ローカル確認用）:{" "}
-                <a className="underline break-all" href={devVerifyUrl}>
-                  {devVerifyUrl}
-                </a>
-              </p>
+          <div className="flex flex-col gap-5">
+            {googleAvailable ? (
+              <button
+                type="button"
+                onClick={onGoogle}
+                disabled={busy}
+                className="w-full bg-slate-800 text-white px-6 py-3 rounded-full cursor-pointer hover:bg-slate-700 disabled:opacity-60 font-bold"
+              >
+                {busy ? "移動中..." : "Google で続行"}
+              </button>
             ) : null}
-          </form>
+            <div className="relative text-center text-xs text-slate-400">
+              <span className="bg-white px-2 relative z-10">または</span>
+              <span className="absolute left-0 right-0 top-1/2 border-t border-slate-200 -z-0" />
+            </div>
+            <form onSubmit={onMagicLink} className="flex flex-col gap-3">
+              <label className="text-sm font-bold text-slate-600">
+                メールでログイン
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-base font-normal text-slate-800"
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                />
+              </label>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                パスワードは不要です。受信箱のリンクでログインします。
+              </p>
+              <button
+                type="submit"
+                disabled={busy}
+                className="border border-slate-300 text-slate-800 px-6 py-2 rounded-full cursor-pointer hover:bg-slate-50 disabled:opacity-60"
+              >
+                {busy ? "送信中..." : "ログインリンクを送る"}
+              </button>
+            </form>
+          </div>
         ) : (
           <div className="flex flex-col gap-5">
             <p className="text-sm text-slate-600">
@@ -207,7 +255,7 @@ const Mypage = () => {
             ) : (
               <div className="flex flex-col gap-3">
                 <p className="text-sm text-slate-600">
-                  このアカウントにはまだ購入権がありません。
+                  このアカウントにはまだ購入権がありません。ログイン済みなので購入できます。
                 </p>
                 <Link
                   to="/tabbeast"
@@ -217,6 +265,30 @@ const Mypage = () => {
                 </Link>
               </div>
             )}
+
+            <form
+              onSubmit={onChangeEmail}
+              className="border-t border-slate-100 pt-4 flex flex-col gap-3"
+            >
+              <p className="text-sm font-bold text-slate-700">メールアドレス変更</p>
+              <input
+                type="email"
+                required
+                value={newEmail}
+                onChange={(event) => setNewEmail(event.target.value)}
+                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800"
+                placeholder="新しいメールアドレス"
+                autoComplete="email"
+              />
+              <button
+                type="submit"
+                disabled={busy}
+                className="self-start border border-slate-300 text-slate-700 px-4 py-1.5 rounded-full text-sm cursor-pointer hover:bg-slate-50 disabled:opacity-60"
+              >
+                確認メールを送る
+              </button>
+            </form>
+
             <button
               type="button"
               onClick={onLogout}

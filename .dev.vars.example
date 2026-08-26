@@ -10,6 +10,11 @@ RESEND_API_KEY=re_xxx
 MAIL_FROM=TABbeast <noreply@example.com>
 APP_BASE_URL=http://127.0.0.1:8788
 SESSION_SECRET=change-me-to-a-long-random-string
+# Better Auth（未設定時は SESSION_SECRET を流用）
+BETTER_AUTH_SECRET=change-me-to-a-long-random-string
+# Google OAuth（未設定ならマイページはマジックリンクのみ）
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 DOWNLOAD_URL_TTL_SEC=3600
 MAGIC_LINK_TTL_SEC=900
 DEMO_WEB_URL=https://tabbeast-demo.pages.dev
@@ -17,10 +22,7 @@ DEMO_WEB_URL=https://tabbeast-demo.pages.dev
 DEMO_WIN_URL=
 
 # P1 ローカル確認用（本番では付けない）
-# 1 にすると、未購入メールでもモック購入権を付けてリンクを返す
-COMMERCE_DEV_ALLOW_ANY_EMAIL=1
-COMMERCE_DEV_RETURN_LINK=1
-# Stripe 未設定時、同意＋メールで権利を付与してマイページへ（本番禁止）
+# Stripe 未設定時、同意＋ログインで権利を付与してマイページへ（本番禁止）
 COMMERCE_DEV_FAKE_CHECKOUT=1
 # R2 に実ファイルが無いとき、小さなプレースホルダ zip を返す
 COMMERCE_DEV_FAKE_DOWNLOAD=1

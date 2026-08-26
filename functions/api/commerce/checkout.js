@@ -5,10 +5,8 @@ import {
   getSession,
   grantFullEntitlement,
   isDevFlag,
-  isValidEmail,
   json,
   methodNotAllowed,
-  normalizeEmail,
   randomHex,
   readJson,
   sameSitePost,
@@ -19,7 +17,7 @@ import {
 } from "../../_lib/stripe.js";
 
 /**
- * POST /api/commerce/checkout
+ * POST /api/commerce/checkout — login required
  */
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -38,18 +36,14 @@ export async function onRequestPost(context) {
   }
 
   const session = await getSession(env, request);
-  const email = normalizeEmail(body?.email || session?.email || "");
+  if (!session) {
+    return error(401, "unauthorized", "Login required before checkout");
+  }
 
   if (isDevFlag(env, "COMMERCE_DEV_FAKE_CHECKOUT") && !stripeConfigured(env)) {
-    if (!isValidEmail(email)) {
-      return error(
-        400,
-        "email_required",
-        "Local fake checkout needs a login session or email",
-      );
-    }
     await grantFullEntitlement(db, {
-      email,
+      email: session.email,
+      authUserId: session.authUserId,
       checkoutSessionId: `cs_dev_${randomHex(12)}`,
     });
     return json({ url: `${appBaseUrl(env, request)}/mypage?checkout=success` });
@@ -61,7 +55,8 @@ export async function onRequestPost(context) {
 
   try {
     const checkout = await createStripeCheckoutSession(env, request, {
-      customerEmail: isValidEmail(email) ? email : undefined,
+      customerEmail: session.email,
+      authUserId: session.authUserId,
     });
     return json({ url: checkout.url });
   } catch (err) {

@@ -1,6 +1,7 @@
 # Commerce (TABbeast 販売) — P0 セットアップ
 
-技術設計: HexaTAB `docs/web-sales-technical-design.md`
+技術設計: HexaTAB `docs/web-sales-technical-design.md`  
+認証移行方針（Better Auth + Resend）: [`auth-better-auth-plan.md`](./auth-better-auth-plan.md)
 
 ## P0 で入ったもの
 
@@ -50,20 +51,33 @@ npx wrangler d1 execute airona-commerce --local --file=./migrations/commerce/001
    - `DB` → 既存ランキング（維持）
 6. Secrets: Stripe / Resend / SESSION_SECRET / APP_BASE_URL 等
 
-## P1（マジックリンク）
+## P1（認証 — Better Auth）
 
-`.dev.vars` に少なくとも次を入れる（ローカル）:
+詳細は [`auth-better-auth-plan.md`](./auth-better-auth-plan.md)。
+
+```bash
+npm run db:commerce:auth:local
+# 本番 D1:
+npm run db:commerce:auth:remote
+```
+
+`.dev.vars` に少なくとも:
 
 ```
-SESSION_SECRET=change-me-to-a-long-random-string
-COMMERCE_DEV_ALLOW_ANY_EMAIL=1
-COMMERCE_DEV_RETURN_LINK=1
+BETTER_AUTH_SECRET=...
 APP_BASE_URL=http://127.0.0.1:8788
+RESEND_API_KEY=...
+MAIL_FROM=...
+# 任意（Google）
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
 ```
 
-`npm run pages:dev` のあと `/mypage` でメールを送り、表示された開発用リンクを開くとログインできる。
+Google コールバック: `{APP_BASE_URL}/api/auth/callback/google`
 
-本番では `COMMERCE_DEV_*` を付けず、Resend（`RESEND_API_KEY` / `MAIL_FROM`）を設定する。未購入アドレスにはメールを送らない。
+`/mypage` で Google（主）またはマジックリンク（副）。購入はログイン必須。
+
+旧 `COMMERCE_DEV_ALLOW_ANY_EMAIL` / `COMMERCE_DEV_RETURN_LINK` と自前 magic-link API は廃止。
 
 ## メール（Resend）
 
@@ -74,9 +88,9 @@ APP_BASE_URL=http://127.0.0.1:8788
 
 ## P2（Stripe）
 
-- `POST /api/commerce/checkout` … `agreeToTerms: true` で Checkout URL
-- `POST /api/commerce/stripe/webhook` … 署名検証、権利付与、返金で revoke
-- ローカルで Stripe 未設定なら `.dev.vars` に `COMMERCE_DEV_FAKE_CHECKOUT=1`。同意＋メールで権利を付けて `/mypage` へ
+- `POST /api/commerce/checkout` … ログイン必須 + `agreeToTerms: true` で Checkout URL
+- `POST /api/commerce/stripe/webhook` … 署名検証、`auth_user_id` metadata で権利付与、返金で revoke
+- ローカルで Stripe 未設定なら `.dev.vars` に `COMMERCE_DEV_FAKE_CHECKOUT=1`。同意＋ログインで権利を付けて `/mypage` へ
 - 本番: Stripe の Price（¥2,920）と Webhook エンドポイント `/api/commerce/stripe/webhook`（`checkout.session.completed`, `charge.refunded`, `charge.dispute.created`）
 - 特商法・規約の正式文言は P5。今はプレースホルダ
 

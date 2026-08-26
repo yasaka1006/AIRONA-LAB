@@ -90,6 +90,9 @@ export function bindingStatus(env) {
     MAIL_FROM: Boolean(env.MAIL_FROM),
     APP_BASE_URL: Boolean(env.APP_BASE_URL),
     SESSION_SECRET: Boolean(env.SESSION_SECRET),
+    BETTER_AUTH_SECRET: Boolean(env.BETTER_AUTH_SECRET || env.SESSION_SECRET),
+    GOOGLE_CLIENT_ID: Boolean(env.GOOGLE_CLIENT_ID),
+    GOOGLE_CLIENT_SECRET: Boolean(env.GOOGLE_CLIENT_SECRET),
     DOWNLOAD_URL_TTL_SEC: env.DOWNLOAD_URL_TTL_SEC ?? "3600",
     MAGIC_LINK_TTL_SEC: env.MAGIC_LINK_TTL_SEC ?? "900",
     DEMO_WEB_URL: env.DEMO_WEB_URL ?? null,
@@ -285,25 +288,25 @@ export function sessionCookieHeader(request, rawId, { clear = false } = {}) {
 export async function getSession(env, request) {
   const db = commerceDb(env);
   if (!db) return null;
-  const raw = parseCookie(request, SESSION_COOKIE);
-  if (!raw) return null;
-  const sessionHash = await hashToken(raw, env);
-  const row = await db
-    .prepare(
-      `SELECT s.id AS session_id, s.customer_id, s.expires_at, c.email
-       FROM sessions s
-       JOIN customers c ON c.id = s.customer_id
-       WHERE s.session_hash = ?
-         AND datetime(s.expires_at) > datetime('now')`,
-    )
-    .bind(sessionHash)
-    .first();
-  if (!row) return null;
+
+  const { getBetterAuthSession } = await import("./auth.js");
+  const ba = await getBetterAuthSession(env, request);
+  if (!ba?.user?.id) return null;
+
+  const email = normalizeEmail(ba.user.email || "");
+  if (!isValidEmail(email)) return null;
+
+  const customer = await ensureCustomerForAuthUser(db, {
+    authUserId: ba.user.id,
+    email,
+  });
+  if (!customer) return null;
+
   return {
-    sessionId: row.session_id,
-    customerId: row.customer_id,
-    email: row.email,
-    sessionHash,
+    authUserId: ba.user.id,
+    customerId: customer.id,
+    email: customer.email,
+    name: ba.user.name || null,
   };
 }
 
@@ -329,9 +332,71 @@ export async function hasActiveFullEntitlement(db, customerId) {
 
 export async function findCustomerByEmail(db, email) {
   return db
-    .prepare("SELECT id, email FROM customers WHERE email = ?")
+    .prepare("SELECT id, email, auth_user_id FROM customers WHERE email = ?")
     .bind(email)
     .first();
+}
+
+export async function findCustomerByAuthUserId(db, authUserId) {
+  if (!authUserId) return null;
+  return db
+    .prepare(
+      "SELECT id, email, auth_user_id FROM customers WHERE auth_user_id = ?",
+    )
+    .bind(authUserId)
+    .first();
+}
+
+/**
+ * Link or create commerce customer for a Better Auth user.
+ * Prefer auth_user_id; fall back to same-email row (test purchase migration).
+ */
+export async function ensureCustomerForAuthUser(db, { authUserId, email }) {
+  if (!authUserId || !email) return null;
+
+  let customer = await findCustomerByAuthUserId(db, authUserId);
+  if (customer) {
+    if (normalizeEmail(customer.email) !== email) {
+      const clash = await findCustomerByEmail(db, email);
+      if (clash && clash.id !== customer.id) {
+        // Keep auth_user_id binding; do not steal another customer's email.
+        return customer;
+      }
+      await db
+        .prepare(
+          `UPDATE customers
+           SET email = ?, updated_at = datetime('now')
+           WHERE id = ?`,
+        )
+        .bind(email, customer.id)
+        .run();
+      customer = await findCustomerByAuthUserId(db, authUserId);
+    }
+    return customer;
+  }
+
+  customer = await findCustomerByEmail(db, email);
+  if (customer) {
+    if (customer.auth_user_id && customer.auth_user_id !== authUserId) {
+      // Email already linked to another auth user — create nothing; fail closed.
+      return null;
+    }
+    await db
+      .prepare(
+        `UPDATE customers
+         SET auth_user_id = ?, updated_at = datetime('now')
+         WHERE id = ?`,
+      )
+      .bind(authUserId, customer.id)
+      .run();
+    return findCustomerByAuthUserId(db, authUserId);
+  }
+
+  await db
+    .prepare("INSERT INTO customers (email, auth_user_id) VALUES (?, ?)")
+    .bind(email, authUserId)
+    .run();
+  return findCustomerByAuthUserId(db, authUserId);
 }
 
 export async function ensureDevPurchaser(db, email) {
@@ -398,40 +463,59 @@ export async function sendPurchaseEmail(env, request, email) {
     html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,920）。</p>
 <p>ダウンロードとブラウザ版はマイページから利用できます。</p>
 <p><a href="${mypage}">${mypage}</a></p>
-<p>ログインは、購入時のメールアドレス宛に送るマジックリンクで行います（マイページから送信）。</p>
+<p>ログイン済みのアカウントに権利が付与されています。未ログインの場合はマイページから Google またはメールのマジックリンクでログインしてください。</p>
 <p>原則として購入後の返金はできません。</p>`,
   });
 }
 
-export async function upsertCustomer(db, email, stripeCustomerId = null) {
-  const existing = await findCustomerByEmail(db, email);
+export async function upsertCustomer(
+  db,
+  email,
+  stripeCustomerId = null,
+  authUserId = null,
+) {
+  let existing = null;
+  if (authUserId) {
+    existing = await findCustomerByAuthUserId(db, authUserId);
+  }
+  if (!existing) {
+    existing = await findCustomerByEmail(db, email);
+  }
   if (existing) {
-    if (stripeCustomerId) {
-      await db
-        .prepare(
-          `UPDATE customers
-           SET stripe_customer_id = COALESCE(stripe_customer_id, ?),
-               updated_at = datetime('now')
-           WHERE id = ?`,
-        )
-        .bind(stripeCustomerId, existing.id)
-        .run();
+    await db
+      .prepare(
+        `UPDATE customers
+         SET email = COALESCE(?, email),
+             stripe_customer_id = COALESCE(stripe_customer_id, ?),
+             auth_user_id = COALESCE(auth_user_id, ?),
+             updated_at = datetime('now')
+         WHERE id = ?`,
+      )
+      .bind(email || null, stripeCustomerId, authUserId, existing.id)
+      .run();
+    if (authUserId) {
+      return findCustomerByAuthUserId(db, authUserId);
     }
-    return existing;
+    return findCustomerByEmail(db, email);
   }
   await db
-    .prepare("INSERT INTO customers (email, stripe_customer_id) VALUES (?, ?)")
-    .bind(email, stripeCustomerId)
+    .prepare(
+      "INSERT INTO customers (email, stripe_customer_id, auth_user_id) VALUES (?, ?, ?)",
+    )
+    .bind(email, stripeCustomerId, authUserId)
     .run();
+  if (authUserId) return findCustomerByAuthUserId(db, authUserId);
   return findCustomerByEmail(db, email);
 }
 
 export async function grantFullEntitlement(db, {
   email,
+  authUserId = null,
   stripeCustomerId = null,
   checkoutSessionId,
   paymentIntentId = null,
 }) {
+  if (!email) return { granted: false };
   if (checkoutSessionId) {
     const dup = await db
       .prepare(
@@ -441,7 +525,12 @@ export async function grantFullEntitlement(db, {
       .first();
     if (dup) return { granted: false, duplicate: true };
   }
-  const customer = await upsertCustomer(db, email, stripeCustomerId);
+  const customer = await upsertCustomer(
+    db,
+    email,
+    stripeCustomerId,
+    authUserId,
+  );
   if (!customer) return { granted: false };
   await db
     .prepare(
@@ -513,14 +602,26 @@ export async function latestFullReleases(db) {
 }
 
 export async function handleLogout(env, request) {
-  const db = commerceDb(env);
-  const raw = parseCookie(request, SESSION_COOKIE);
-  if (db && raw) {
-    const sessionHash = await hashToken(raw, env);
-    await db
-      .prepare("DELETE FROM sessions WHERE session_hash = ?")
-      .bind(sessionHash)
-      .run();
+  try {
+    const { createAuth } = await import("./auth.js");
+    if (env.COMMERCE_DB) {
+      const auth = createAuth(env, request);
+      const res = await auth.api.signOut({
+        headers: request.headers,
+        asResponse: true,
+      });
+      if (res instanceof Response) {
+        // Also clear legacy tb_session
+        const headers = new Headers(res.headers);
+        headers.append(
+          "Set-Cookie",
+          sessionCookieHeader(request, "", { clear: true }),
+        );
+        return new Response(res.body, { status: res.status, headers });
+      }
+    }
+  } catch (err) {
+    console.error("handleLogout_failed", String(err));
   }
   return json(
     { ok: true },

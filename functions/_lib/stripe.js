@@ -77,7 +77,11 @@ function formEncode(fields) {
     .join("&");
 }
 
-export async function createStripeCheckoutSession(env, request, { customerEmail }) {
+export async function createStripeCheckoutSession(
+  env,
+  request,
+  { customerEmail, authUserId },
+) {
   const base = (env.APP_BASE_URL || new URL(request.url).origin).replace(
     /\/$/,
     "",
@@ -90,8 +94,13 @@ export async function createStripeCheckoutSession(env, request, { customerEmail 
     cancel_url: `${base}/tabbeast?checkout=cancel`,
     "metadata[product_id]": "tabbeast_full",
   };
+  if (authUserId) {
+    fields["metadata[auth_user_id]"] = authUserId;
+    fields.client_reference_id = authUserId;
+  }
   if (customerEmail) {
     fields.customer_email = customerEmail;
+    fields["metadata[email]"] = customerEmail;
   }
 
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {

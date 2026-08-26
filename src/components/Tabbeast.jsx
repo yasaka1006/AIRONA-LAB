@@ -52,16 +52,17 @@ const FeatureSection = ({ title, description, imageSrc, reverse = false }) => (
 const PurchaseBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [agree, setAgree] = useState(false);
-  const [email, setEmail] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [owned, setOwned] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [demoWeb, setDemoWeb] = useState('');
   const [demoWin, setDemoWin] = useState('');
 
   useEffect(() => {
     fetchMe().then((me) => {
+      setLoggedIn(Boolean(me));
       const hasFull = me?.entitlements?.some(
         (item) => item.productId === 'tabbeast_full' && item.status === 'active',
       );
@@ -88,10 +89,14 @@ const PurchaseBar = () => {
       setError('利用規約と特商法表記への同意が必要です。');
       return;
     }
+    if (!loggedIn) {
+      setError('購入にはログインが必要です。マイページでアカウント作成／ログインしてください。');
+      return;
+    }
     setBusy(true);
     setError('');
     try {
-      const { url } = await createCheckout({ agreeToTerms: true, email });
+      const { url } = await createCheckout({ agreeToTerms: true });
       window.location.assign(url);
     } catch (err) {
       setError(err.message);
@@ -115,6 +120,13 @@ const PurchaseBar = () => {
         </p>
       ) : (
         <>
+          {!loggedIn ? (
+            <p className="text-center text-sm text-slate-600 mb-4">
+              購入の前に
+              <Link to="/mypage" className="underline mx-1">マイページ</Link>
+              でログインしてください（Google またはメール）。
+            </p>
+          ) : null}
           <label className="flex justify-center items-start gap-2 text-sm text-slate-600 mb-4 max-w-xl mx-auto text-left">
             <input
               type="checkbox"
@@ -129,18 +141,11 @@ const PurchaseBar = () => {
               に同意します（原則返金不可）
             </span>
           </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="購入に使うメール（任意。Stripe で入力も可）"
-            className="block w-full max-w-md mx-auto mb-4 rounded-md border border-slate-300 px-3 py-2 text-sm"
-          />
           <div className="flex flex-wrap justify-center items-center gap-4 md:gap-10">
             <button
               type="button"
               onClick={onBuy}
-              disabled={busy}
+              disabled={busy || !loggedIn}
               className="bg-slate-800 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-slate-700 disabled:opacity-60 shadow-md"
             >
               {busy ? '移動中...' : '購入￥2,920 ▶'}

@@ -28,29 +28,6 @@ export async function fetchMe() {
   }
 }
 
-export async function requestMagicLink(email) {
-  try {
-    const res = await fetch("/api/commerce/auth/magic-link", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    const body = await readApiJson(res);
-    if (!res.ok) {
-      throw new Error(body.message || "Failed to request login link");
-    }
-    return body;
-  } catch (err) {
-    if (err.message === API_UNAVAILABLE) {
-      throw new Error(
-        "ログインAPIに接続できません。AIRONA-LAB で npm run pages:dev を起動してください。",
-      );
-    }
-    throw err;
-  }
-}
-
 export async function logout() {
   const res = await fetch("/api/commerce/auth/logout", {
     method: "POST",
@@ -82,13 +59,13 @@ export async function requestDownload(channel = "full_win") {
   }
 }
 
-export async function createCheckout({ agreeToTerms, email } = {}) {
+export async function createCheckout({ agreeToTerms } = {}) {
   try {
     const res = await fetch("/api/commerce/checkout", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ agreeToTerms, email }),
+      body: JSON.stringify({ agreeToTerms }),
     });
     const body = await readApiJson(res);
     if (!res.ok) {

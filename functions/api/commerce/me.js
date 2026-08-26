@@ -28,6 +28,7 @@ export async function onRequestGet(context) {
 
   return json({
     email: session.email,
+    authUserId: session.authUserId,
     entitlements,
     latest,
   });

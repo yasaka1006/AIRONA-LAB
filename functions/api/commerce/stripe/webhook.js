@@ -1,6 +1,7 @@
 import {
   commerceDb,
   error,
+  findCustomerByAuthUserId,
   grantFullEntitlement,
   json,
   methodNotAllowed,
@@ -17,8 +18,29 @@ import {
 
 function eventEmail(session) {
   return normalizeEmail(
-    session?.customer_details?.email || session?.customer_email || "",
+    session?.customer_details?.email ||
+      session?.customer_email ||
+      session?.metadata?.email ||
+      "",
   );
+}
+
+async function resolveGrantIdentity(db, session) {
+  const authUserId =
+    session.metadata?.auth_user_id || session.client_reference_id || null;
+  let email = eventEmail(session);
+  if (!email && authUserId) {
+    const customer = await findCustomerByAuthUserId(db, authUserId);
+    if (customer?.email) email = normalizeEmail(customer.email);
+    if (!email) {
+      const user = await db
+        .prepare(`SELECT email FROM "user" WHERE id = ?`)
+        .bind(authUserId)
+        .first();
+      if (user?.email) email = normalizeEmail(user.email);
+    }
+  }
+  return { email, authUserId };
 }
 
 /**
@@ -52,16 +74,17 @@ export async function onRequestPost(context) {
   try {
     if (event.type === "checkout.session.completed") {
       const session = event.data?.object || {};
-      const email = eventEmail(session);
-      if (email) {
+      const { email, authUserId } = await resolveGrantIdentity(db, session);
+      if (email || authUserId) {
         const result = await grantFullEntitlement(db, {
           email,
+          authUserId,
           stripeCustomerId:
             typeof session.customer === "string" ? session.customer : null,
           checkoutSessionId: session.id,
           paymentIntentId: paymentIntentId(session.payment_intent),
         });
-        if (result.granted) {
+        if (result.granted && email) {
           await sendPurchaseEmail(env, request, email);
         }
       }
