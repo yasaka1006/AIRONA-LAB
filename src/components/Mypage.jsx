@@ -300,7 +300,14 @@ const Mypage = () => {
                     >
                       <div className="flex flex-col gap-3">
                         <div>
-                          <p className="text-base font-extrabold text-slate-800">
+                          <p className="flex items-center gap-2 text-base font-extrabold text-slate-800">
+                            {product.id === "tabbeast_full" ? (
+                              <img
+                                src="/tabbeast/appIcon.SVG"
+                                alt=""
+                                className="h-7 w-7 shrink-0"
+                              />
+                            ) : null}
                             {product.name}
                           </p>
                           {product.description ? (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { createCheckout, fetchDemoLinks, fetchMe } from '../lib/commerceApi';
+import { createCheckout, fetchDemoLinks, fetchMe, requestDownload } from '../lib/commerceApi';
 import { TermsContent } from './legal/LegalPages';
 
 const importFormats = ['MusicXML', '.tg', '.gp'];
@@ -235,6 +235,7 @@ const PurchaseBar = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [demoWeb, setDemoWeb] = useState('');
   const [demoWin, setDemoWin] = useState('');
+  const [winVersion, setWinVersion] = useState('');
 
   useEffect(() => {
     fetchMe().then((me) => {
@@ -243,6 +244,7 @@ const PurchaseBar = () => {
         (item) => item.productId === 'tabbeast_full' && item.status === 'active',
       );
       setOwned(Boolean(hasFull));
+      setWinVersion(me?.latest?.full_win?.version || '');
     }).catch(() => {});
 
     fetchDemoLinks().then((demo) => {
@@ -340,6 +342,19 @@ const PurchaseBar = () => {
     }
   };
 
+  const onFullWinDownload = async () => {
+    setBusy(true);
+    setError('');
+    setNotice('');
+    try {
+      const result = await requestDownload('full_win');
+      window.location.assign(result.url);
+    } catch (err) {
+      setError(err.message);
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="mt-18 bg-slate-100 py-6 px-4">
       {notice ? (
@@ -349,11 +364,37 @@ const PurchaseBar = () => {
         <p className="text-center text-sm text-red-600 mb-3">{error}</p>
       ) : null}
       {owned ? (
-        <p className="text-center mb-4">
-          <Link to="/mypage" className="bg-slate-800 text-white px-6 py-2 rounded-full inline-block hover:bg-slate-700">
-            購入済み — マイページへ
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-sm md:text-base font-extrabold text-slate-700">
+            購入済み
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-3 md:gap-5">
+            <button
+              type="button"
+              onClick={onFullWinDownload}
+              disabled={busy}
+              className="inline-flex items-center gap-2 text-white font-bold px-6 py-2.5 rounded-full cursor-pointer disabled:opacity-60 shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
+            >
+              <span className="leading-none">
+                {busy
+                  ? '準備中…'
+                  : winVersion
+                    ? `Windows EXE Download (${winVersion})`
+                    : 'Windows EXE Download'}
+              </span>
+              {!busy ? <DownloadIcon className="h-[1.05em] w-[1.05em]" /> : null}
+            </button>
+            <a
+              href="/app/"
+              className="inline-flex items-center bg-slate-700 text-white font-bold px-6 py-2.5 rounded-full hover:bg-slate-600 shadow-md"
+            >
+              ブラウザ版 ▶
+            </a>
+          </div>
+          <Link to="/mypage" className="text-sm text-slate-500 underline hover:text-slate-700">
+            マイページへ
           </Link>
-        </p>
+        </div>
       ) : (
         <>
           <div className="flex flex-col items-center gap-6">
