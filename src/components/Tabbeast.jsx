@@ -235,7 +235,6 @@ const PurchaseBar = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [demoWeb, setDemoWeb] = useState('');
   const [demoWin, setDemoWin] = useState('');
-  const [winVersion, setWinVersion] = useState('');
 
   useEffect(() => {
     fetchMe().then((me) => {
@@ -244,7 +243,6 @@ const PurchaseBar = () => {
         (item) => item.productId === 'tabbeast_full' && item.status === 'active',
       );
       setOwned(Boolean(hasFull));
-      setWinVersion(me?.latest?.full_win?.version || '');
     }).catch(() => {});
 
     fetchDemoLinks().then((demo) => {
@@ -373,20 +371,16 @@ const PurchaseBar = () => {
               type="button"
               onClick={onFullWinDownload}
               disabled={busy}
-              className="inline-flex items-center gap-2 text-white font-bold px-6 py-2.5 rounded-full cursor-pointer disabled:opacity-60 shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
+              className="inline-flex h-11 items-center justify-center gap-2 text-white text-sm font-bold px-6 rounded-full cursor-pointer disabled:opacity-60 shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
             >
               <span className="leading-none">
-                {busy
-                  ? '準備中…'
-                  : winVersion
-                    ? `Windows EXE Download (${winVersion})`
-                    : 'Windows EXE Download'}
+                {busy ? '準備中…' : 'Windows EXE Download'}
               </span>
-              {!busy ? <DownloadIcon className="h-[1.05em] w-[1.05em]" /> : null}
+              {!busy ? <DownloadIcon className="h-4 w-4" /> : null}
             </button>
             <a
               href="/app/"
-              className="inline-flex items-center bg-slate-700 text-white font-bold px-6 py-2.5 rounded-full hover:bg-slate-600 shadow-md"
+              className="inline-flex h-11 items-center justify-center text-white text-sm font-bold px-6 rounded-full bg-slate-700 hover:bg-slate-600 shadow-md leading-none"
             >
               ブラウザ版 ▶
             </a>
