@@ -97,3 +97,26 @@ export async function fetchDemoLinks() {
     throw err;
   }
 }
+
+export async function submitContact({ email, category, subject, message }) {
+  try {
+    const res = await fetch("/api/commerce/contact", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, category, subject, message }),
+    });
+    const body = await readApiJson(res);
+    if (!res.ok) {
+      throw new Error(body.message || "Failed to send contact form");
+    }
+    return body;
+  } catch (err) {
+    if (err.message === API_UNAVAILABLE) {
+      throw new Error(
+        "お問い合わせAPIに接続できません。AIRONA-LAB で npm run pages:dev を起動してください。",
+      );
+    }
+    throw err;
+  }
+}

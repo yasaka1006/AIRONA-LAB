@@ -1,12 +1,17 @@
 import {
+  APP_TICKET_COOKIE,
   PRODUCT_ID_FULL,
   appBaseUrl,
+  appTicketCookieHeader,
   commerceDb,
+  createAppTicket,
   error,
   getLatestRelease,
   getSession,
   hasActiveFullEntitlement,
   isDevFlag,
+  parseAppTicket,
+  parseCookie,
 } from "../_lib/commerce.js";
 
 function contentTypeFor(path) {
@@ -47,6 +52,18 @@ function normalizeAppPath(pathname) {
   return path;
 }
 
+function isHtmlPath(relPath) {
+  return relPath === "index.html" || relPath.endsWith(".html");
+}
+
+function cacheControlFor(relPath) {
+  if (isHtmlPath(relPath)) return "no-store";
+  if (relPath.startsWith("assets/") || /\.[a-f0-9]{8,}\./i.test(relPath)) {
+    return "private, max-age=86400, immutable";
+  }
+  return "private, max-age=3600";
+}
+
 function placeholderHtml(version) {
   return `<!doctype html>
 <html lang="ja">
@@ -74,12 +91,53 @@ function placeholderHtml(version) {
 </html>`;
 }
 
+async function getProductResponse(env, key, { waitUntil, cacheControl, useEdgeCache }) {
+  const cacheKeyUrl = `https://tabbeast-app-assets.internal/${encodeURIComponent(key)}`;
+  const cacheKey = new Request(cacheKeyUrl);
+
+  if (useEdgeCache && typeof caches !== "undefined" && caches.default) {
+    const hit = await caches.default.match(cacheKey);
+    if (hit) {
+      const headers = new Headers(hit.headers);
+      headers.set("Cache-Control", cacheControl);
+      headers.set("X-App-Cache", "HIT");
+      return new Response(hit.body, { status: hit.status, headers });
+    }
+  }
+
+  if (!env.PRODUCTS) return null;
+  const object = await env.PRODUCTS.get(key);
+  if (!object) return null;
+
+  const headers = {
+    "Content-Type": object.httpMetadata?.contentType || contentTypeFor(key),
+    "Cache-Control": cacheControl,
+    "X-Content-Type-Options": "nosniff",
+    "X-App-Cache": "MISS",
+  };
+  if (object.size != null) {
+    headers["Content-Length"] = String(object.size);
+  }
+
+  const response = new Response(object.body, { status: 200, headers });
+  if (
+    useEdgeCache &&
+    typeof caches !== "undefined" &&
+    caches.default &&
+    typeof waitUntil === "function"
+  ) {
+    waitUntil(caches.default.put(cacheKey, response.clone()));
+  }
+  return response;
+}
+
 /**
  * GET /app および /app/*
- * 要ログイン + active entitlement → Private R2 の full_web を配信
+ * HTML: ログイン + active entitlement → tb_app ticket
+ * assets: tb_app ticket only → R2 (+ edge cache)
  */
 export async function onRequestGet(context) {
-  const { request, env } = context;
+  const { request, env, waitUntil } = context;
   const base = appBaseUrl(env, request);
   const url = new URL(request.url);
 
@@ -87,64 +145,90 @@ export async function onRequestGet(context) {
     return Response.redirect(`${base}/app/`, 302);
   }
 
-  const db = commerceDb(env);
-  const session = await getSession(env, request);
-  if (!session || !db) {
-    return Response.redirect(`${base}/mypage`, 302);
-  }
-
-  const entitled = await hasActiveFullEntitlement(db, session.customerId);
-  if (!entitled) {
-    return Response.redirect(`${base}/mypage`, 302);
-  }
-
-  const release = await getLatestRelease(db, PRODUCT_ID_FULL, "full_web");
-  const version = release?.version || "0.1.0";
-  const prefix = (release?.r2_key || `tabbeast/full/web/${version}/`).replace(
-    /\/?$/,
-    "/",
-  );
-
   const relPath = normalizeAppPath(url.pathname);
   if (!relPath) {
     return error(400, "bad_path", "Invalid path");
   }
 
+  const db = commerceDb(env);
+  const servingHtml = isHtmlPath(relPath);
+  let version = "0.1.0";
+  let prefix = `tabbeast/full/web/${version}/`;
+  let ticketCookie = null;
+
+  if (servingHtml) {
+    const session = await getSession(env, request);
+    if (!session || !db) {
+      return Response.redirect(`${base}/mypage`, 302);
+    }
+
+    const entitled = await hasActiveFullEntitlement(db, session.customerId);
+    if (!entitled) {
+      return Response.redirect(`${base}/mypage`, 302);
+    }
+
+    const release = await getLatestRelease(db, PRODUCT_ID_FULL, "full_web");
+    version = release?.version || "0.1.0";
+    prefix = (release?.r2_key || `tabbeast/full/web/${version}/`).replace(
+      /\/?$/,
+      "/",
+    );
+
+    const ticket = await createAppTicket(env, {
+      customerId: session.customerId,
+      version,
+      r2Prefix: prefix,
+    });
+    ticketCookie = appTicketCookieHeader(request, ticket);
+  } else {
+    const raw = parseCookie(request, APP_TICKET_COOKIE);
+    const ticket = await parseAppTicket(env, raw);
+    if (!ticket) {
+      return Response.redirect(`${base}/mypage`, 302);
+    }
+    version = ticket.version;
+    prefix = ticket.r2Prefix;
+  }
+
+  const cacheControl = cacheControlFor(relPath);
+  const useEdgeCache = !servingHtml;
   const candidates = [prefix + relPath];
-  if (relPath !== "index.html") {
+  if (servingHtml && relPath !== "index.html") {
     candidates.push(`${prefix}index.html`);
   }
 
-  if (env.PRODUCTS) {
-    for (const key of candidates) {
-      const object = await env.PRODUCTS.get(key);
-      if (object) {
-        const headers = {
-          "Content-Type":
-            object.httpMetadata?.contentType || contentTypeFor(key),
-          "Cache-Control": "private, max-age=60",
-          "X-Content-Type-Options": "nosniff",
-        };
-        if (object.size != null) {
-          headers["Content-Length"] = String(object.size);
-        }
-        return new Response(object.body, {
-          status: 200,
+  for (const key of candidates) {
+    const response = await getProductResponse(env, key, {
+      waitUntil,
+      cacheControl,
+      useEdgeCache,
+    });
+    if (response) {
+      if (ticketCookie) {
+        const headers = new Headers(response.headers);
+        headers.append("Set-Cookie", ticketCookie);
+        return new Response(response.body, {
+          status: response.status,
           headers,
         });
       }
+      return response;
     }
   }
 
-  if (isDevFlag(env, "COMMERCE_DEV_FAKE_APP")) {
-    return new Response(placeholderHtml(version), {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "no-store",
-        "X-Commerce-Placeholder": "1",
-      },
-    });
+  if (servingHtml && isDevFlag(env, "COMMERCE_DEV_FAKE_APP")) {
+    const headers = {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Commerce-Placeholder": "1",
+    };
+    if (ticketCookie) {
+      return new Response(placeholderHtml(version), {
+        status: 200,
+        headers: { ...headers, "Set-Cookie": ticketCookie },
+      });
+    }
+    return new Response(placeholderHtml(version), { status: 200, headers });
   }
 
   return error(404, "missing_build", "full_web build is not uploaded yet");

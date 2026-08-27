@@ -12,8 +12,8 @@ const H = ({ children }) => (
   <h2 className="text-base font-extrabold text-slate-800 pt-2">{children}</h2>
 );
 
-export const Terms = () => (
-  <LegalPage title="TABbeast 利用規約">
+export const TermsContent = () => (
+  <>
     <p>
       本規約は、個人事業主（以下「当方」）が提供するソフトウェア「TABbeast」（以下「本ソフトウェア」）および関連する Web サービス（マイページ、購入者向けブラウザ版等）の利用条件を定めるものです。購入または利用開始をもって、本規約に同意したものとみなします。
     </p>
@@ -58,6 +58,12 @@ export const Terms = () => (
 
     <H>8. 準拠法</H>
     <p>本規約は日本法に準拠し、紛争が生じた場合は当方所在地を管轄する裁判所を第一審の専属的合意管轄とします。</p>
+  </>
+);
+
+export const Terms = () => (
+  <LegalPage title="TABbeast 利用規約">
+    <TermsContent />
   </LegalPage>
 );
 

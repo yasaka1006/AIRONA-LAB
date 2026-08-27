@@ -92,7 +92,7 @@ export function createAuth(env, request) {
             html: `<p>TABbeast にログインするには、次のリンクを開いてください。</p>
 <p><a href="${url}">${url}</a></p>
 <p>このリンクは短時間のみ有効で、1回のみ使用できます。</p>
-<p>パスワードは不要です。心当たりがない場合はこのメールを無視してください。</p>`,
+`,
           });
           if (!result.sent) {
             console.error("magic_link_send_failed", result.reason || result.status);

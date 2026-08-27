@@ -9,12 +9,14 @@ STRIPE_WEBHOOK_SECRET=whsec_xxx
 STRIPE_PRICE_ID=price_xxx
 RESEND_API_KEY=re_xxx
 MAIL_FROM="AIRONA-LAB <noreply@airona-lab.com>"
+# お問い合わせ受信先（未設定時は airona.lab@gmail.com）
+CONTACT_TO=airona.lab@gmail.com
 APP_BASE_URL=https://airona-lab.com
 SESSION_SECRET=generate-a-long-random-hex
 BETTER_AUTH_SECRET=generate-a-long-random-hex
 GOOGLE_CLIENT_ID=your-google-oauth-client-id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
-DOWNLOAD_URL_TTL_SEC=3600
+DOWNLOAD_URL_TTL_SEC=900
 MAGIC_LINK_TTL_SEC=900
 DEMO_WEB_URL=https://tabbeast-demo.pages.dev
-DEMO_WIN_URL=
+DEMO_WIN_URL=https://airona-lab.com/api/commerce/demo-win

@@ -69,7 +69,7 @@ flowchart LR
 - `functions/api/commerce/auth/magic-link.js` — 購入権があるメールにのみリンク送信
 - `functions/api/commerce/auth/verify.js` — トークン検証 → `tb_session`
 - `functions/api/commerce/checkout.js` / `stripe/webhook.js` — メールで顧客・権利
-- `functions/app/[[path]].js` — セッション + active entitlement でゲート
+- `functions/app/[[path]].js` — HTML のみ entitlement、`tb_app` でアセットゲート
 - `functions/_lib/commerce.js` — `sendResendEmail` / セッションヘルパー
 
 ### スキーマ（`migrations/commerce/001_init.sql`）

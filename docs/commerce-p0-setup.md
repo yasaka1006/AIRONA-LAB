@@ -104,10 +104,13 @@ Google コールバック: `{APP_BASE_URL}/api/auth/callback/google`
 
 ## P4（ブラウザ版ゲート）
 
-- `GET /app` / `/app/*` … 要ログイン + active → R2 `tabbeast/full/web/{version}/`
-- 未認証・未購入 → `/mypage` へ 302
-- HexaTAB: `npm run build:web:full`（`base: /app/`）→ dist を R2 に配置
+- `GET /app` / `/app/*`
+  - **HTML**: 要ログイン + active → `tb_app` チケット Cookie 付与 → R2 `tabbeast/full/web/{version}/`
+  - **アセット**: `tb_app` のみ検証（D1 省略）+ エッジキャッシュ
+  - 未認証・チケット無し → `/mypage` へ 302
+- HexaTAB: `npm run build:web:full`（`base: /app/` + `VITE_MEDIA_BASE` で音源は DEMO CDN）
 - ローカル: `COMMERCE_DEV_FAKE_APP=1` または `npm run r2:web:placeholder:local`
+- 同時利用が増えたら Workers Paid を検討
 
 ## P5（導線・法務）
 
@@ -162,6 +165,8 @@ npx wrangler pages secret bulk .prod.vars --project-name aironalab
 ```
 
 必須キー: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_ID`, `RESEND_API_KEY`, `MAIL_FROM`, `APP_BASE_URL`, `SESSION_SECRET`, `DOWNLOAD_URL_TTL_SEC`, `MAGIC_LINK_TTL_SEC`（任意: `DEMO_WEB_URL`, `DEMO_WIN_URL`）
+
+`DEMO_WIN_URL` は公開 zip 直リンク、または同一オリジンの `https://airona-lab.com/api/commerce/demo-win`（Private R2 の latest `demo_win` を配信）。
 
 **本番に `COMMERCE_DEV_*` を付けない。**
 

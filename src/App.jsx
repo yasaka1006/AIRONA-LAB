@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Suspense, lazy } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 import Home from './components/Home';
 import Header from './components/assets/Header';
@@ -15,7 +15,9 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Minigames from './components/Minigames';
 import Ranking from './components/Ranking';
 import Tabbeast from './components/Tabbeast';
+import TabbeastContact from './components/TabbeastContact';
 import Mypage from './components/Mypage';
+import ChangeEmail from './components/ChangeEmail';
 import { Terms, Tokushoho } from './components/legal/LegalPages';
 
 const Tokyo = lazy(() => import('./components/minigames/Tokyo'));
@@ -48,7 +50,9 @@ const PAGE_TITLES = {
   '/element': '周期表の元素全部言えるかな？ - AIRONA-LAB',
   '/monhan': 'モンハン歴代モンスター144種言えるかな？ - AIRONA-LAB',
   '/tabbeast': 'Tabbeast - AIRONA-LAB',
+  '/tabbeast/contact': 'お問い合わせ - TABbeast',
   '/mypage': 'マイページ - AIRONA-LAB',
+  '/mypage/email': 'メールアドレス変更 - AIRONA-LAB',
   '/legal/terms': '利用規約 - AIRONA-LAB',
   '/legal/tokushoho': '特定商取引法に基づく表記 - AIRONA-LAB',
 };
@@ -100,7 +104,10 @@ function App() {
                   <Route path="/ranking" element={<Ranking />} />
                   <Route path="/japan" element={<Japan />} />
                   <Route path="/tabbeast" element={<Tabbeast />} />
+                  <Route path="/tabbeast/contact" element={<TabbeastContact />} />
+                  <Route path="/tabbeast/mypage" element={<Navigate to="/mypage" replace />} />
                   <Route path="/mypage" element={<Mypage />} />
+                  <Route path="/mypage/email" element={<ChangeEmail />} />
                   <Route path="/legal/terms" element={<Terms />} />
                   <Route path="/legal/tokushoho" element={<Tokushoho />} />
                 </Routes>

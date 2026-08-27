@@ -4,6 +4,9 @@ export const PRODUCT_ID_FULL = "tabbeast_full";
 export const PRODUCT_ID_DEMO = "tabbeast_demo";
 export const SESSION_COOKIE = "tb_session";
 export const SESSION_TTL_SEC = 60 * 60 * 24 * 30;
+/** short-lived ticket for /app/* static assets after HTML entitlement check */
+export const APP_TICKET_COOKIE = "tb_app";
+export const APP_TICKET_TTL_SEC = 60 * 60 * 2;
 
 export function json(data, init = {}) {
   const headers = new Headers(init.headers);
@@ -93,7 +96,7 @@ export function bindingStatus(env) {
     BETTER_AUTH_SECRET: Boolean(env.BETTER_AUTH_SECRET || env.SESSION_SECRET),
     GOOGLE_CLIENT_ID: Boolean(env.GOOGLE_CLIENT_ID),
     GOOGLE_CLIENT_SECRET: Boolean(env.GOOGLE_CLIENT_SECRET),
-    DOWNLOAD_URL_TTL_SEC: env.DOWNLOAD_URL_TTL_SEC ?? "3600",
+    DOWNLOAD_URL_TTL_SEC: env.DOWNLOAD_URL_TTL_SEC ?? "900",
     MAGIC_LINK_TTL_SEC: env.MAGIC_LINK_TTL_SEC ?? "900",
     DEMO_WEB_URL: env.DEMO_WEB_URL ?? null,
     DEMO_WIN_URL: env.DEMO_WIN_URL ?? null,
@@ -113,7 +116,7 @@ function bytesToHex(buffer) {
 }
 
 export function downloadTtlSec(env) {
-  const n = Number(env.DOWNLOAD_URL_TTL_SEC ?? 3600);
+  const n = Number(env.DOWNLOAD_URL_TTL_SEC ?? 900);
   return Number.isFinite(n) && n > 0 ? n : 3600;
 }
 
@@ -285,6 +288,54 @@ export function sessionCookieHeader(request, rawId, { clear = false } = {}) {
   return `${SESSION_COOKIE}=${encodeURIComponent(rawId)}; Path=/; Max-Age=${SESSION_TTL_SEC}; HttpOnly; SameSite=Lax${secure}`;
 }
 
+function appTicketSecret(env) {
+  return env.BETTER_AUTH_SECRET || env.SESSION_SECRET || "dev-session-secret";
+}
+
+/**
+ * HMAC ticket for /app assets: customerId|exp|version|r2Prefix
+ */
+export async function createAppTicket(env, { customerId, version, r2Prefix }) {
+  const exp = Math.floor(Date.now() / 1000) + APP_TICKET_TTL_SEC;
+  const prefix = String(r2Prefix || "").replace(/\/?$/, "/");
+  const body = [customerId, String(exp), version, prefix].join("|");
+  const sig = await hmacSha256Hex(appTicketSecret(env), body);
+  return toBase64Url(`${body}|${sig}`);
+}
+
+export async function parseAppTicket(env, token) {
+  if (!token) return null;
+  let decoded;
+  try {
+    decoded = fromBase64Url(token);
+  } catch {
+    return null;
+  }
+  const parts = decoded.split("|");
+  if (parts.length !== 5) return null;
+  const [customerId, expRaw, version, r2Prefix, sig] = parts;
+  if (!customerId || !version || !r2Prefix) return null;
+  const body = [customerId, expRaw, version, r2Prefix].join("|");
+  const expected = await hmacSha256Hex(appTicketSecret(env), body);
+  if (sig !== expected) return null;
+  const exp = Number(expRaw);
+  if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return null;
+  return {
+    customerId,
+    version,
+    r2Prefix: r2Prefix.replace(/\/?$/, "/"),
+    exp,
+  };
+}
+
+export function appTicketCookieHeader(request, token, { clear = false } = {}) {
+  const secure = cookieSecure(request) ? "; Secure" : "";
+  if (clear) {
+    return `${APP_TICKET_COOKIE}=; Path=/app; Max-Age=0; HttpOnly; SameSite=Lax${secure}`;
+  }
+  return `${APP_TICKET_COOKIE}=${encodeURIComponent(token)}; Path=/app; Max-Age=${APP_TICKET_TTL_SEC}; HttpOnly; SameSite=Lax${secure}`;
+}
+
 export async function getSession(env, request) {
   const db = commerceDb(env);
   if (!db) return null;
@@ -422,11 +473,15 @@ export async function ensureDevPurchaser(db, email) {
   return customer;
 }
 
-export async function sendResendEmail(env, { to, subject, html }) {
+export async function sendResendEmail(env, { to, subject, html, replyTo }) {
   const apiKey = env.RESEND_API_KEY;
   const from = env.MAIL_FROM;
   if (!apiKey || !from || apiKey.startsWith("re_xxx")) {
     return { sent: false, reason: "not_configured" };
+  }
+  const payload = { from, to, subject, html };
+  if (replyTo && isValidEmail(normalizeEmail(replyTo))) {
+    payload.reply_to = normalizeEmail(replyTo);
   }
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -434,7 +489,7 @@ export async function sendResendEmail(env, { to, subject, html }) {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ from, to, subject, html }),
+    body: JSON.stringify(payload),
   });
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
@@ -461,10 +516,10 @@ export async function sendPurchaseEmail(env, request, email) {
     to: email,
     subject: "TABbeast のご購入ありがとうございます",
     html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,920）。</p>
-<p>ダウンロードとブラウザ版はマイページから利用できます。</p>
+<p>ご購入アカウントに権利が付与されています。マイページからブラウザ版の利用、および Windows 版のダウンロードができます。</p>
 <p><a href="${mypage}">${mypage}</a></p>
-<p>ログイン済みのアカウントに権利が付与されています。未ログインの場合はマイページから Google またはメールのマジックリンクでログインしてください。</p>
-<p>原則として購入後の返金はできません。</p>`,
+<p>別の端末やブラウザから開く場合は、同じアカウントで Google ログイン、またはメールのマジックリンクでログインしてください。</p>
+`,
   });
 }
 
