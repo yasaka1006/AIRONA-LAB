@@ -91,7 +91,7 @@ Google コールバック: `{APP_BASE_URL}/api/auth/callback/google`
 - `POST /api/commerce/checkout` … ログイン必須 + `agreeToTerms: true` で Checkout URL
 - `POST /api/commerce/stripe/webhook` … 署名検証、`auth_user_id` metadata で権利付与、返金で revoke
 - ローカルで Stripe 未設定なら `.dev.vars` に `COMMERCE_DEV_FAKE_CHECKOUT=1`。同意＋ログインで権利を付けて `/mypage` へ
-- 本番: Stripe の Price（¥2,920）と Webhook エンドポイント `/api/commerce/stripe/webhook`（`checkout.session.completed`, `charge.refunded`, `charge.dispute.created`）
+- 本番: Stripe の Price（¥2,980）と Webhook エンドポイント `/api/commerce/stripe/webhook`（`checkout.session.completed`, `charge.refunded`, `charge.dispute.created`）
 - 特商法・規約の正式文言は P5。今はプレースホルダ
 
 ## P3（ダウンロード）

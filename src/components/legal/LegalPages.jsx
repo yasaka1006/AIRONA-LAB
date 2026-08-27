@@ -94,7 +94,7 @@ export const Tokushoho = () => (
       </div>
       <div>
         <dt className="font-bold text-slate-800">販売価格</dt>
-        <dd>TABbeast 製品版 税込 ¥2,920（表示価格）</dd>
+        <dd>TABbeast 製品版 税込 ¥2,980（表示価格）</dd>
       </div>
       <div>
         <dt className="font-bold text-slate-800">商品以外の必要料金</dt>

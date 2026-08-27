@@ -439,7 +439,7 @@ const PurchaseBar = () => {
                 disabled={busy}
                 className="text-white text-lg md:text-xl font-extrabold px-10 md:px-14 py-3.5 md:py-4 rounded-full cursor-pointer disabled:opacity-60 shadow-lg bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
               >
-                製品版を入手 ￥2,920 ▶
+                製品版を入手 ￥2,980 ▶
               </button>
               <p className="flex flex-col sm:flex-row sm:items-center justify-center gap-0.5 sm:gap-0 text-center text-xs md:text-sm text-slate-500 leading-relaxed">
                 <span>
@@ -479,7 +479,7 @@ const PurchaseBar = () => {
                   製品版の購入
                 </h2>
                 <p className="text-sm text-slate-500 mb-3 shrink-0">
-                  TABbeast 製品版（￥2,920）の購入手続きに進みます。
+                  TABbeast 製品版（￥2,980）の購入手続きに進みます。
                 </p>
                 <p className="text-xs font-bold text-slate-500 mb-1.5 shrink-0">利用規約</p>
                 <div className="mb-4 min-h-0 flex-1 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 leading-relaxed space-y-3 max-h-56 md:max-h-72">
@@ -548,10 +548,10 @@ const Tabbeast = () => {
             TABbeast
           </h1>
           <p className="text-xl md:text-3xl font-extrabold text-slate-700 leading-snug mb-4">
-            弾いてみた動画のTAB譜を、より手軽に。
+            弾いてみた動画のTAB譜を、よりスマートにつくろう。
           </p>
           <p className="text-sm md:text-base text-slate-500 leading-relaxed">
-            直感的な操作で、ギターTABをもっと速く、もっと自由に。
+          ギターTAB YouTuber「あいろな」による個人開発サービスです。
           </p>
         </div>
 

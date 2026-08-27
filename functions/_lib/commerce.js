@@ -515,7 +515,7 @@ export async function sendPurchaseEmail(env, request, email) {
   return sendResendEmail(env, {
     to: email,
     subject: "TABbeast のご購入ありがとうございます",
-    html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,920）。</p>
+    html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,980）。</p>
 <p>ご購入アカウントに権利が付与されています。マイページからブラウザ版の利用、および Windows 版のダウンロードができます。</p>
 <p><a href="${mypage}">${mypage}</a></p>
 <p>別の端末やブラウザから開く場合は、同じアカウントで Google ログイン、またはメールのマジックリンクでログインしてください。</p>
