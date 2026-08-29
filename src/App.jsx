@@ -21,6 +21,9 @@ import TabbeastManual from './components/TabbeastManual';
 import Mypage from './components/Mypage';
 import ChangeEmail from './components/ChangeEmail';
 import { Terms, Tokushoho } from './components/legal/LegalPages';
+import LocaleAutoRedirect from './i18n/LocaleAutoRedirect';
+import { LocaleProvider, useSiteLocale } from './i18n/siteLocale';
+import { LOCALIZED_PATHS, pageTitle, localeFromPathname } from './i18n/routes';
 
 const Tokyo = lazy(() => import('./components/minigames/Tokyo'));
 const Saitama = lazy(() => import('./components/minigames/Saitama'));
@@ -51,22 +54,86 @@ const PAGE_TITLES = {
   '/ibaraki': '茨城県の市町村全部言えるかな？ - AIRONA-LAB',
   '/element': '周期表の元素全部言えるかな？ - AIRONA-LAB',
   '/monhan': 'モンハン歴代モンスター144種言えるかな？ - AIRONA-LAB',
-  '/tabbeast': 'Tabbeast - AIRONA-LAB',
-  '/tabbeast/contact': 'お問い合わせ - TABbeast',
-  '/tabbeast/guide': 'ご利用の流れ - TABbeast',
-  '/tabbeast/manual': 'マニュアル - TABbeast',
-  '/mypage': 'マイページ - AIRONA-LAB',
-  '/mypage/email': 'メールアドレス変更 - AIRONA-LAB',
-  '/legal/terms': '利用規約 - AIRONA-LAB',
-  '/legal/tokushoho': '特定商取引法に基づく表記 - AIRONA-LAB',
 };
+
+function basePath(pathname) {
+  if (pathname === '/en') return '/';
+  if (pathname.startsWith('/en/')) return pathname.slice(3) || '/';
+  return pathname;
+}
+
+function LocaleMypageRedirect() {
+  const { path } = useSiteLocale();
+  return <Navigate to={path('/mypage')} replace />;
+}
+
+const LOCALIZED_ROUTE_ELEMENTS = {
+  '/tabbeast': <Tabbeast />,
+  '/tabbeast/contact': <TabbeastContact />,
+  '/tabbeast/guide': <TabbeastGuide />,
+  '/tabbeast/manual': <TabbeastManual />,
+  '/tabbeast/mypage': <LocaleMypageRedirect />,
+  '/mypage': <Mypage />,
+  '/mypage/email': <ChangeEmail />,
+  '/privacy-policy': <PrivacyPolicy />,
+  '/legal/terms': <Terms />,
+  '/legal/tokushoho': <Tokushoho />,
+};
+
+function AppRoutes() {
+  return (
+    <>
+      <LocaleAutoRedirect />
+      <Suspense fallback={<div className="flex justify-center items-center min-h-screen font-bold">Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/links" element={<Links2 />} />
+          <Route path="/minigames" element={<Minigames />} />
+          <Route path="/equipments" element={<Equipments />} />
+          <Route path="/mcp" element={<Mcp />} />
+          <Route path="/tokyo" element={<Tokyo />} />
+          <Route path="/saitama" element={<Saitama />} />
+          <Route path="/chiba" element={<Chiba />} />
+          <Route path="/tochigi" element={<Tochigi />} />
+          <Route path="/kanagawa" element={<Kanagawa />} />
+          <Route path="/yamanashi" element={<Yamanashi />} />
+          <Route path="/gunma" element={<Gunma />} />
+          <Route path="/shizuoka" element={<Shizuoka />} />
+          <Route path="/ibaraki" element={<Ibaraki />} />
+          <Route path="/element" element={<Element />} />
+          <Route path="/ranking" element={<Ranking />} />
+          <Route path="/japan" element={<Japan />} />
+          <Route path="/tabbeast" element={<Tabbeast />} />
+          <Route path="/tabbeast/contact" element={<TabbeastContact />} />
+          <Route path="/tabbeast/guide" element={<TabbeastGuide />} />
+          <Route path="/tabbeast/manual" element={<TabbeastManual />} />
+          <Route path="/tabbeast/mypage" element={<LocaleMypageRedirect />} />
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypage/email" element={<ChangeEmail />} />
+          <Route path="/legal/terms" element={<Terms />} />
+          <Route path="/legal/tokushoho" element={<Tokushoho />} />
+          {LOCALIZED_PATHS.map((localizedPath) => (
+            <Route
+              key={`en-${localizedPath}`}
+              path={`/en${localizedPath}`}
+              element={LOCALIZED_ROUTE_ELEMENTS[localizedPath]}
+            />
+          ))}
+        </Routes>
+      </Suspense>
+    </>
+  );
+}
 
 function App() {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const title = PAGE_TITLES[location.pathname] ?? 'AIRONA-LAB';
+    const locale = localeFromPathname(location.pathname);
+    const base = basePath(location.pathname);
+    const title = PAGE_TITLES[base] ?? pageTitle(location.pathname, locale);
     document.title = title;
   }, [location.pathname]);
 
@@ -79,7 +146,7 @@ function App() {
   };
 
   return (
-    <>
+    <LocaleProvider>
       <ViewTop />
       <div className="bg-slate-50 min-h-screen text-slate-800 flex flex-col font-mplus1">
         <Header onMenuClick={toggleSidebar} />
@@ -87,37 +154,7 @@ function App() {
         <div className="flex pt-12 flex-1">
           <div className="w-full flex-1">
             <div className="w-full max-w-6xl mx-auto md:main-content-centered px-2">
-              <Suspense fallback={<div className="flex justify-center items-center min-h-screen font-bold">Loading...</div>}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/links" element={<Links2 />} />
-                  <Route path="/minigames" element={<Minigames />} />
-                  <Route path="/equipments" element={<Equipments />} />
-                  <Route path="/mcp" element={<Mcp />} />
-                  <Route path="/tokyo" element={<Tokyo />} />
-                  <Route path="/saitama" element={<Saitama />} />
-                  <Route path="/chiba" element={<Chiba />} />
-                  <Route path="/tochigi" element={<Tochigi />} />
-                  <Route path="/kanagawa" element={<Kanagawa />} />
-                  <Route path="/yamanashi" element={<Yamanashi />} />
-                  <Route path="/gunma" element={<Gunma />} />
-                  <Route path="/shizuoka" element={<Shizuoka />} />
-                  <Route path="/ibaraki" element={<Ibaraki />} />
-                  <Route path="/element" element={<Element />} />
-                  <Route path="/ranking" element={<Ranking />} />
-                  <Route path="/japan" element={<Japan />} />
-                  <Route path="/tabbeast" element={<Tabbeast />} />
-                  <Route path="/tabbeast/contact" element={<TabbeastContact />} />
-                  <Route path="/tabbeast/guide" element={<TabbeastGuide />} />
-                  <Route path="/tabbeast/manual" element={<TabbeastManual />} />
-                  <Route path="/tabbeast/mypage" element={<Navigate to="/mypage" replace />} />
-                  <Route path="/mypage" element={<Mypage />} />
-                  <Route path="/mypage/email" element={<ChangeEmail />} />
-                  <Route path="/legal/terms" element={<Terms />} />
-                  <Route path="/legal/tokushoho" element={<Tokushoho />} />
-                </Routes>
-              </Suspense>
+              <AppRoutes />
             </div>
             <div className="w-full max-w-full lg:max-w-[93%] mx-auto px-2 sm:px-4 min-w-0 overflow-x-clip">
               <Suspense fallback={<div className="flex justify-center items-center min-h-screen font-bold">Loading...</div>}>
@@ -131,7 +168,7 @@ function App() {
         <Footer />
         <ScrollToTop />
       </div>
-    </>
+    </LocaleProvider>
   )
 }
 

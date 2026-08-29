@@ -85,7 +85,8 @@ export async function onRequestPost(context) {
           paymentIntentId: paymentIntentId(session.payment_intent),
         });
         if (result.granted && email) {
-          await sendPurchaseEmail(env, request, email);
+          const locale = session.metadata?.locale === "en" ? "en" : "ja";
+          await sendPurchaseEmail(env, request, email, locale);
         }
       }
     } else if (event.type === "charge.refunded") {

@@ -11,25 +11,48 @@ import {
   sameSitePost,
   sendResendEmail,
 } from "../../_lib/commerce.js";
+import {
+  contactAdminEmailIntro,
+  contactCategoryLabel,
+  contactFieldLabel,
+  escapeHtml,
+} from "../../_lib/emailTemplates.js";
+import { normalizeLocale, parseLocaleFromRequest } from "../../_lib/locale.js";
 
-const CATEGORIES = {
-  purchase_download: "購入・ダウンロード",
-  browser: "ブラウザ版",
-  payment: "決済トラブル",
-  bug: "不具合・要望",
-  other: "その他",
-};
+const CATEGORIES = new Set([
+  "purchase_download",
+  "browser",
+  "payment",
+  "bug",
+  "other",
+]);
 
 const MAX_SUBJECT = 120;
 const MAX_BODY = 4000;
 
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+const CONTACT_ERRORS = {
+  ja: {
+    invalid_category: "種別を選択してください",
+    invalid_email: "有効なメールアドレスを入力してください",
+    message_too_short: "内容は10文字以上で入力してください",
+    message_too_long: "内容が長すぎます",
+    mail_not_configured: "メール送信が設定されていません",
+    mail_failed: "送信に失敗しました。しばらくしてから再度お試しください",
+  },
+  en: {
+    invalid_category: "Please select a category",
+    invalid_email: "Please enter a valid email address",
+    message_too_short: "Message must be at least 10 characters",
+    message_too_long: "Message is too long",
+    mail_not_configured: "Email is not configured",
+    mail_failed: "Failed to send. Please try again later",
+  },
+};
+
+function contactError(status, code, locale) {
+  const loc = normalizeLocale(locale);
+  const message = CONTACT_ERRORS[loc][code] || CONTACT_ERRORS.ja[code] || code;
+  return error(status, code, message);
 }
 
 function contactTo(env) {
@@ -51,28 +74,30 @@ export async function onRequestPost(context) {
     return error(400, "invalid_json", "Invalid JSON body");
   }
 
+  const locale = parseLocaleFromRequest(request, body.locale);
+
   const category = typeof body.category === "string" ? body.category : "";
-  const categoryLabel = CATEGORIES[category];
-  if (!categoryLabel) {
-    return error(400, "invalid_category", "種別を選択してください");
+  if (!CATEGORIES.has(category)) {
+    return contactError(400, "invalid_category", locale);
   }
+  const categoryLabel = contactCategoryLabel(locale, category);
 
   const email = normalizeEmail(body.email);
   if (!isValidEmail(email)) {
-    return error(400, "invalid_email", "有効なメールアドレスを入力してください");
+    return contactError(400, "invalid_email", locale);
   }
 
   const subjectRaw =
     typeof body.subject === "string" ? body.subject.trim() : "";
   const subject =
-    subjectRaw.slice(0, MAX_SUBJECT) || `（件名なし）`;
+    subjectRaw.slice(0, MAX_SUBJECT) || contactFieldLabel(locale, "none");
 
   const messageRaw = typeof body.message === "string" ? body.message.trim() : "";
   if (messageRaw.length < 10) {
-    return error(400, "message_too_short", "内容は10文字以上で入力してください");
+    return contactError(400, "message_too_short", locale);
   }
   if (messageRaw.length > MAX_BODY) {
-    return error(400, "message_too_long", "内容が長すぎます");
+    return contactError(400, "message_too_long", locale);
   }
 
   const session = await getSession(env, request);
@@ -89,15 +114,19 @@ export async function onRequestPost(context) {
     }
   }
 
-  const mailSubject = `[TABbeast 問い合わせ][${categoryLabel}] ${subject}`;
+  const mailSubject =
+    locale === "en"
+      ? `[TABbeast contact][${categoryLabel}] ${subject}`
+      : `[TABbeast 問い合わせ][${categoryLabel}] ${subject}`;
   const html = `
-<p>TABbeast お問い合わせを受信しました。</p>
+<p>${contactAdminEmailIntro(locale)}</p>
 <table style="border-collapse:collapse;font-size:14px;line-height:1.6">
-  <tr><td style="padding:4px 12px 4px 0;color:#64748b">種別</td><td>${escapeHtml(categoryLabel)}</td></tr>
-  <tr><td style="padding:4px 12px 4px 0;color:#64748b">返信先</td><td>${escapeHtml(email)}</td></tr>
-  <tr><td style="padding:4px 12px 4px 0;color:#64748b">件名</td><td>${escapeHtml(subject)}</td></tr>
-  <tr><td style="padding:4px 12px 4px 0;color:#64748b">ログイン</td><td>${session ? "あり" : "なし"}</td></tr>
-  <tr><td style="padding:4px 12px 4px 0;color:#64748b">購入権</td><td>${owned ? "tabbeast_full active" : "なし / 不明"}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#64748b">${contactFieldLabel(locale, "category")}</td><td>${escapeHtml(categoryLabel)}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#64748b">${contactFieldLabel(locale, "replyTo")}</td><td>${escapeHtml(email)}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#64748b">${contactFieldLabel(locale, "subject")}</td><td>${escapeHtml(subject)}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#64748b">${contactFieldLabel(locale, "login")}</td><td>${session ? contactFieldLabel(locale, "yes") : contactFieldLabel(locale, "no")}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#64748b">${contactFieldLabel(locale, "owned")}</td><td>${owned ? "tabbeast_full active" : contactFieldLabel(locale, "no")}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#64748b">${contactFieldLabel(locale, "locale")}</td><td>${locale}</td></tr>
   <tr><td style="padding:4px 12px 4px 0;color:#64748b">authUserId</td><td>${authUserId ? escapeHtml(authUserId) : "—"}</td></tr>
 </table>
 <p style="white-space:pre-wrap;margin-top:16px;padding:12px;background:#f8fafc;border-radius:8px">${escapeHtml(messageRaw)}</p>
@@ -112,9 +141,9 @@ export async function onRequestPost(context) {
 
   if (!result.sent) {
     if (result.reason === "not_configured") {
-      return error(503, "mail_not_configured", "メール送信が設定されていません");
+      return contactError(503, "mail_not_configured", locale);
     }
-    return error(502, "mail_failed", "送信に失敗しました。しばらくしてから再度お試しください");
+    return contactError(502, "mail_failed", locale);
   }
 
   return json({ ok: true });

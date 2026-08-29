@@ -59,13 +59,13 @@ export async function requestDownload(channel = "full_win") {
   }
 }
 
-export async function createCheckout({ agreeToTerms } = {}) {
+export async function createCheckout({ agreeToTerms, locale } = {}) {
   try {
     const res = await fetch("/api/commerce/checkout", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ agreeToTerms }),
+      body: JSON.stringify({ agreeToTerms, locale }),
     });
     const body = await readApiJson(res);
     if (!res.ok) {
@@ -98,13 +98,13 @@ export async function fetchDemoLinks() {
   }
 }
 
-export async function submitContact({ email, category, subject, message }) {
+export async function submitContact({ email, category, subject, message, locale }) {
   try {
     const res = await fetch("/api/commerce/contact", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, category, subject, message }),
+      body: JSON.stringify({ email, category, subject, message, locale }),
     });
     const body = await readApiJson(res);
     if (!res.ok) {

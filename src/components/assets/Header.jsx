@@ -1,30 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { fetchMe, logout } from '../../lib/commerceApi';
-
-const isJapanese = (navigator.languages?.[0] ?? navigator.language ?? '')
-  .toLowerCase()
-  .startsWith('ja');
-
-const menuLabels = isJapanese
-  ? {
-      home: 'ホーム',
-      games: 'ゲーム',
-      openMenu: 'メニューを開く',
-      accountMenu: 'アカウントメニュー',
-      mypage: 'マイページ',
-      changeEmail: 'メールアドレス変更',
-      logout: 'ログアウト',
-    }
-  : {
-      home: 'Home',
-      games: 'Games',
-      openMenu: 'Open menu',
-      accountMenu: 'Account menu',
-      mypage: 'My page',
-      changeEmail: 'Change email',
-      logout: 'Log out',
-    };
+import { useSiteLocale } from '../../i18n/siteLocale';
 
 const menuItems =
   'font-bold text-md text-gray-500 hover:text-gray-700 transition-colors duration-100 hover:bg-slate-300 rounded-full py-2 px-4';
@@ -36,6 +13,7 @@ const dropdownItemClass =
 const SHOW_ACCOUNT_MENU = false;
 
 const Header = ({ onMenuClick }) => {
+  const { t, path } = useSiteLocale();
   const location = useLocation();
   const navigate = useNavigate();
   const menuRef = useRef(null);
@@ -86,7 +64,7 @@ const Header = ({ onMenuClick }) => {
 
   const onAccountClick = () => {
     if (!loggedIn) {
-      navigate('/mypage');
+      navigate(path('/mypage'));
       return;
     }
     setOpen((value) => !value);
@@ -101,7 +79,7 @@ const Header = ({ onMenuClick }) => {
     }
     setLoggedIn(false);
     setEmail('');
-    navigate('/mypage');
+    navigate(path('/mypage'));
   };
 
   return (
@@ -110,7 +88,7 @@ const Header = ({ onMenuClick }) => {
         <button
           onClick={onMenuClick}
           className="xl:hidden p-2 hover:bg-slate-300 rounded-xl transition-all duration-200 active:scale-95 group text-slate-700"
-          aria-label={menuLabels.openMenu}
+          aria-label={t('nav.openMenu')}
         >
           <svg className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
@@ -127,10 +105,10 @@ const Header = ({ onMenuClick }) => {
 
           <div className="hidden xl:flex items-center gap-6">
             <Link to="/" className={menuItems}>
-              {menuLabels.home}
+              {t('nav.home')}
             </Link>
             <Link to="/minigames" className={menuItems}>
-              {menuLabels.games}
+              {t('nav.games')}
             </Link>
           </div>
         </div>
@@ -141,7 +119,7 @@ const Header = ({ onMenuClick }) => {
               type="button"
               onClick={onAccountClick}
               className="p-1.5 hover:bg-slate-300 rounded-full transition-colors duration-100"
-              aria-label={menuLabels.accountMenu}
+              aria-label={t('nav.accountMenu')}
               aria-expanded={open}
               aria-haspopup="menu"
             >
@@ -165,20 +143,20 @@ const Header = ({ onMenuClick }) => {
                 </div>
                 <div className="py-1">
                   <Link
-                    to="/mypage"
+                    to={path('/mypage')}
                     role="menuitem"
                     className={dropdownItemClass}
                     onClick={() => setOpen(false)}
                   >
-                    {menuLabels.mypage}
+                    {t('nav.mypage')}
                   </Link>
                   <Link
-                    to="/mypage/email"
+                    to={path('/mypage/email')}
                     role="menuitem"
                     className={dropdownItemClass}
                     onClick={() => setOpen(false)}
                   >
-                    {menuLabels.changeEmail}
+                    {t('nav.changeEmail')}
                   </Link>
                   <button
                     type="button"
@@ -186,7 +164,7 @@ const Header = ({ onMenuClick }) => {
                     className={dropdownItemClass}
                     onClick={onLogout}
                   >
-                    {menuLabels.logout}
+                    {t('nav.logout')}
                   </button>
                 </div>
               </div>

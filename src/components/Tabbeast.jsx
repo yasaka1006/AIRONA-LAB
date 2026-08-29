@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSiteLocale } from '../i18n/siteLocale';
 import { createCheckout, fetchDemoLinks, fetchMe, requestDownload } from '../lib/commerceApi';
 import { TermsContent } from './legal/LegalPages';
 
@@ -200,28 +201,30 @@ const FormatGroup = ({ title, formats, prefix }) => (
   </div>
 );
 
-const SystemRequirements = () => (
+const SystemRequirements = () => {
+  const { t } = useSiteLocale();
+  return (
   <div className="max-w-2xl mx-auto text-left text-sm text-slate-600 leading-relaxed space-y-6">
     <div className="overflow-x-auto">
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-slate-200 text-slate-700">
             <th className="py-2 pr-4 text-left font-extrabold" scope="col" />
-            <th className="py-2 px-3 text-center font-extrabold" scope="col">Windows</th>
-            <th className="py-2 pl-3 text-center font-extrabold" scope="col">Mac</th>
+            <th className="py-2 px-3 text-center font-extrabold" scope="col">{t('pages.tabbeast.sysReqWindows')}</th>
+            <th className="py-2 pl-3 text-center font-extrabold" scope="col">{t('pages.tabbeast.sysReqMac')}</th>
           </tr>
         </thead>
         <tbody>
           <tr className="border-b border-slate-100">
             <th className="py-2.5 pr-4 text-left font-bold text-slate-700" scope="row">
-              EXE 版
+              {t('pages.tabbeast.sysReqExeRow')}
             </th>
             <td className="py-2.5 px-3 text-center">○</td>
             <td className="py-2.5 pl-3 text-center text-slate-400">—</td>
           </tr>
           <tr>
             <th className="py-2.5 pr-4 text-left font-bold text-slate-700" scope="row">
-              ブラウザ版
+              {t('pages.tabbeast.sysReqBrowserRow')}
             </th>
             <td className="py-2.5 px-3 text-center">○</td>
             <td className="py-2.5 pl-3 text-center">○</td>
@@ -232,35 +235,36 @@ const SystemRequirements = () => (
 
     <div className="space-y-4">
       <div>
-        <p className="font-extrabold text-slate-800 mb-1">Windows EXE 版</p>
+        <p className="font-extrabold text-slate-800 mb-1">{t('pages.tabbeast.sysReqExeWinTitle')}</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Windows 10 / 11（64bit）推奨</li>
-          <li>zip を解凍して EXE を実行（SmartScreen 警告が出る場合は「詳細」をクリックして実行）</li>
+          <li>{t('pages.tabbeast.sysReqExeWin1')}</li>
+          <li>{t('pages.tabbeast.sysReqExeWin2')}</li>
         </ul>
       </div>
 
       <div>
-        <p className="font-extrabold text-slate-800 mb-1">ブラウザ版（Windows / Mac）</p>
+        <p className="font-extrabold text-slate-800 mb-1">{t('pages.tabbeast.sysReqBrowserTitle')}</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>
-            Google Chrome、Microsoft Edge、Mozilla Firefox、Safari の<strong>最新版</strong>推奨
-          </li>
-          <li>インターネット接続が必要</li>
-          <li>PC での利用を推奨（画面サイズ・操作性の都合）</li>
+          <li>{t('pages.tabbeast.sysReqBrowser1')}</li>
+          <li>{t('pages.tabbeast.sysReqBrowser2')}</li>
+          <li>{t('pages.tabbeast.sysReqBrowser3')}</li>
         </ul>
       </div>
 
       <div>
-        <p className="font-extrabold text-slate-800 mb-1">共通</p>
+        <p className="font-extrabold text-slate-800 mb-1">{t('pages.tabbeast.sysReqCommonTitle')}</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>スマートフォン・タブレットは非対応</li>
-          <li>音声再生・MP4 書き出しは PC 性能により所要時間が変わります</li>
-          <li>おためし版（DEMO）も同じ環境で利用できます（保存機能制限あり）</li>
+          <li>{t('pages.tabbeast.sysReqCommon1')}</li>
+          <li>{t('pages.tabbeast.sysReqCommon2')}</li>
+          <li>{t('pages.tabbeast.sysReqCommon3')}</li>
         </ul>
       </div>
+
+      <p className="font-extrabold text-slate-800">{t('pages.tabbeast.supportedLanguages')}</p>
     </div>
   </div>
-);
+  );
+};
 
 const FeatureSection = ({ title, description, imageSrc, reverse = false }) => (
   <div
@@ -285,6 +289,7 @@ const FeatureSection = ({ title, description, imageSrc, reverse = false }) => (
 );
 
 const PurchaseBar = () => {
+  const { t, path, locale } = useSiteLocale();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [agree, setAgree] = useState(false);
@@ -316,12 +321,12 @@ const PurchaseBar = () => {
   useEffect(() => {
     if (searchParams.get('checkout') === 'cancel') {
       setBusy(false);
-      setNotice('購入をキャンセルしました。');
+      setNotice(t('pages.tabbeast.purchaseCancelNotice'));
       const next = new URLSearchParams(searchParams);
       next.delete('checkout');
       setSearchParams(next, { replace: true });
     }
-  }, [searchParams, setSearchParams]);
+  }, [searchParams, setSearchParams, t]);
 
   // Stripe から「戻る」すると bfcache で busy=true が残ることがある
   useEffect(() => {
@@ -371,7 +376,7 @@ const PurchaseBar = () => {
 
   const openPurchaseDialog = () => {
     if (!loggedIn) {
-      navigate('/mypage?next=/tabbeast');
+      navigate(`${path('/mypage')}?next=${encodeURIComponent(path('/tabbeast'))}`);
       return;
     }
     setError('');
@@ -382,13 +387,13 @@ const PurchaseBar = () => {
 
   const onCheckout = async () => {
     if (!agree) {
-      setError('利用規約と特商法表記への同意が必要です。');
+      setError(t('pages.tabbeast.purchaseAgreeError'));
       return;
     }
     setBusy(true);
     setError('');
     try {
-      const { url } = await createCheckout({ agreeToTerms: true });
+      const { url } = await createCheckout({ agreeToTerms: true, locale });
       if (!url) {
         throw new Error('Checkout URL was empty');
       }
@@ -426,7 +431,7 @@ const PurchaseBar = () => {
       {owned ? (
         <div className="flex flex-col items-center gap-4">
           <p className="text-sm md:text-base font-extrabold text-slate-700">
-            購入済み
+            {t('pages.tabbeast.purchaseOwned')}
           </p>
           <div className="flex flex-wrap justify-center items-center gap-3 md:gap-5">
             <button
@@ -436,7 +441,7 @@ const PurchaseBar = () => {
               className="inline-flex h-11 items-center justify-center gap-2 text-white text-sm font-bold px-6 rounded-full cursor-pointer disabled:opacity-60 shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
             >
               <span className="leading-none">
-                {busy ? '準備中…' : 'Windows EXE Download'}
+                {busy ? t('common.preparing') : t('pages.tabbeast.purchaseWinDownload')}
               </span>
               {!busy ? <DownloadIcon className="h-4 w-4" /> : null}
             </button>
@@ -444,30 +449,30 @@ const PurchaseBar = () => {
               href="/app/"
               className="inline-flex h-11 items-center justify-center text-white text-sm font-bold px-6 rounded-full bg-slate-700 hover:bg-slate-600 shadow-md leading-none"
             >
-              ブラウザ版 ▶
+              {t('pages.tabbeast.purchaseBrowser')}
             </a>
           </div>
-          <Link to="/mypage" className="text-sm text-slate-500 underline hover:text-slate-700">
-            マイページへ
+          <Link to={path('/mypage')} className="text-sm text-slate-500 underline hover:text-slate-700">
+            {t('common.toMypage')}
           </Link>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             <Link
-              to="/tabbeast/guide"
+              to={path('/tabbeast/guide')}
               className="text-sm text-slate-500 underline hover:text-slate-700"
             >
-              ご利用の流れ
+              {t('common.guide')}
             </Link>
             <Link
-              to="/tabbeast/manual"
+              to={path('/tabbeast/manual')}
               className="text-sm text-slate-500 underline hover:text-slate-700"
             >
-              マニュアル
+              {t('common.manual')}
             </Link>
             <Link
-              to="/tabbeast/contact"
+              to={path('/tabbeast/contact')}
               className="text-sm text-slate-500 underline hover:text-slate-700"
             >
-              お問い合わせ
+              {t('common.contact')}
             </Link>
           </div>
         </div>
@@ -482,16 +487,16 @@ const PurchaseBar = () => {
                   rel="noopener noreferrer"
                   className="inline-flex h-11 items-center justify-center bg-slate-600 text-white text-sm font-bold px-6 rounded-full hover:bg-slate-500 shadow-md leading-none"
                 >
-                  おためし版（ブラウザ） ▶
+                  {t('pages.tabbeast.purchaseDemoWeb')}
                 </a>
               ) : (
                 <button
                   type="button"
                   disabled
                   className="inline-flex h-11 items-center justify-center bg-slate-400 text-white text-sm font-bold px-6 rounded-full cursor-not-allowed shadow-md leading-none"
-                  title="DEMO Web URL 未設定"
+                  title={t('pages.tabbeast.purchaseDemoWebTitle')}
                 >
-                  おためし版（ブラウザ）
+                  {t('pages.tabbeast.purchaseDemoWebDisabled')}
                 </button>
               )}
               {demoWin ? (
@@ -499,7 +504,7 @@ const PurchaseBar = () => {
                   href={demoWin}
                   className="inline-flex h-11 items-center justify-center gap-2 bg-slate-600 text-white text-sm font-bold px-6 rounded-full hover:bg-slate-500 shadow-md leading-none"
                 >
-                  <span className="leading-none">おためし版（Windows EXE）</span>
+                  <span className="leading-none">{t('pages.tabbeast.purchaseDemoWin')}</span>
                   <DownloadIcon className="h-4 w-4" />
                 </a>
               ) : (
@@ -507,9 +512,9 @@ const PurchaseBar = () => {
                   type="button"
                   disabled
                   className="inline-flex h-11 items-center justify-center gap-2 bg-slate-400 text-white text-sm font-bold px-6 rounded-full cursor-not-allowed shadow-md leading-none"
-                  title="DEMO Windows の公開 URL 準備中"
+                  title={t('pages.tabbeast.purchaseDemoWinTitle')}
                 >
-                  <span className="leading-none">おためし版（Windows EXE）</span>
+                  <span className="leading-none">{t('pages.tabbeast.purchaseDemoWin')}</span>
                   <DownloadIcon className="h-4 w-4" />
                 </button>
               )}
@@ -521,39 +526,39 @@ const PurchaseBar = () => {
                 disabled={busy}
                 className="mb-5 text-white text-lg md:text-xl font-extrabold px-10 md:px-14 py-3.5 md:py-4 rounded-full cursor-pointer disabled:opacity-60 shadow-lg bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
               >
-                製品版を入手 ￥2,980 ▶
+                {t('pages.tabbeast.purchaseBuy')}
               </button>
               <p className="flex flex-col sm:flex-row sm:items-center justify-center gap-0.5 sm:gap-0 text-center text-xs md:text-sm text-slate-500 leading-relaxed">
                 <span>
-                  <span className="font-bold text-slate-600">Windows :</span>
-                  {' '}EXE版・ブラウザ版
+                  <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformWin')}</span>
+                  {' '}{t('pages.tabbeast.purchasePlatformWinDetail')}
                 </span>
                 <span className="hidden sm:inline mx-2.5 text-slate-300" aria-hidden>
                   ｜
                 </span>
                 <span>
-                  <span className="font-bold text-slate-600">Mac :</span>
-                  {' '}ブラウザ版
+                  <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformMac')}</span>
+                  {' '}{t('pages.tabbeast.purchasePlatformMacDetail')}
                 </span>
               </p>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
                 <Link
-                  to="/tabbeast/guide"
+                  to={path('/tabbeast/guide')}
                   className="text-sm text-slate-500 underline hover:text-slate-700"
                 >
-                  ご利用の流れ
+                  {t('common.guide')}
                 </Link>
                 <Link
-                  to="/tabbeast/manual"
+                  to={path('/tabbeast/manual')}
                   className="text-sm text-slate-500 underline hover:text-slate-700"
                 >
-                  マニュアル
+                  {t('common.manual')}
                 </Link>
                 <Link
-                  to="/tabbeast/contact"
+                  to={path('/tabbeast/contact')}
                   className="text-sm text-slate-500 underline hover:text-slate-700"
                 >
-                  お問い合わせ
+                  {t('common.contact')}
                 </Link>
               </div>
             </div>
@@ -578,12 +583,14 @@ const PurchaseBar = () => {
                 aria-labelledby="purchase-dialog-title"
               >
                 <h2 id="purchase-dialog-title" className="text-xl font-extrabold text-slate-800 mb-1 shrink-0">
-                  製品版の購入
+                  {t('pages.tabbeast.purchaseDialogTitle')}
                 </h2>
                 <p className="text-sm text-slate-500 mb-3 shrink-0">
-                  TABbeast 製品版（￥2,980）の購入手続きに進みます。
+                  {t('pages.tabbeast.purchaseDialogDesc')}
                 </p>
-                <p className="text-xs font-bold text-slate-500 mb-1.5 shrink-0">利用規約</p>
+                <p className="text-xs font-bold text-slate-500 mb-1.5 shrink-0">
+                  {t('pages.tabbeast.purchaseDialogTermsLabel')}
+                </p>
                 <div className="mb-4 min-h-0 flex-1 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 leading-relaxed space-y-3 max-h-56 md:max-h-72">
                   <TermsContent />
                 </div>
@@ -598,11 +605,16 @@ const PurchaseBar = () => {
                     className="mt-1"
                   />
                   <span>
-                    利用規約及び
-                    <Link to="/legal/tokushoho" className="underline" target="_blank" rel="noopener noreferrer">
-                      特定商取引法に基づく表記
+                    {t('pages.tabbeast.purchaseDialogAgreePrefix')}
+                    <Link
+                      to={path('/legal/tokushoho')}
+                      className="underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t('common.tokushoho')}
                     </Link>
-                    に同意します
+                    {t('pages.tabbeast.purchaseDialogAgreeSuffix')}
                   </span>
                 </label>
                 {error ? (
@@ -615,7 +627,7 @@ const PurchaseBar = () => {
                     disabled={busy}
                     className="px-5 py-2.5 rounded-full text-slate-700 bg-slate-100 hover:bg-slate-200 font-bold disabled:opacity-60"
                   >
-                    キャンセル
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="button"
@@ -623,7 +635,7 @@ const PurchaseBar = () => {
                     disabled={!agree || busy}
                     className="px-5 py-2.5 rounded-full text-white font-bold bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {busy ? '準備中…' : '購入（Stripe）'}
+                    {busy ? t('common.preparing') : t('pages.tabbeast.purchaseCheckout')}
                   </button>
                 </div>
               </div>
@@ -636,11 +648,12 @@ const PurchaseBar = () => {
 };
 
 const Tabbeast = () => {
+  const { t } = useSiteLocale();
+
   return (
     <main className="my-4 mx-1">
       <section className="py-12 rounded-xl ">
         <div className="max-w-3xl mx-auto text-center">
-
           <h1 className="flex items-center justify-center gap-3 md:gap-4 text-4xl md:text-6xl font-extrabold text-slate-800 tracking-tight mb-10">
             <img
               src="/tabbeast/appIcon.SVG"
@@ -650,10 +663,10 @@ const Tabbeast = () => {
             TABbeast
           </h1>
           <p className="text-xl md:text-3xl font-extrabold text-slate-700 leading-snug mb-4">
-            弾いてみた動画のTAB譜を、よりスマートに。
+            {t('pages.tabbeast.heroLine1')}
           </p>
           <p className="text-sm md:text-base text-slate-500 leading-relaxed">
-          ギターTAB YouTuber「あいろな」による個人開発サービスです。
+            {t('pages.tabbeast.heroLine2')}
           </p>
         </div>
 
@@ -675,39 +688,39 @@ const Tabbeast = () => {
 
         <div className="mt-10 px-4 md:px-10">
           <h2 className="text-2xl font-extrabold text-slate-600 text-center mb-10">
-            対応形式
+            {t('pages.tabbeast.formatsTitle')}
           </h2>
           <div className="flex flex-col sm:flex-row justify-center items-start gap-10 sm:gap-24">
-            <FormatGroup title="インポート" formats={importFormats} prefix="import" />
-            <FormatGroup title="エクスポート" formats={exportFormats} prefix="export" />
+            <FormatGroup title={t('pages.tabbeast.importTitle')} formats={importFormats} prefix="import" />
+            <FormatGroup title={t('pages.tabbeast.exportTitle')} formats={exportFormats} prefix="export" />
           </div>
         </div>
 
         <div className="mt-15 px-4 md:px-10 py-10 bg-slate-100 rounded-md">
           <FeatureSection
-            title="効率重視のTAB編集ソフト"
-            description={(<>製作に便利な機能を多数搭載<br />・ドラッグ範囲に一括付与<br />・コードショートカット<br />・リズムパターンを貼り付け</>)}
+            title={t('pages.tabbeast.feature1Title')}
+            description={t('pages.tabbeast.feature1Desc')}
             imageSrc="/tabbeast/feature.png"
           />
         </div>
         <div className="mt-15 px-4 md:px-10 py-10 bg-slate-100 rounded-md">
           <FeatureSection
-            title="直接MP4を出力可能"
-            description={(<>作成した譜面をMP4形式で出力できるので、そのまま演奏動画に貼り付けて使うことができます</>)}
+            title={t('pages.tabbeast.feature2Title')}
+            description={t('pages.tabbeast.feature2Desc')}
             imageSrc="/tabbeast/feature.png"
           />
         </div>
         <div className="mt-15 px-4 md:px-10 py-10 bg-slate-100 rounded-md">
           <FeatureSection
-            title="音声ファイルと同時に再生可能"
-            description={(<>MP3/wavファイルを読み込ませて同期させることが可能で、練習やタイミング合わせに便利です</>)}
+            title={t('pages.tabbeast.feature3Title')}
+            description={t('pages.tabbeast.feature3Desc')}
             imageSrc="/tabbeast/feature.png"
           />
         </div>
 
         <div className="mt-15 px-4 md:px-10 py-10">
           <h2 className="text-2xl font-extrabold text-slate-600 text-center mb-10">
-            紹介動画
+            {t('pages.tabbeast.videoTitle')}
           </h2>
           <div className="flex flex-col sm:flex-row justify-center items-start gap-10 sm:gap-24">
             <iframe src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -716,7 +729,7 @@ const Tabbeast = () => {
 
         <div className="mt-15 px-4 md:px-10 py-10">
           <h2 className="text-2xl font-extrabold text-slate-600 text-center mb-10">
-            動作環境
+            {t('pages.tabbeast.requirementsTitle')}
           </h2>
           <SystemRequirements />
         </div>

@@ -499,27 +499,26 @@ export async function sendResendEmail(env, { to, subject, html, replyTo }) {
   return { sent: true, status: res.status };
 }
 
-export async function sendMagicLinkEmail(env, { to, verifyUrl }) {
+export async function sendMagicLinkEmail(env, { to, verifyUrl, locale = "ja" }) {
+  const { magicLinkEmail } = await import("./emailTemplates.js");
+  const mail = magicLinkEmail(locale === "en" ? "en" : "ja", verifyUrl);
   return sendResendEmail(env, {
     to,
-    subject: "TABbeast ログインリンク",
-    html: `<p>TABbeast のマイページにログインするには、次のリンクを開いてください。</p>
-<p><a href="${verifyUrl}">${verifyUrl}</a></p>
-<p>このリンクは15分間有効で、1回のみ使用できます。</p>
-<p>心当たりがない場合はこのメールを無視してください。</p>`,
+    subject: mail.subject,
+    html: mail.html,
   });
 }
 
-export async function sendPurchaseEmail(env, request, email) {
-  const mypage = `${appBaseUrl(env, request)}/mypage`;
+export async function sendPurchaseEmail(env, request, email, locale = "ja") {
+  const { purchaseEmail } = await import("./emailTemplates.js");
+  const { localizedPath } = await import("./locale.js");
+  const loc = locale === "en" ? "en" : "ja";
+  const mypage = `${appBaseUrl(env, request)}${localizedPath(loc, "/mypage")}`;
+  const mail = purchaseEmail(loc, mypage);
   return sendResendEmail(env, {
     to: email,
-    subject: "TABbeast のご購入ありがとうございます",
-    html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,980）。</p>
-<p>ご購入アカウントに権利が付与されています。マイページからブラウザ版の利用、および Windows 版のダウンロードができます。</p>
-<p><a href="${mypage}">${mypage}</a></p>
-<p>別の端末やブラウザから開く場合は、同じアカウントで Google ログイン、またはメールのマジックリンクでログインしてください。</p>
-`,
+    subject: mail.subject,
+    html: mail.html,
   });
 }
 

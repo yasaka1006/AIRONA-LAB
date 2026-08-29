@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { authClient } from "../lib/authClient";
-import { fetchMe } from "../lib/commerceApi";
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { PageChrome } from '../i18n/PageChrome';
+import { useSiteLocale } from '../i18n/siteLocale';
+import { authClient } from '../lib/authClient';
+import { fetchMe } from '../lib/commerceApi';
 
 const ChangeEmail = () => {
+  const { t, path } = useSiteLocale();
   const [me, setMe] = useState(undefined);
-  const [newEmail, setNewEmail] = useState("");
+  const [newEmail, setNewEmail] = useState('');
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState("");
-  const [error, setError] = useState("");
+  const [notice, setNotice] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchMe()
@@ -22,20 +25,18 @@ const ChangeEmail = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     setBusy(true);
-    setError("");
-    setNotice("");
+    setError('');
+    setNotice('');
     try {
       const { error: authError } = await authClient.changeEmail({
         newEmail,
-        callbackURL: "/mypage",
+        callbackURL: path('/mypage'),
       });
       if (authError) {
-        throw new Error(authError.message || "Failed to change email");
+        throw new Error(authError.message || 'Failed to change email');
       }
-      setNotice(
-        "確認メールを送りました。現在のメール（または新メール）の案内に従って変更を完了してください。",
-      );
-      setNewEmail("");
+      setNotice(t('pages.changeEmail.sentNotice'));
+      setNewEmail('');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -46,28 +47,25 @@ const ChangeEmail = () => {
   if (me === undefined) {
     return (
       <main className="my-8 mx-1">
-        <p className="text-slate-500 font-bold">読み込み中...</p>
+        <p className="text-slate-500 font-bold">{t('common.loading')}</p>
       </main>
     );
   }
 
   if (me === null) {
-    return <Navigate to="/mypage" replace />;
+    return <Navigate to={path('/mypage')} replace />;
   }
 
   return (
     <main className="my-8 mx-1">
       <section className="w-full bg-white border border-slate-200 rounded-xl p-6 md:px-8 md:py-8 shadow-sm">
-        <p className="mb-4">
-          <Link to="/mypage" className="text-sm text-slate-500 underline">
-            ← マイページに戻る
-          </Link>
-        </p>
+        <PageChrome backTo="/mypage" backLabel={t('common.backToMypage')} />
         <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">
-          メールアドレス変更
+          {t('pages.changeEmail.title')}
         </h1>
         <p className="text-sm text-slate-500 mb-6">
-          現在: <span className="font-bold text-slate-700">{me.email}</span>
+          {t('pages.changeEmail.current')}{' '}
+          <span className="font-bold text-slate-700">{me.email}</span>
         </p>
 
         {error ? (
@@ -83,7 +81,7 @@ const ChangeEmail = () => {
 
         <form onSubmit={onSubmit} className="flex flex-col gap-3 max-w-md">
           <label className="text-sm font-bold text-slate-700">
-            新しいメールアドレス
+            {t('pages.changeEmail.newLabel')}
             <input
               type="email"
               required
@@ -95,14 +93,14 @@ const ChangeEmail = () => {
             />
           </label>
           <p className="text-xs text-slate-500 leading-relaxed">
-            確認用のメールが届きます。リンクを開くと変更が完了します。
+            {t('pages.changeEmail.note')}
           </p>
           <button
             type="submit"
             disabled={busy}
             className="self-start bg-slate-800 text-white px-5 py-2 rounded-full text-sm cursor-pointer hover:bg-slate-700 disabled:opacity-60"
           >
-            {busy ? "送信中..." : "確認メールを送る"}
+            {busy ? t('common.sending') : t('pages.changeEmail.submit')}
           </button>
         </form>
       </section>

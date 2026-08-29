@@ -80,8 +80,10 @@ function formEncode(fields) {
 export async function createStripeCheckoutSession(
   env,
   request,
-  { customerEmail, authUserId },
+  { customerEmail, authUserId, locale = "ja" },
 ) {
+  const { localizedPath } = await import("./locale.js");
+  const loc = locale === "en" ? "en" : "ja";
   const base = (env.APP_BASE_URL || new URL(request.url).origin).replace(
     /\/$/,
     "",
@@ -90,9 +92,10 @@ export async function createStripeCheckoutSession(
     mode: "payment",
     "line_items[0][price]": env.STRIPE_PRICE_ID,
     "line_items[0][quantity]": "1",
-    success_url: `${base}/mypage?checkout=success`,
-    cancel_url: `${base}/tabbeast?checkout=cancel`,
+    success_url: `${base}${localizedPath(loc, "/mypage")}?checkout=success`,
+    cancel_url: `${base}${localizedPath(loc, "/tabbeast")}?checkout=cancel`,
     "metadata[product_id]": "tabbeast_full",
+    "metadata[locale]": loc,
   };
   if (authUserId) {
     fields["metadata[auth_user_id]"] = authUserId;

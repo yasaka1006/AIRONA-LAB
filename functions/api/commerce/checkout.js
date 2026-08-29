@@ -11,6 +11,7 @@ import {
   readJson,
   sameSitePost,
 } from "../../_lib/commerce.js";
+import { localizedPath, parseLocaleFromRequest } from "../../_lib/locale.js";
 import {
   createStripeCheckoutSession,
   stripeConfigured,
@@ -35,6 +36,7 @@ export async function onRequestPost(context) {
     return error(400, "terms_required", "agreeToTerms must be true");
   }
 
+  const locale = parseLocaleFromRequest(request, body?.locale);
   const session = await getSession(env, request);
   if (!session) {
     return error(401, "unauthorized", "Login required before checkout");
@@ -46,7 +48,9 @@ export async function onRequestPost(context) {
       authUserId: session.authUserId,
       checkoutSessionId: `cs_dev_${randomHex(12)}`,
     });
-    return json({ url: `${appBaseUrl(env, request)}/mypage?checkout=success` });
+    return json({
+      url: `${appBaseUrl(env, request)}${localizedPath(locale, "/mypage")}?checkout=success`,
+    });
   }
 
   if (!stripeConfigured(env)) {
@@ -57,6 +61,7 @@ export async function onRequestPost(context) {
     const checkout = await createStripeCheckoutSession(env, request, {
       customerEmail: session.email,
       authUserId: session.authUserId,
+      locale,
     });
     return json({ url: checkout.url });
   } catch (err) {

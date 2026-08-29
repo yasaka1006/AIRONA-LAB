@@ -7,6 +7,12 @@ import {
   magicLinkTtlSec,
   sendResendEmail,
 } from "./commerce.js";
+import {
+  changeEmailConfirmation,
+  magicLinkEmail,
+  verifyEmail,
+} from "./emailTemplates.js";
+import { parseLocaleFromRequest } from "./locale.js";
 
 /**
  * @param {any} env
@@ -23,6 +29,7 @@ export function createAuth(env, request) {
     env.BETTER_AUTH_SECRET ||
     env.SESSION_SECRET ||
     "dev-better-auth-secret-change-me";
+  const locale = () => parseLocaleFromRequest(request);
 
   /** @type {Record<string, unknown>} */
   const socialProviders = {};
@@ -60,25 +67,22 @@ export function createAuth(env, request) {
       changeEmail: {
         enabled: true,
         sendChangeEmailConfirmation: async ({ user, newEmail, url }) => {
+          const mail = changeEmailConfirmation(locale(), newEmail, url);
           void sendResendEmail(env, {
             to: user.email,
-            subject: "TABbeast メールアドレス変更の確認",
-            html: `<p>メールアドレスを <strong>${newEmail}</strong> に変更するリクエストがありました。</p>
-<p>変更を承認するには次のリンクを開いてください。</p>
-<p><a href="${url}">${url}</a></p>
-<p>心当たりがない場合はこのメールを無視してください。</p>`,
+            subject: mail.subject,
+            html: mail.html,
           });
         },
       },
     },
     emailVerification: {
       sendVerificationEmail: async ({ user, url }) => {
+        const mail = verifyEmail(locale(), url);
         void sendResendEmail(env, {
           to: user.email,
-          subject: "TABbeast メールアドレスの確認",
-          html: `<p>メールアドレスを確認するには、次のリンクを開いてください。</p>
-<p><a href="${url}">${url}</a></p>
-<p>心当たりがない場合はこのメールを無視してください。</p>`,
+          subject: mail.subject,
+          html: mail.html,
         });
       },
     },
@@ -86,13 +90,11 @@ export function createAuth(env, request) {
       magicLink({
         expiresIn: magicLinkTtlSec(env),
         sendMagicLink: async ({ email, url }) => {
+          const mail = magicLinkEmail(locale(), url);
           const result = await sendResendEmail(env, {
             to: email,
-            subject: "TABbeast ログインリンク",
-            html: `<p>TABbeast にログインするには、次のリンクを開いてください。</p>
-<p><a href="${url}">${url}</a></p>
-<p>このリンクは短時間のみ有効で、1回のみ使用できます。</p>
-`,
+            subject: mail.subject,
+            html: mail.html,
           });
           if (!result.sent) {
             console.error("magic_link_send_failed", result.reason || result.status);

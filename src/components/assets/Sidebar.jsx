@@ -1,33 +1,12 @@
 import { Link } from 'react-router-dom';
-
-const isJapanese = (navigator.languages?.[0] ?? navigator.language ?? '')
-  .toLowerCase()
-  .startsWith('ja');
-
-const labels = isJapanese
-  ? {
-      home: 'ホーム',
-      games: 'ゲーム',
-      ranking: 'ランキング',
-      equipments: '使用機材リスト',
-      mcp: 'Minecraft Portfolio',
-      links: 'リンク',
-      close: 'メニューを閉じる',
-    }
-  : {
-      home: 'Home',
-      games: 'Games',
-      ranking: 'Ranking',
-      equipments: 'Equipment',
-      mcp: 'Minecraft Portfolio',
-      links: 'Links',
-      close: 'Close menu',
-    };
+import { useSiteLocale } from '../../i18n/siteLocale';
 
 const menuItemClass =
   'block font-bold text-gray-600 hover:text-gray-800 hover:bg-slate-300 rounded-md px-4 py-3 transition-colors duration-100';
 
 const Sidebar = ({ isOpen, onClose }) => {
+  const { t } = useSiteLocale();
+
   return (
     <>
       {isOpen && (
@@ -49,23 +28,23 @@ const Sidebar = ({ isOpen, onClose }) => {
       >
         <div className="space-y-1 px-2">
           <Link to="/" className={menuItemClass} onClick={onClose}>
-            {labels.home}
+            {t('nav.home')}
           </Link>
           <Link to="/minigames" className={menuItemClass} onClick={onClose}>
-            {labels.games}
+            {t('nav.games')}
           </Link>
           <Link to="/ranking" className={menuItemClass} onClick={onClose}>
-            {labels.ranking}
+            {t('sidebar.ranking')}
           </Link>
           <div className="h-[2px] bg-slate-300 my-3 mx-2" />
           <Link to="/equipments" className={menuItemClass} onClick={onClose}>
-            {labels.equipments}
+            {t('sidebar.equipments')}
           </Link>
           <Link to="/mcp" className={menuItemClass} onClick={onClose}>
-            {labels.mcp}
+            {t('sidebar.mcp')}
           </Link>
           <Link to="/links" className={menuItemClass} onClick={onClose}>
-            {labels.links}
+            {t('sidebar.links')}
           </Link>
         </div>
       </nav>

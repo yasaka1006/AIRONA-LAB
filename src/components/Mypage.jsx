@@ -1,52 +1,51 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { authClient } from "../lib/authClient";
-import { fetchMe, logout, requestDownload } from "../lib/commerceApi";
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useSiteLocale } from '../i18n/siteLocale';
+import { authClient } from '../lib/authClient';
+import { fetchMe, logout, requestDownload } from '../lib/commerceApi';
 
-/**
- * 販売カタログ（今後の製品はここに追加）
- * entitlement.productId と id を対応させる
- */
-const PRODUCT_CATALOG = [
-  {
-    id: "tabbeast_full",
-    name: "TABbeast",
-    description: "ギターTAB編集ソフト（Windows / ブラウザ）",
-    storePath: "/tabbeast",
-    actions: [
-      {
-        kind: "download",
-        label: "Download",
-        channel: "full_win",
-        versionKey: "full_win",
-      },
-      {
-        kind: "link",
-        label: "ブラウザ版",
-        href: "/app/",
-        versionKey: "full_web",
-      },
-    ],
-  },
-];
+function productCatalog(t) {
+  return [
+    {
+      id: 'tabbeast_full',
+      name: t('pages.mypage.productTabbeastName'),
+      description: t('pages.mypage.productTabbeastDesc'),
+      storePath: '/tabbeast',
+      actions: [
+        {
+          kind: 'download',
+          label: t('pages.mypage.actionDownload'),
+          channel: 'full_win',
+          versionKey: 'full_win',
+        },
+        {
+          kind: 'link',
+          label: t('pages.mypage.actionBrowser'),
+          href: '/app/',
+          versionKey: 'full_web',
+        },
+      ],
+    },
+  ];
+}
 
-function ownedProducts(me) {
+function ownedProducts(me, catalog) {
   const activeIds = new Set(
     (me?.entitlements || [])
-      .filter((item) => item.status === "active")
+      .filter((item) => item.status === 'active')
       .map((item) => item.productId),
   );
-  return PRODUCT_CATALOG.filter((product) => activeIds.has(product.id));
+  return catalog.filter((product) => activeIds.has(product.id));
 }
 
 /** Open redirect 防止: 同一オリジンの相対パスのみ許可 */
-function safeNextPath(raw) {
-  if (!raw || typeof raw !== "string") return "/mypage";
-  if (!raw.startsWith("/") || raw.startsWith("//")) return "/mypage";
+function safeNextPath(raw, fallback) {
+  if (!raw || typeof raw !== 'string') return fallback;
+  if (!raw.startsWith('/') || raw.startsWith('//')) return fallback;
   return raw;
 }
 
-function GoogleMark({ className = "h-5 w-5" }) {
+function GoogleMark({ className = 'h-5 w-5' }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
       <path
@@ -70,15 +69,20 @@ function GoogleMark({ className = "h-5 w-5" }) {
 }
 
 const Mypage = () => {
+  const { t, path } = useSiteLocale();
   const [searchParams, setSearchParams] = useSearchParams();
   const [me, setMe] = useState(undefined);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [busy, setBusy] = useState(false);
-  const [busyAction, setBusyAction] = useState("");
-  const [notice, setNotice] = useState("");
-  const [error, setError] = useState("");
+  const [busyAction, setBusyAction] = useState('');
+  const [notice, setNotice] = useState('');
+  const [error, setError] = useState('');
   const [googleAvailable, setGoogleAvailable] = useState(false);
-  const afterLoginPath = safeNextPath(searchParams.get("next"));
+
+  const mypagePath = path('/mypage');
+  const afterLoginPath = safeNextPath(searchParams.get('next'), mypagePath);
+  const catalog = productCatalog(t);
+  const products = me ? ownedProducts(me, catalog) : [];
 
   const loadMe = async () => {
     try {
@@ -92,7 +96,7 @@ const Mypage = () => {
 
   useEffect(() => {
     loadMe();
-    fetch("/api/commerce/auth/providers", { credentials: "include" })
+    fetch('/api/commerce/auth/providers', { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.google) setGoogleAvailable(true);
@@ -101,37 +105,35 @@ const Mypage = () => {
   }, []);
 
   useEffect(() => {
-    const auth = searchParams.get("auth");
-    const checkout = searchParams.get("checkout");
-    if (auth === "invalid" || searchParams.get("error")) {
-      setError("ログインに失敗しました。もう一度お試しください。");
+    const auth = searchParams.get('auth');
+    const checkout = searchParams.get('checkout');
+    if (auth === 'invalid' || searchParams.get('error')) {
+      setError(t('pages.mypage.loginFailed'));
     }
-    if (checkout === "success") {
-      setNotice(
-        "購入手続きが完了しました。権利が反映されない場合は再読み込みしてください。",
-      );
+    if (checkout === 'success') {
+      setNotice(t('pages.mypage.checkoutSuccess'));
       loadMe();
     }
-    if (auth || checkout || searchParams.get("error")) {
+    if (auth || checkout || searchParams.get('error')) {
       const next = new URLSearchParams(searchParams);
-      next.delete("auth");
-      next.delete("checkout");
-      next.delete("error");
+      next.delete('auth');
+      next.delete('checkout');
+      next.delete('error');
       setSearchParams(next, { replace: true });
     }
-  }, [searchParams, setSearchParams]);
+  }, [searchParams, setSearchParams, t]);
 
   const onGoogle = async () => {
     setBusy(true);
-    setError("");
-    setNotice("");
+    setError('');
+    setNotice('');
     try {
       await authClient.signIn.social({
-        provider: "google",
+        provider: 'google',
         callbackURL: afterLoginPath,
       });
     } catch (err) {
-      setError(err?.message || "Google ログインを開始できませんでした。");
+      setError(err?.message || t('pages.mypage.googleLoginFailed'));
       setBusy(false);
     }
   };
@@ -139,21 +141,19 @@ const Mypage = () => {
   const onMagicLink = async (event) => {
     event.preventDefault();
     setBusy(true);
-    setError("");
-    setNotice("");
+    setError('');
+    setNotice('');
     try {
       const { error: authError } = await authClient.signIn.magicLink({
         email,
         callbackURL: afterLoginPath,
         newUserCallbackURL: afterLoginPath,
-        errorCallbackURL: `/mypage?auth=invalid&next=${encodeURIComponent(afterLoginPath)}`,
+        errorCallbackURL: `${mypagePath}?auth=invalid&next=${encodeURIComponent(afterLoginPath)}`,
       });
       if (authError) {
-        throw new Error(authError.message || "Failed to send magic link");
+        throw new Error(authError.message || 'Failed to send magic link');
       }
-      setNotice(
-        "入力されたアドレスにログイン用リンクを送りました。届かない場合は迷惑メールフォルダも確認してください。",
-      );
+      setNotice(t('pages.mypage.magicLinkSent'));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -166,7 +166,7 @@ const Mypage = () => {
     try {
       await logout();
       setMe(null);
-      setNotice("ログアウトしました。");
+      setNotice(t('pages.mypage.logoutDone'));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -177,49 +177,46 @@ const Mypage = () => {
   const onDownload = async (channel, actionKey) => {
     setBusy(true);
     setBusyAction(actionKey);
-    setError("");
+    setError('');
     try {
       const result = await requestDownload(channel);
       window.location.assign(result.url);
     } catch (err) {
       setError(err.message);
       setBusy(false);
-      setBusyAction("");
+      setBusyAction('');
     }
   };
-
-  const products = me ? ownedProducts(me) : [];
 
   return (
     <main className="my-8 mx-1">
       <section
         className={`bg-white border border-slate-200 rounded-xl p-6 md:px-8 md:py-8 shadow-sm ${
-          me ? "w-full" : "max-w-md mx-auto w-full"
+          me ? 'w-full' : 'max-w-md mx-auto w-full'
         }`}
       >
         <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">
           {me ? (
             <>
-              マイページ
+              {t('pages.mypage.title')}
               <span className="ml-2 text-sm md:text-base font-normal text-slate-500">
                 - {me.email}
               </span>
             </>
           ) : (
-            "ログイン・アカウント作成"
+            t('pages.mypage.loginTitle')
           )}
         </h1>
         <p className="text-sm text-slate-500 mb-6">
-          {me
-            ? "購入済み製品のダウンロード"
-            : "Google またはメールでログイン／アカウント作成できます。"}
+          {me ? t('pages.mypage.loggedInSubtitle') : t('pages.mypage.loginSubtitle')}
           {!me ? (
             <>
               {' '}
-              <Link to="/tabbeast/guide" className="underline">
-                ご利用の流れ
+              {t('pages.mypage.guideRefPrefix')}
+              <Link to={path('/tabbeast/guide')} className="underline">
+                {t('pages.mypage.guideRefLink')}
               </Link>
-              も参照してください。
+              {t('pages.mypage.guideRefSuffix')}
             </>
           ) : null}
         </p>
@@ -236,7 +233,7 @@ const Mypage = () => {
         ) : null}
 
         {me === undefined ? (
-          <p className="text-slate-500 font-bold">読み込み中...</p>
+          <p className="text-slate-500 font-bold">{t('common.loading')}</p>
         ) : me === null ? (
           <div className="flex flex-col gap-5">
             {googleAvailable ? (
@@ -247,24 +244,24 @@ const Mypage = () => {
                 className="w-full inline-flex items-center justify-center gap-3 bg-slate-800 text-white px-6 py-3 rounded-full cursor-pointer hover:bg-slate-700 disabled:opacity-60 font-bold"
               >
                 {busy ? (
-                  "移動中..."
+                  t('pages.mypage.redirecting')
                 ) : (
                   <>
                     <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white">
                       <GoogleMark className="h-4 w-4" />
                     </span>
-                    Google で続行
+                    {t('pages.mypage.googleContinue')}
                   </>
                 )}
               </button>
             ) : null}
             <div className="relative text-center text-xs text-slate-400">
-              <span className="bg-white px-2 relative z-10">または</span>
+              <span className="bg-white px-2 relative z-10">{t('common.or')}</span>
               <span className="absolute left-0 right-0 top-1/2 border-t border-slate-200 -z-0" />
             </div>
             <form onSubmit={onMagicLink} className="flex flex-col gap-3">
               <label className="text-sm font-bold text-slate-600">
-                メールでログイン
+                {t('pages.mypage.magicLinkLabel')}
                 <input
                   type="email"
                   required
@@ -276,14 +273,14 @@ const Mypage = () => {
                 />
               </label>
               <p className="text-xs text-slate-500 leading-relaxed">
-                ログインリンク送信後、届いたメールのリンクをクリックしてください。届かない場合は迷惑メールフォルダも確認してください。
+                {t('pages.mypage.magicLinkNote')}
               </p>
               <button
                 type="submit"
                 disabled={busy}
                 className="border border-slate-300 text-slate-800 px-6 py-2 rounded-full cursor-pointer hover:bg-slate-50 disabled:opacity-60"
               >
-                {busy ? "送信中..." : "ログインリンクを送る"}
+                {busy ? t('common.sending') : t('pages.mypage.magicLinkSubmit')}
               </button>
             </form>
           </div>
@@ -291,14 +288,12 @@ const Mypage = () => {
           <div className="flex flex-col gap-8">
             <section className="flex flex-col gap-4">
               <h2 className="text-lg font-extrabold text-slate-800">
-                購入済み製品
+                {t('pages.mypage.ownedTitle')}
               </h2>
 
               {products.length === 0 ? (
                 <div className="flex flex-col gap-3 rounded-lg border border-dashed border-slate-200 px-4 py-5">
-                  <p className="text-sm text-slate-600">
-                    まだ購入済みの製品はありません。
-                  </p>
+                  <p className="text-sm text-slate-600">{t('pages.mypage.noProducts')}</p>
                 </div>
               ) : (
                 <ul className="flex flex-col gap-4">
@@ -310,7 +305,7 @@ const Mypage = () => {
                       <div className="flex flex-col gap-3">
                         <div>
                           <p className="flex items-center gap-2 text-base font-extrabold text-slate-800">
-                            {product.id === "tabbeast_full" ? (
+                            {product.id === 'tabbeast_full' ? (
                               <img
                                 src="/tabbeast/appIcon.SVG"
                                 alt=""
@@ -332,19 +327,17 @@ const Mypage = () => {
                                 ? me.latest[action.versionKey].version
                                 : null;
                             const actionKey = `${product.id}:${action.label}`;
-                            if (action.kind === "download") {
+                            if (action.kind === 'download') {
                               return (
                                 <button
                                   key={actionKey}
                                   type="button"
-                                  onClick={() =>
-                                    onDownload(action.channel, actionKey)
-                                  }
+                                  onClick={() => onDownload(action.channel, actionKey)}
                                   disabled={busy}
                                   className="bg-slate-800 text-white px-5 py-2 rounded-full cursor-pointer hover:bg-slate-700 disabled:opacity-60 text-sm"
                                 >
                                   {busyAction === actionKey
-                                    ? "準備中..."
+                                    ? t('common.preparing')
                                     : version
                                       ? `${action.label} (${version})`
                                       : action.label}
@@ -357,25 +350,22 @@ const Mypage = () => {
                                 href={action.href}
                                 className="inline-flex justify-center bg-slate-800 text-white px-5 py-2 rounded-full hover:bg-slate-700 text-sm"
                               >
-                                {version
-                                  ? `${action.label} (${version})`
-                                  : action.label}
+                                {version ? `${action.label} (${version})` : action.label}
                               </a>
                             );
                           })}
                         </div>
-                        {product.id === "tabbeast_full" ? (
+                        {product.id === 'tabbeast_full' ? (
                           <>
                             <p className="text-xs text-slate-500 leading-relaxed">
-                              Windows で「Windows によって PC が保護されました」と出る場合は、
-                              「詳細情報」→「実行」で続行できることがあります（コード署名導入前）。
+                              {t('pages.mypage.smartScreenNote')}
                             </p>
                             <p>
                               <Link
-                                to="/tabbeast/contact"
+                                to={path('/tabbeast/contact')}
                                 className="text-sm text-slate-700 underline"
                               >
-                                お問い合わせ
+                                {t('common.contact')}
                               </Link>
                             </p>
                           </>
@@ -388,12 +378,14 @@ const Mypage = () => {
             </section>
 
             <section className="border-t border-slate-100 pt-6 flex flex-col gap-3">
-              <h2 className="text-lg font-extrabold text-slate-800">設定</h2>
+              <h2 className="text-lg font-extrabold text-slate-800">
+                {t('pages.mypage.settingsTitle')}
+              </h2>
               <Link
-                to="/mypage/email"
+                to={path('/mypage/email')}
                 className="self-start text-sm text-slate-700 underline"
               >
-                メールアドレス変更
+                {t('nav.changeEmail')}
               </Link>
             </section>
 
@@ -403,7 +395,7 @@ const Mypage = () => {
               disabled={busy}
               className="self-start text-sm text-slate-500 underline cursor-pointer disabled:opacity-60"
             >
-              ログアウト
+              {t('nav.logout')}
             </button>
           </div>
         )}

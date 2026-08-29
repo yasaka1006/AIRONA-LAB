@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PageChrome } from '../i18n/PageChrome';
+import { useSiteLocale } from '../i18n/siteLocale';
 import { fetchMe, submitContact } from '../lib/commerceApi';
 
-const CATEGORIES = [
-  { value: 'purchase_download', label: '購入・ダウンロード' },
-  { value: 'browser', label: 'ブラウザ版' },
-  { value: 'payment', label: '決済トラブル' },
-  { value: 'bug', label: '不具合・要望' },
-  { value: 'other', label: 'その他' },
+const CATEGORY_KEYS = [
+  { value: 'purchase_download', key: 'pages.contact.categoryPurchase' },
+  { value: 'browser', key: 'pages.contact.categoryBrowser' },
+  { value: 'payment', key: 'pages.contact.categoryPayment' },
+  { value: 'bug', key: 'pages.contact.categoryBug' },
+  { value: 'other', key: 'pages.contact.categoryOther' },
 ];
 
 const TabbeastContact = () => {
+  const { t, path, locale } = useSiteLocale();
   const [email, setEmail] = useState('');
   const [category, setCategory] = useState('purchase_download');
   const [subject, setSubject] = useState('');
@@ -36,7 +39,7 @@ const TabbeastContact = () => {
     setBusy(true);
     setError('');
     try {
-      await submitContact({ email, category, subject, message });
+      await submitContact({ email, category, subject, message, locale });
       setSent(true);
     } catch (err) {
       setError(err.message);
@@ -51,56 +54,50 @@ const TabbeastContact = () => {
         {sent ? (
           <div className="flex flex-col items-center text-center py-6 md:py-10">
             <p className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-3">
-              送信しました
+              {t('pages.contact.sentTitle')}
             </p>
             <p className="text-sm text-slate-500 leading-relaxed mb-8 max-w-md">
-              お問い合わせありがとうございます。
-              内容を確認のうえ、必要に応じてご返信します。
+              {t('pages.contact.sentBody')}
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                to="/tabbeast"
+                to={path('/tabbeast')}
                 className="px-6 py-2.5 rounded-full text-white font-bold bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
               >
-                TABbeast に戻る
+                {t('common.toTabbeast')}
               </Link>
               <Link
-                to="/mypage"
+                to={path('/mypage')}
                 className="px-6 py-2.5 rounded-full font-bold text-slate-700 bg-slate-100 hover:bg-slate-200"
               >
-                マイページへ
+                {t('common.toMypage')}
               </Link>
             </div>
           </div>
         ) : (
           <>
-            <p className="mb-4">
-              <Link to="/tabbeast" className="text-sm text-slate-500 underline">
-                ← TABbeast に戻る
-              </Link>
-            </p>
+            <PageChrome backTo="/tabbeast" backLabel={t('common.backToTabbeast')} />
             <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">
-              TABbeast お問い合わせ
+              {t('pages.contact.title')}
             </h1>
             <p className="text-sm text-slate-500 leading-relaxed mb-4">
-              製品に関するご質問・不具合・決済トラブルなどはこちらからご連絡ください。
-              内容を確認のうえ、ご返信いたします。
+              {t('pages.contact.intro')}
             </p>
 
             <ul className="mb-6 text-xs text-slate-500 leading-relaxed list-disc pl-5 space-y-1">
               <li>
-                デジタルコンテンツのため、購入後の返金は原則としてお受けできません（
-                <Link to="/legal/tokushoho" className="underline">
-                  特定商取引法に基づく表記
+                {t('pages.contact.note1Prefix')}
+                <Link to={path('/legal/tokushoho')} className="underline">
+                  {t('common.tokushoho')}
                 </Link>
-                ）。
+                {t('pages.contact.note1Suffix')}
               </li>
               <li>
-                ダウンロードやブラウザ版はまず
-                <Link to="/mypage" className="underline mx-0.5">
-                  マイページ
+                {t('pages.contact.note2Prefix')}
+                <Link to={path('/mypage')} className="underline mx-0.5">
+                  {t('nav.mypage')}
                 </Link>
-                をご確認ください。
+                {t('pages.contact.note2Suffix')}
               </li>
             </ul>
 
@@ -112,22 +109,22 @@ const TabbeastContact = () => {
 
             <form onSubmit={onSubmit} className="flex flex-col gap-4">
               <label className="text-sm font-bold text-slate-700">
-                種別
+                {t('pages.contact.categoryLabel')}
                 <select
                   value={category}
                   onChange={(event) => setCategory(event.target.value)}
                   className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-normal text-slate-800 bg-white"
                 >
-                  {CATEGORIES.map((item) => (
+                  {CATEGORY_KEYS.map((item) => (
                     <option key={item.value} value={item.value}>
-                      {item.label}
+                      {t(item.key)}
                     </option>
                   ))}
                 </select>
               </label>
 
               <label className="text-sm font-bold text-slate-700">
-                メールアドレス
+                {t('pages.contact.emailLabel')}
                 <input
                   type="email"
                   required
@@ -143,28 +140,28 @@ const TabbeastContact = () => {
               </label>
               {loggedIn ? (
                 <p className="-mt-2 text-xs text-slate-500">
-                  ログイン中のアドレスを使用します。変更する場合は先に
-                  <Link to="/mypage/email" className="underline mx-0.5">
-                    メールアドレス変更
+                  {t('pages.contact.emailLoggedInNotePrefix')}
+                  <Link to={path('/mypage/email')} className="underline mx-0.5">
+                    {t('nav.changeEmail')}
                   </Link>
-                  へ。
+                  {t('pages.contact.emailLoggedInNoteSuffix')}
                 </p>
               ) : null}
 
               <label className="text-sm font-bold text-slate-700">
-                件名（任意）
+                {t('pages.contact.subjectLabel')}
                 <input
                   type="text"
                   value={subject}
                   onChange={(event) => setSubject(event.target.value)}
                   maxLength={120}
                   className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-normal text-slate-800"
-                  placeholder="例: Windows 版が起動しない"
+                  placeholder={t('pages.contact.subjectPlaceholder')}
                 />
               </label>
 
               <label className="text-sm font-bold text-slate-700">
-                内容
+                {t('pages.contact.messageLabel')}
                 <textarea
                   required
                   value={message}
@@ -173,7 +170,7 @@ const TabbeastContact = () => {
                   maxLength={4000}
                   rows={8}
                   className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-normal text-slate-800 resize-y"
-                  placeholder="発生した症状、OS、ブラウザ、購入日時などが分かると対応しやすいです。"
+                  placeholder={t('pages.contact.messagePlaceholder')}
                 />
               </label>
 
@@ -182,12 +179,12 @@ const TabbeastContact = () => {
                 disabled={busy}
                 className="self-start px-6 py-2.5 rounded-full text-white font-bold bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600 disabled:opacity-60 cursor-pointer"
               >
-                {busy ? '送信中…' : '送信する'}
+                {busy ? t('common.sending') : t('pages.contact.submit')}
               </button>
             </form>
 
             <p className="mt-6 text-xs text-slate-400 leading-relaxed">
-              予備連絡先:{' '}
+              {t('pages.contact.fallbackContact')}{' '}
               <a href="mailto:airona.lab@gmail.com" className="underline">
                 airona.lab@gmail.com
               </a>
