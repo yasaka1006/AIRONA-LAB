@@ -81,12 +81,21 @@ export async function readJson(request) {
   }
 }
 
+function stripeKeyMode(env) {
+  const key = String(env.STRIPE_SECRET_KEY || "");
+  if (key.startsWith("sk_live_")) return "live";
+  if (key.startsWith("sk_test_")) return "test";
+  if (key.startsWith("sk_")) return "unknown";
+  return "missing";
+}
+
 export function bindingStatus(env) {
   return {
     COMMERCE_DB: Boolean(env.COMMERCE_DB),
     PRODUCTS: Boolean(env.PRODUCTS),
     DB: Boolean(env.DB),
     STRIPE_SECRET_KEY: Boolean(env.STRIPE_SECRET_KEY),
+    STRIPE_KEY_MODE: stripeKeyMode(env),
     STRIPE_WEBHOOK_SECRET: Boolean(env.STRIPE_WEBHOOK_SECRET),
     STRIPE_PRICE_ID: Boolean(env.STRIPE_PRICE_ID),
     RESEND_API_KEY: Boolean(env.RESEND_API_KEY),
