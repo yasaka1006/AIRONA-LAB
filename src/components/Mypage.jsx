@@ -213,6 +213,15 @@ const Mypage = () => {
           {me
             ? "購入済み製品のダウンロード"
             : "Google またはメールでログイン／アカウント作成できます。"}
+          {!me ? (
+            <>
+              {' '}
+              <Link to="/tabbeast/guide" className="underline">
+                ご利用の流れ
+              </Link>
+              も参照してください。
+            </>
+          ) : null}
         </p>
 
         {error ? (

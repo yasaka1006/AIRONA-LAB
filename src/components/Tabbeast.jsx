@@ -200,6 +200,68 @@ const FormatGroup = ({ title, formats, prefix }) => (
   </div>
 );
 
+const SystemRequirements = () => (
+  <div className="max-w-2xl mx-auto text-left text-sm text-slate-600 leading-relaxed space-y-6">
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="border-b border-slate-200 text-slate-700">
+            <th className="py-2 pr-4 text-left font-extrabold" scope="col" />
+            <th className="py-2 px-3 text-center font-extrabold" scope="col">Windows</th>
+            <th className="py-2 pl-3 text-center font-extrabold" scope="col">Mac</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="border-b border-slate-100">
+            <th className="py-2.5 pr-4 text-left font-bold text-slate-700" scope="row">
+              EXE 版
+            </th>
+            <td className="py-2.5 px-3 text-center">○</td>
+            <td className="py-2.5 pl-3 text-center text-slate-400">—</td>
+          </tr>
+          <tr>
+            <th className="py-2.5 pr-4 text-left font-bold text-slate-700" scope="row">
+              ブラウザ版
+            </th>
+            <td className="py-2.5 px-3 text-center">○</td>
+            <td className="py-2.5 pl-3 text-center">○</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="space-y-4">
+      <div>
+        <p className="font-extrabold text-slate-800 mb-1">Windows EXE 版</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Windows 10 / 11（64bit）推奨</li>
+          <li>zip を解凍して EXE を実行（SmartScreen 警告が出る場合は「詳細」をクリックして実行）</li>
+        </ul>
+      </div>
+
+      <div>
+        <p className="font-extrabold text-slate-800 mb-1">ブラウザ版（Windows / Mac）</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>
+            Google Chrome、Microsoft Edge、Mozilla Firefox、Safari の<strong>最新版</strong>推奨
+          </li>
+          <li>インターネット接続が必要</li>
+          <li>PC での利用を推奨（画面サイズ・操作性の都合）</li>
+        </ul>
+      </div>
+
+      <div>
+        <p className="font-extrabold text-slate-800 mb-1">共通</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>スマートフォン・タブレットは非対応</li>
+          <li>音声再生・MP4 書き出しは PC 性能により所要時間が変わります</li>
+          <li>おためし版（DEMO）も同じ環境で利用できます（保存機能制限あり）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+);
+
 const FeatureSection = ({ title, description, imageSrc, reverse = false }) => (
   <div
     className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12 max-w-5xl mx-auto`}
@@ -354,7 +416,7 @@ const PurchaseBar = () => {
   };
 
   return (
-    <div className="mt-18 bg-slate-100 py-6 px-4">
+    <div className="mt-12 bg-slate-100 py-6 px-4">
       {notice ? (
         <p className="text-center text-sm text-slate-600 mb-3">{notice}</p>
       ) : null}
@@ -388,17 +450,37 @@ const PurchaseBar = () => {
           <Link to="/mypage" className="text-sm text-slate-500 underline hover:text-slate-700">
             マイページへ
           </Link>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <Link
+              to="/tabbeast/guide"
+              className="text-sm text-slate-500 underline hover:text-slate-700"
+            >
+              ご利用の流れ
+            </Link>
+            <Link
+              to="/tabbeast/manual"
+              className="text-sm text-slate-500 underline hover:text-slate-700"
+            >
+              マニュアル
+            </Link>
+            <Link
+              to="/tabbeast/contact"
+              className="text-sm text-slate-500 underline hover:text-slate-700"
+            >
+              お問い合わせ
+            </Link>
+          </div>
         </div>
       ) : (
         <>
           <div className="flex flex-col items-center gap-6">
-            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-10">
+            <div className="mt-3 flex flex-wrap justify-center items-center gap-4 md:gap-10">
               {demoWeb ? (
                 <a
                   href={demoWeb}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-slate-600 text-white px-6 py-2 rounded-full hover:bg-slate-500 shadow-md"
+                  className="inline-flex h-11 items-center justify-center bg-slate-600 text-white text-sm font-bold px-6 rounded-full hover:bg-slate-500 shadow-md leading-none"
                 >
                   おためし版（ブラウザ） ▶
                 </a>
@@ -406,7 +488,7 @@ const PurchaseBar = () => {
                 <button
                   type="button"
                   disabled
-                  className="bg-slate-400 text-white px-6 py-2 rounded-full cursor-not-allowed shadow-md"
+                  className="inline-flex h-11 items-center justify-center bg-slate-400 text-white text-sm font-bold px-6 rounded-full cursor-not-allowed shadow-md leading-none"
                   title="DEMO Web URL 未設定"
                 >
                   おためし版（ブラウザ）
@@ -415,20 +497,20 @@ const PurchaseBar = () => {
               {demoWin ? (
                 <a
                   href={demoWin}
-                  className="inline-flex items-center gap-2 bg-slate-600 text-white px-6 py-2 rounded-full hover:bg-slate-500 shadow-md leading-none"
+                  className="inline-flex h-11 items-center justify-center gap-2 bg-slate-600 text-white text-sm font-bold px-6 rounded-full hover:bg-slate-500 shadow-md leading-none"
                 >
                   <span className="leading-none">おためし版（Windows EXE）</span>
-                  <DownloadIcon className="h-[1.05em] w-[1.05em]" />
+                  <DownloadIcon className="h-4 w-4" />
                 </a>
               ) : (
                 <button
                   type="button"
                   disabled
-                  className="inline-flex items-center gap-2 bg-slate-400 text-white px-6 py-2 rounded-full cursor-not-allowed shadow-md leading-none"
+                  className="inline-flex h-11 items-center justify-center gap-2 bg-slate-400 text-white text-sm font-bold px-6 rounded-full cursor-not-allowed shadow-md leading-none"
                   title="DEMO Windows の公開 URL 準備中"
                 >
                   <span className="leading-none">おためし版（Windows EXE）</span>
-                  <DownloadIcon className="h-[1.05em] w-[1.05em]" />
+                  <DownloadIcon className="h-4 w-4" />
                 </button>
               )}
             </div>
@@ -437,23 +519,43 @@ const PurchaseBar = () => {
                 type="button"
                 onClick={openPurchaseDialog}
                 disabled={busy}
-                className="text-white text-lg md:text-xl font-extrabold px-10 md:px-14 py-3.5 md:py-4 rounded-full cursor-pointer disabled:opacity-60 shadow-lg bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
+                className="mb-5 text-white text-lg md:text-xl font-extrabold px-10 md:px-14 py-3.5 md:py-4 rounded-full cursor-pointer disabled:opacity-60 shadow-lg bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
               >
                 製品版を入手 ￥2,980 ▶
               </button>
               <p className="flex flex-col sm:flex-row sm:items-center justify-center gap-0.5 sm:gap-0 text-center text-xs md:text-sm text-slate-500 leading-relaxed">
                 <span>
-                  <span className="font-bold text-slate-600">Windows</span>
+                  <span className="font-bold text-slate-600">Windows :</span>
                   {' '}EXE版・ブラウザ版
                 </span>
                 <span className="hidden sm:inline mx-2.5 text-slate-300" aria-hidden>
                   ｜
                 </span>
                 <span>
-                  <span className="font-bold text-slate-600">Mac</span>
-                  {' '}ブラウザ版のみ
+                  <span className="font-bold text-slate-600">Mac :</span>
+                  {' '}ブラウザ版
                 </span>
               </p>
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <Link
+                  to="/tabbeast/guide"
+                  className="text-sm text-slate-500 underline hover:text-slate-700"
+                >
+                  ご利用の流れ
+                </Link>
+                <Link
+                  to="/tabbeast/manual"
+                  className="text-sm text-slate-500 underline hover:text-slate-700"
+                >
+                  マニュアル
+                </Link>
+                <Link
+                  to="/tabbeast/contact"
+                  className="text-sm text-slate-500 underline hover:text-slate-700"
+                >
+                  お問い合わせ
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -548,7 +650,7 @@ const Tabbeast = () => {
             TABbeast
           </h1>
           <p className="text-xl md:text-3xl font-extrabold text-slate-700 leading-snug mb-4">
-            弾いてみた動画のTAB譜を、よりスマートにつくろう。
+            弾いてみた動画のTAB譜を、よりスマートに。
           </p>
           <p className="text-sm md:text-base text-slate-500 leading-relaxed">
           ギターTAB YouTuber「あいろな」による個人開発サービスです。
@@ -612,14 +714,13 @@ const Tabbeast = () => {
           </div>
         </div>
 
-        <div className="mt-10 mb-4 px-4 text-center">
-          <Link
-            to="/tabbeast/contact"
-            className="text-sm text-slate-500 underline hover:text-slate-700"
-          >
-            お問い合わせ
-          </Link>
+        <div className="mt-15 px-4 md:px-10 py-10">
+          <h2 className="text-2xl font-extrabold text-slate-600 text-center mb-10">
+            動作環境
+          </h2>
+          <SystemRequirements />
         </div>
+
       </section>
     </main>
   );

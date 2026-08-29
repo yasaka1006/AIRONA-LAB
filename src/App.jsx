@@ -16,6 +16,8 @@ import Minigames from './components/Minigames';
 import Ranking from './components/Ranking';
 import Tabbeast from './components/Tabbeast';
 import TabbeastContact from './components/TabbeastContact';
+import TabbeastGuide from './components/TabbeastGuide';
+import TabbeastManual from './components/TabbeastManual';
 import Mypage from './components/Mypage';
 import ChangeEmail from './components/ChangeEmail';
 import { Terms, Tokushoho } from './components/legal/LegalPages';
@@ -51,6 +53,8 @@ const PAGE_TITLES = {
   '/monhan': 'モンハン歴代モンスター144種言えるかな？ - AIRONA-LAB',
   '/tabbeast': 'Tabbeast - AIRONA-LAB',
   '/tabbeast/contact': 'お問い合わせ - TABbeast',
+  '/tabbeast/guide': 'ご利用の流れ - TABbeast',
+  '/tabbeast/manual': 'マニュアル - TABbeast',
   '/mypage': 'マイページ - AIRONA-LAB',
   '/mypage/email': 'メールアドレス変更 - AIRONA-LAB',
   '/legal/terms': '利用規約 - AIRONA-LAB',
@@ -105,6 +109,8 @@ function App() {
                   <Route path="/japan" element={<Japan />} />
                   <Route path="/tabbeast" element={<Tabbeast />} />
                   <Route path="/tabbeast/contact" element={<TabbeastContact />} />
+                  <Route path="/tabbeast/guide" element={<TabbeastGuide />} />
+                  <Route path="/tabbeast/manual" element={<TabbeastManual />} />
                   <Route path="/tabbeast/mypage" element={<Navigate to="/mypage" replace />} />
                   <Route path="/mypage" element={<Mypage />} />
                   <Route path="/mypage/email" element={<ChangeEmail />} />
