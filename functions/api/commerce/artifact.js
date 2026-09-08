@@ -1,5 +1,6 @@
 import {
   error,
+  filenameFromR2Key,
   isDevFlag,
   methodNotAllowed,
   parseDownloadToken,
@@ -18,9 +19,10 @@ export async function onRequestGet(context) {
     return error(403, "invalid_token", "Download link is invalid or expired");
   }
 
+  const filename = filenameFromR2Key(payload.filename, "download.zip");
   const headers = {
     "Content-Type": "application/zip",
-    "Content-Disposition": `attachment; filename="${payload.filename}"`,
+    "Content-Disposition": `attachment; filename="${filename}"`,
     "Cache-Control": "no-store",
   };
 

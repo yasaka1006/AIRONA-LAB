@@ -6,21 +6,23 @@ compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
 
-# 既存ランキング用
+# 既存ランキング用（PII は少ないが、必要なら preview 用 D1 を分ける）
 [[d1_databases]]
 binding = "DB"
 database_name = "ranking"
 database_id = "bf2722de-0420-4a42-baab-6f993515cc48"
 preview_database_id = "bf2722de-0420-4a42-baab-6f993515cc48"
 
-# 販売・配信用
+# 販売・配信用（preview の COMMERCE_DB は本番と分ける）
 [[d1_databases]]
 binding = "COMMERCE_DB"
 database_name = "airona-commerce"
 database_id = "89dee874-1fb5-440f-826e-09690860ce1e"
-preview_database_id = "89dee874-1fb5-440f-826e-09690860ce1e"
+# 本番 ID を書かない。作成: npx wrangler d1 create airona-commerce-preview
+preview_database_id = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"
 
 [[r2_buckets]]
 binding = "PRODUCTS"
 bucket_name = "tabbeast-products"
+# 製品ファイルは preview でも同じバケットを参照（権利は D1 側）
 preview_bucket_name = "tabbeast-products"

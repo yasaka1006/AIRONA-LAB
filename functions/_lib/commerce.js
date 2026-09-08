@@ -1,5 +1,12 @@
 /** Commerce API shared helpers (Pages Functions). */
 
+import {
+  isLocalApp,
+  requireAppSecret,
+  sanitizeDownloadFilename,
+  timingSafeEqualHex,
+} from "./security.js";
+
 export const PRODUCT_ID_FULL = "tabbeast_full";
 export const PRODUCT_ID_DEMO = "tabbeast_demo";
 export const SESSION_COOKIE = "tb_session";
@@ -47,13 +54,14 @@ export function magicLinkTtlSec(env) {
 }
 
 export function isDevFlag(env, name) {
+  if (!isLocalApp(env)) return false;
   const v = env[name];
   return v === "1" || v === "true" || v === "TRUE";
 }
 
 export function sameSitePost(request, env) {
   const origin = request.headers.get("Origin");
-  if (!origin) return true;
+  if (!origin) return isLocalApp(env);
   try {
     const originHost = new URL(origin).origin;
     const requestHost = new URL(request.url).origin;
@@ -132,7 +140,7 @@ export function downloadTtlSec(env) {
 export async function hmacSha256Hex(secret, message) {
   const key = await crypto.subtle.importKey(
     "raw",
-    new TextEncoder().encode(secret || "dev-session-secret"),
+    new TextEncoder().encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign"],
@@ -170,7 +178,7 @@ export async function createDownloadToken(env, payload) {
     payload.version,
     exp,
   ].join("|");
-  const sig = await hmacSha256Hex(env.SESSION_SECRET, body);
+  const sig = await hmacSha256Hex(requireAppSecret(env, "dev-session-secret"), body);
   return toBase64Url(`${body}|${sig}`);
 }
 
@@ -185,9 +193,12 @@ export async function parseDownloadToken(env, token) {
   const parts = decoded.split("|");
   if (parts.length !== 7) return null;
   const [customerId, channel, r2Key, filename, version, expRaw, sig] = parts;
+  if (!r2Key.startsWith("tabbeast/") || r2Key.includes("..") || r2Key.includes("\\")) {
+    return null;
+  }
   const body = [customerId, channel, r2Key, filename, version, expRaw].join("|");
-  const expected = await hmacSha256Hex(env.SESSION_SECRET, body);
-  if (sig !== expected) return null;
+  const expected = await hmacSha256Hex(requireAppSecret(env, "dev-session-secret"), body);
+  if (!timingSafeEqualHex(sig, expected)) return null;
   const exp = Number(expRaw);
   if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return null;
   return {
@@ -216,7 +227,7 @@ export function filenameFromR2Key(r2Key, fallback = "download.zip") {
   if (!r2Key) return fallback;
   const parts = r2Key.split("/").filter(Boolean);
   const last = parts[parts.length - 1];
-  return last && last.includes(".") ? last : fallback;
+  return sanitizeDownloadFilename(last, fallback);
 }
 
 /** Tiny placeholder zip when R2 object is missing (local only). */
@@ -262,8 +273,8 @@ export function placeholderZipBytes(version) {
 }
 
 export async function hashToken(token, env) {
-  const secret = env.SESSION_SECRET || "";
-  const payload = secret ? `${secret}:${token}` : token;
+  const secret = requireAppSecret(env, "dev-session-secret");
+  const payload = `${secret}:${token}`;
   const digest = await crypto.subtle.digest(
     "SHA-256",
     new TextEncoder().encode(payload),
@@ -298,7 +309,7 @@ export function sessionCookieHeader(request, rawId, { clear = false } = {}) {
 }
 
 function appTicketSecret(env) {
-  return env.BETTER_AUTH_SECRET || env.SESSION_SECRET || "dev-session-secret";
+  return requireAppSecret(env, "dev-session-secret");
 }
 
 /**
@@ -326,7 +337,7 @@ export async function parseAppTicket(env, token) {
   if (!customerId || !version || !r2Prefix) return null;
   const body = [customerId, expRaw, version, r2Prefix].join("|");
   const expected = await hmacSha256Hex(appTicketSecret(env), body);
-  if (sig !== expected) return null;
+  if (!timingSafeEqualHex(sig, expected)) return null;
   const exp = Number(expRaw);
   if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return null;
   return {
@@ -537,6 +548,7 @@ export async function upsertCustomer(
   stripeCustomerId = null,
   authUserId = null,
 ) {
+  if (!authUserId && !email) return null;
   let existing = null;
   if (authUserId) {
     existing = await findCustomerByAuthUserId(db, authUserId);
@@ -548,13 +560,12 @@ export async function upsertCustomer(
     await db
       .prepare(
         `UPDATE customers
-         SET email = COALESCE(?, email),
-             stripe_customer_id = COALESCE(stripe_customer_id, ?),
+         SET stripe_customer_id = COALESCE(stripe_customer_id, ?),
              auth_user_id = COALESCE(auth_user_id, ?),
              updated_at = datetime('now')
          WHERE id = ?`,
       )
-      .bind(email || null, stripeCustomerId, authUserId, existing.id)
+      .bind(stripeCustomerId, authUserId, existing.id)
       .run();
     if (authUserId) {
       return findCustomerByAuthUserId(db, authUserId);
@@ -578,7 +589,7 @@ export async function grantFullEntitlement(db, {
   checkoutSessionId,
   paymentIntentId = null,
 }) {
-  if (!email) return { granted: false };
+  if (!authUserId && !email) return { granted: false };
   if (checkoutSessionId) {
     const dup = await db
       .prepare(
@@ -674,11 +685,14 @@ export async function handleLogout(env, request) {
         asResponse: true,
       });
       if (res instanceof Response) {
-        // Also clear legacy tb_session
         const headers = new Headers(res.headers);
         headers.append(
           "Set-Cookie",
           sessionCookieHeader(request, "", { clear: true }),
+        );
+        headers.append(
+          "Set-Cookie",
+          appTicketCookieHeader(request, "", { clear: true }),
         );
         return new Response(res.body, { status: res.status, headers });
       }
@@ -686,8 +700,8 @@ export async function handleLogout(env, request) {
   } catch (err) {
     console.error("handleLogout_failed", String(err));
   }
-  return json(
-    { ok: true },
-    { headers: { "Set-Cookie": sessionCookieHeader(request, "", { clear: true }) } },
-  );
+  const headers = new Headers();
+  headers.append("Set-Cookie", sessionCookieHeader(request, "", { clear: true }));
+  headers.append("Set-Cookie", appTicketCookieHeader(request, "", { clear: true }));
+  return json({ ok: true }, { headers });
 }

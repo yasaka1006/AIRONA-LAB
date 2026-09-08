@@ -18,6 +18,7 @@ import {
   escapeHtml,
 } from "../../_lib/emailTemplates.js";
 import { normalizeLocale, parseLocaleFromRequest } from "../../_lib/locale.js";
+import { consumeRateLimit } from "../../_lib/security.js";
 
 const CATEGORIES = new Set([
   "purchase_download",
@@ -38,6 +39,7 @@ const CONTACT_ERRORS = {
     message_too_long: "内容が長すぎます",
     mail_not_configured: "メール送信が設定されていません",
     mail_failed: "送信に失敗しました。しばらくしてから再度お試しください",
+    rate_limited: "送信が多すぎます。しばらくしてから再度お試しください",
   },
   en: {
     invalid_category: "Please select a category",
@@ -46,6 +48,7 @@ const CONTACT_ERRORS = {
     message_too_long: "Message is too long",
     mail_not_configured: "Email is not configured",
     mail_failed: "Failed to send. Please try again later",
+    rate_limited: "Too many requests. Please try again later",
   },
 };
 
@@ -67,6 +70,16 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   if (!sameSitePost(request, env)) {
     return error(403, "forbidden", "Invalid origin");
+  }
+
+  const limited = await consumeRateLimit(request, {
+    bucket: "contact",
+    limit: 5,
+    windowSec: 3600,
+  });
+  if (!limited.ok) {
+    const localeHint = parseLocaleFromRequest(request, null);
+    return contactError(429, "rate_limited", localeHint);
   }
 
   const body = await readJson(request);

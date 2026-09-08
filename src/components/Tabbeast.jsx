@@ -397,10 +397,17 @@ const PurchaseBar = () => {
       if (!url) {
         throw new Error('Checkout URL was empty');
       }
-      const target = new URL(url, window.location.origin).href;
-      // 遷移前に解除（戻ってきたときのスナップショット対策）
+      const target = new URL(url, window.location.origin);
+      const sameOrigin = target.origin === window.location.origin;
+      const stripeHost =
+        target.protocol === 'https:' &&
+        (target.hostname === 'checkout.stripe.com' ||
+          target.hostname.endsWith('.stripe.com'));
+      if (!sameOrigin && !stripeHost) {
+        throw new Error('Unexpected checkout URL');
+      }
       setBusy(false);
-      window.location.assign(target);
+      window.location.assign(target.href);
     } catch (err) {
       setError(err.message);
       setBusy(false);

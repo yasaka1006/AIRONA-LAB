@@ -13,6 +13,7 @@ import {
   verifyEmail,
 } from "./emailTemplates.js";
 import { parseLocaleFromRequest } from "./locale.js";
+import { requireAppSecret } from "./security.js";
 
 /**
  * @param {any} env
@@ -25,10 +26,7 @@ export function createAuth(env, request) {
   }
 
   const baseURL = appBaseUrl(env, request);
-  const secret =
-    env.BETTER_AUTH_SECRET ||
-    env.SESSION_SECRET ||
-    "dev-better-auth-secret-change-me";
+  const secret = requireAppSecret(env, "dev-better-auth-secret-change-me");
   const locale = () => parseLocaleFromRequest(request);
 
   /** @type {Record<string, unknown>} */
@@ -45,10 +43,25 @@ export function createAuth(env, request) {
     };
   }
 
+  const trustedOrigins = [baseURL];
+  try {
+    const configured = new URL(baseURL).origin;
+    if (!trustedOrigins.includes(configured)) trustedOrigins.push(configured);
+  } catch {
+    // ignore
+  }
+  if (!trustedOrigins.includes("https://airona-lab.com")) {
+    trustedOrigins.push("https://airona-lab.com");
+  }
+  if (!trustedOrigins.includes("https://www.airona-lab.com")) {
+    trustedOrigins.push("https://www.airona-lab.com");
+  }
+
   return betterAuth({
     database: db,
     baseURL,
     secret,
+    trustedOrigins,
     emailAndPassword: {
       enabled: false,
     },

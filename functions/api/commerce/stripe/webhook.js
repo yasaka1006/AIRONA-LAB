@@ -16,31 +16,25 @@ import {
   verifyStripeSignature,
 } from "../../../_lib/stripe.js";
 
-function eventEmail(session) {
-  return normalizeEmail(
-    session?.customer_details?.email ||
-      session?.customer_email ||
-      session?.metadata?.email ||
-      "",
-  );
-}
-
-async function resolveGrantIdentity(db, session) {
+async function resolvePaidIdentity(db, session) {
   const authUserId =
     session.metadata?.auth_user_id || session.client_reference_id || null;
-  let email = eventEmail(session);
-  if (!email && authUserId) {
-    const customer = await findCustomerByAuthUserId(db, authUserId);
-    if (customer?.email) email = normalizeEmail(customer.email);
-    if (!email) {
-      const user = await db
-        .prepare(`SELECT email FROM "user" WHERE id = ?`)
-        .bind(authUserId)
-        .first();
-      if (user?.email) email = normalizeEmail(user.email);
-    }
+  if (!authUserId) return { email: "", authUserId: null };
+
+  const customer = await findCustomerByAuthUserId(db, authUserId);
+  if (customer?.email) {
+    return { email: normalizeEmail(customer.email), authUserId };
   }
-  return { email, authUserId };
+
+  const user = await db
+    .prepare(`SELECT email FROM "user" WHERE id = ?`)
+    .bind(authUserId)
+    .first();
+  if (user?.email) {
+    return { email: normalizeEmail(user.email), authUserId };
+  }
+
+  return { email: "", authUserId };
 }
 
 /**
@@ -74,8 +68,11 @@ export async function onRequestPost(context) {
   try {
     if (event.type === "checkout.session.completed") {
       const session = event.data?.object || {};
-      const { email, authUserId } = await resolveGrantIdentity(db, session);
-      if (email || authUserId) {
+      if (session.payment_status !== "paid") {
+        return json({ received: true, skipped: "unpaid" });
+      }
+      const { email, authUserId } = await resolvePaidIdentity(db, session);
+      if (email && authUserId) {
         const result = await grantFullEntitlement(db, {
           email,
           authUserId,

@@ -23,7 +23,7 @@ export async function onRequestGet(context) {
 
   const { results } = await db
     .prepare(
-      `SELECT channel, version, r2_key AS r2Key, public_url AS publicUrl
+      `SELECT channel, version, public_url AS publicUrl
        FROM releases
        WHERE product_id = ? AND is_latest = 1
          AND channel IN ('full_win', 'full_web')`,
@@ -35,7 +35,6 @@ export async function onRequestGet(context) {
   for (const row of results ?? []) {
     latest[row.channel] = {
       version: row.version,
-      r2Key: row.r2Key,
       publicUrl: row.publicUrl,
     };
   }

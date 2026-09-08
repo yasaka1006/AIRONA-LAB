@@ -92,6 +92,7 @@ export async function createStripeCheckoutSession(
     mode: "payment",
     "line_items[0][price]": env.STRIPE_PRICE_ID,
     "line_items[0][quantity]": "1",
+    "payment_method_types[0]": "card",
     success_url: `${base}${localizedPath(loc, "/mypage")}?checkout=success`,
     cancel_url: `${base}${localizedPath(loc, "/tabbeast")}?checkout=cancel`,
     "metadata[product_id]": "tabbeast_full",
