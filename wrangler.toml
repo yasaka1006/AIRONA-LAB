@@ -11,7 +11,7 @@ pages_build_output_dir = "dist"
 binding = "DB"
 database_name = "ranking"
 database_id = "bf2722de-0420-4a42-baab-6f993515cc48"
-preview_database_id = "bf2722de-0420-4a42-baab-6f993515cc48"
+preview_database_id = "659de4cb-ed1a-4f4b-9149-5b3ff4dfc3ad"
 
 # 販売・配信用（preview の COMMERCE_DB は本番と分ける）
 [[d1_databases]]
