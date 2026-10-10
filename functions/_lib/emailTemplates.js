@@ -36,7 +36,7 @@ export function purchaseEmail(locale, mypageUrl) {
   if (locale === "en") {
     return {
       subject: "Thank you for purchasing TABbeast",
-      html: `<p>Thank you for purchasing TABbeast (¥2,980 incl. tax).</p>
+      html: `<p>Thank you for purchasing TABbeast (¥2,480 incl. tax).</p>
 <p>Your license has been added to your account. Open My page to use the browser edition or download the Windows edition.</p>
 <p><a href="${url}">${url}</a></p>
 <p>On another device or browser, log in with the same Google account or the magic link sent to your email.</p>`,
@@ -44,7 +44,7 @@ export function purchaseEmail(locale, mypageUrl) {
   }
   return {
     subject: "TABbeast のご購入ありがとうございます",
-    html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,980）。</p>
+    html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,480）。</p>
 <p>ご購入アカウントに権利が付与されています。マイページからブラウザ版の利用、および Windows 版のダウンロードができます。</p>
 <p><a href="${url}">${url}</a></p>
 <p>別の端末やブラウザから開く場合は、同じアカウントで Google ログイン、またはメールのマジックリンクでログインしてください。</p>`,

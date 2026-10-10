@@ -11,29 +11,110 @@ const Section = ({ id, title, children }) => (
   </section>
 );
 
+const Sub = ({ children }) => (
+  <p className="font-bold text-slate-700">{children}</p>
+);
+
 const Kbd = ({ children }) => (
   <kbd className="inline-block rounded border border-slate-300 bg-slate-100 px-1.5 py-0.5 text-xs font-mono text-slate-700">
     {children}
   </kbd>
 );
 
-const TOC_IDS = ['overview', 'ui', 'basic', 'edit', 'playback', 'backing', 'mp4', 'io', 'shortcuts'];
+const BulletList = ({ items }) => (
+  <ul className="list-disc pl-5 space-y-2">
+    {items.map((item) => (
+      <li key={item}>{item}</li>
+    ))}
+  </ul>
+);
+
+const TOC_IDS = [
+  'overview',
+  'ui',
+  'basic',
+  'edit',
+  'view',
+  'playback',
+  'backing',
+  'mp4',
+  'io',
+  'shortcuts',
+];
 
 const SHORTCUT_ROWS = [
   { action: 'pages.manual.shortcuts.actionPlay', key: 'Space' },
   { action: 'pages.manual.shortcuts.actionUndo', key: 'Ctrl+Z / Ctrl+Y' },
+  { action: 'pages.manual.shortcuts.actionFile', key: 'Ctrl+N / Ctrl+O / Ctrl+S' },
+  { action: 'pages.manual.shortcuts.actionSaveAs', key: 'Ctrl+Shift+S' },
   { action: 'pages.manual.shortcuts.actionClipboard', key: 'Ctrl+C / Ctrl+X / Ctrl+V' },
   { action: 'pages.manual.shortcuts.actionRhythmPaste', key: 'Ctrl+Alt+V' },
   { action: 'pages.manual.shortcuts.actionSelectAll', key: 'Ctrl+A' },
+  { action: 'pages.manual.shortcuts.actionDuplicate', key: 'Ctrl+D' },
   { action: 'pages.manual.shortcuts.actionMeasure', key: 'Ctrl+T / Ctrl+Delete' },
-  { action: 'pages.manual.shortcuts.actionNoteSplit', key: '+ / -' },
-  { action: 'pages.manual.shortcuts.actionRestTie', key: 'R / L' },
+  { action: 'pages.manual.shortcuts.actionResetMeasure', key: 'Ctrl+R' },
+  { action: 'pages.manual.shortcuts.actionNoteSplit', key: '+ / −' },
+  { action: 'pages.manual.shortcuts.actionDuplicateSplit', key: 'Shift + +' },
+  { action: 'pages.manual.shortcuts.actionRest', key: 'R / Shift+R' },
+  { action: 'pages.manual.shortcuts.actionTie', key: 'L' },
+  { action: 'pages.manual.shortcuts.actionDotTuplet', key: '* / /' },
   { action: 'pages.manual.shortcuts.actionFret', key: 'Alt+← / Alt+→' },
+  { action: 'pages.manual.shortcuts.actionString', key: 'Alt+↑ / Alt+↓' },
+  { action: 'pages.manual.shortcuts.actionExtend', key: 'Shift+← → ↑ ↓' },
   { action: 'pages.manual.shortcuts.actionMeasureNav', key: 'Ctrl+← / Ctrl+→' },
+  { action: 'pages.manual.shortcuts.actionChord', key: 'Shift+C' },
+  { action: 'pages.manual.shortcuts.actionChordShortcut', key: 'Alt+1–9 / Alt+0' },
 ];
+
+const TECH_ROWS = [
+  { action: 'pages.manual.shortcuts.techBrush', key: 'X / .' },
+  { action: 'pages.manual.shortcuts.techPalm', key: 'M' },
+  { action: 'pages.manual.shortcuts.techHammer', key: 'H' },
+  { action: 'pages.manual.shortcuts.techGhost', key: 'C' },
+  { action: 'pages.manual.shortcuts.techSlide', key: 'S' },
+  { action: 'pages.manual.shortcuts.techGlide', key: 'G' },
+  { action: 'pages.manual.shortcuts.techBend', key: 'B' },
+  { action: 'pages.manual.shortcuts.techBendHeight', key: '] / [' },
+  { action: 'pages.manual.shortcuts.techBendFlip', key: 'Shift+B' },
+  { action: 'pages.manual.shortcuts.techVibrato', key: 'V' },
+  { action: 'pages.manual.shortcuts.techHarmonic', key: 'N' },
+  { action: 'pages.manual.shortcuts.techTap', key: 'T' },
+  { action: 'pages.manual.shortcuts.techSlap', key: 'O' },
+  { action: 'pages.manual.shortcuts.techPull', key: 'P' },
+  { action: 'pages.manual.shortcuts.techLetRing', key: ';' },
+  { action: 'pages.manual.shortcuts.techText', key: 'Shift+T' },
+  { action: 'pages.manual.shortcuts.techAccent', key: 'A' },
+  { action: 'pages.manual.shortcuts.techStaccato', key: ',' },
+  { action: 'pages.manual.shortcuts.techStrokeDown', key: 'Y' },
+  { action: 'pages.manual.shortcuts.techStrokeUp', key: 'U' },
+  { action: 'pages.manual.shortcuts.techSlash', key: 'K' },
+];
+
+const ShortcutTable = ({ rows, colAction, colKey, t }) => (
+  <div className="overflow-x-auto">
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="border-b border-slate-200 text-left">
+          <th className="py-2 pr-4 font-extrabold text-slate-700">{colAction}</th>
+          <th className="py-2 font-extrabold text-slate-700">{colKey}</th>
+        </tr>
+      </thead>
+      <tbody className="text-slate-600">
+        {rows.map(({ action, key }) => (
+          <tr key={action} className="border-b border-slate-100">
+            <td className="py-2 pr-4">{t(action)}</td>
+            <td className="py-2 font-mono text-xs">{key}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
 
 const TabbeastManual = () => {
   const { t, path } = useSiteLocale();
+  const li = (base, count) =>
+    Array.from({ length: count }, (_, index) => t(`${base}${index + 1}`));
 
   return (
     <main className="my-8 mx-1">
@@ -42,9 +123,7 @@ const TabbeastManual = () => {
         <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">
           {t('pages.manual.title')}
         </h1>
-        <p className="text-sm text-slate-500 leading-relaxed mb-2">
-          {t('pages.manual.intro')}
-        </p>
+        <p className="text-sm text-slate-500 leading-relaxed mb-2">{t('pages.manual.intro')}</p>
         <p className="text-xs text-slate-400 mb-8">
           {t('pages.manual.guideRefPrefix')}
           <Link to={path('/tabbeast/guide')} className="underline mx-0.5">
@@ -73,88 +152,74 @@ const TabbeastManual = () => {
           <Section id="overview" title={t('pages.manual.overview.title')}>
             <p>{t('pages.manual.overview.p1')}</p>
             <p>{t('pages.manual.overview.p2')}</p>
+            <p>{t('pages.manual.overview.p3')}</p>
           </Section>
 
           <Section id="ui" title={t('pages.manual.ui.title')}>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>{t('pages.manual.ui.li1')}</li>
-              <li>{t('pages.manual.ui.li2')}</li>
-              <li>{t('pages.manual.ui.li3')}</li>
-              <li>{t('pages.manual.ui.li4')}</li>
-              <li>{t('pages.manual.ui.li5')}</li>
-              <li>{t('pages.manual.ui.li6')}</li>
-              <li>{t('pages.manual.ui.li7')}</li>
-            </ul>
+            <BulletList items={li('pages.manual.ui.li', 7)} />
           </Section>
 
           <Section id="basic" title={t('pages.manual.basic.title')}>
-            <p className="font-bold text-slate-700">{t('pages.manual.basic.fretTitle')}</p>
+            <Sub>{t('pages.manual.basic.fretTitle')}</Sub>
             <ul className="list-disc pl-5 space-y-1">
               <li>
                 <Kbd>0</Kbd>〜<Kbd>9</Kbd> {t('pages.manual.basic.fretLi1')}
               </li>
               <li>{t('pages.manual.basic.fretLi2')}</li>
+              <li>{t('pages.manual.basic.fretLi3')}</li>
               <li>
-                <Kbd>Backspace</Kbd> — {t('pages.manual.basic.fretLi3')}
+                <Kbd>Backspace</Kbd> / <Kbd>Delete</Kbd> — {t('pages.manual.basic.fretLi4')}
               </li>
             </ul>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.basic.dragTitle')}</p>
+            <Sub>{t('pages.manual.basic.dragTitle')}</Sub>
             <p>{t('pages.manual.basic.dragIntro')}</p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>{t('pages.manual.basic.dragLi1')}</li>
-              <li>{t('pages.manual.basic.dragLi2')}</li>
-              <li>{t('pages.manual.basic.dragLi3')}</li>
-              <li>{t('pages.manual.basic.dragLi4')}</li>
-              <li>{t('pages.manual.basic.dragLi5')}</li>
-              <li>{t('pages.manual.basic.dragLi6')}</li>
-            </ul>
+            <BulletList items={li('pages.manual.basic.dragLi', 6)} />
             <p className="text-xs text-slate-500">{t('pages.manual.basic.dragNote')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.basic.modeTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.basic.modeLi1')}</li>
-              <li>{t('pages.manual.basic.modeLi2')}</li>
-              <li>{t('pages.manual.basic.modeLi3')}</li>
-              <li>{t('pages.manual.basic.modeLi4')}</li>
-            </ul>
+            <Sub>{t('pages.manual.basic.modeTitle')}</Sub>
+            <BulletList items={li('pages.manual.basic.modeLi', 4)} />
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.basic.fileTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.basic.fileLi1')}</li>
-              <li>{t('pages.manual.basic.fileLi2')}</li>
-            </ul>
+            <Sub>{t('pages.manual.basic.fileTitle')}</Sub>
+            <BulletList items={li('pages.manual.basic.fileLi', 3)} />
           </Section>
 
           <Section id="edit" title={t('pages.manual.edit.title')}>
-            <p className="font-bold text-slate-700">{t('pages.manual.edit.measureTitle')}</p>
+            <Sub>{t('pages.manual.edit.measureTitle')}</Sub>
             <p>{t('pages.manual.edit.measureP')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.edit.rhythmTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.edit.rhythmLi1')}</li>
-              <li>{t('pages.manual.edit.rhythmLi2')}</li>
-              <li>{t('pages.manual.edit.rhythmLi3')}</li>
-            </ul>
+            <Sub>{t('pages.manual.edit.rhythmTitle')}</Sub>
+            <BulletList items={li('pages.manual.edit.rhythmLi', 4)} />
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.edit.technicalTitle')}</p>
+            <Sub>{t('pages.manual.edit.technicalTitle')}</Sub>
             <p>{t('pages.manual.edit.technicalP')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.edit.efficiencyTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.edit.efficiencyLi1')}</li>
-              <li>{t('pages.manual.edit.efficiencyLi2')}</li>
-              <li>{t('pages.manual.edit.efficiencyLi3')}</li>
-              <li>{t('pages.manual.edit.efficiencyLi4')}</li>
-            </ul>
+            <Sub>{t('pages.manual.edit.chordTitle')}</Sub>
+            <BulletList items={li('pages.manual.edit.chordLi', 4)} />
+
+            <Sub>{t('pages.manual.edit.fingerTitle')}</Sub>
+            <p>{t('pages.manual.edit.fingerP')}</p>
+
+            <Sub>{t('pages.manual.edit.efficiencyTitle')}</Sub>
+            <BulletList items={li('pages.manual.edit.efficiencyLi', 6)} />
+          </Section>
+
+          <Section id="view" title={t('pages.manual.view.title')}>
+            <Sub>{t('pages.manual.view.layoutTitle')}</Sub>
+            <BulletList items={li('pages.manual.view.layoutLi', 4)} />
+
+            <Sub>{t('pages.manual.view.appearanceTitle')}</Sub>
+            <BulletList items={li('pages.manual.view.appearanceLi', 4)} />
+
+            <Sub>{t('pages.manual.view.generalTitle')}</Sub>
+            <BulletList items={li('pages.manual.view.generalLi', 4)} />
           </Section>
 
           <Section id="playback" title={t('pages.manual.playback.title')}>
             <ul className="list-disc pl-5 space-y-2">
-              <li>{t('pages.manual.playback.li1')}</li>
-              <li>{t('pages.manual.playback.li2')}</li>
-              <li>{t('pages.manual.playback.li3')}</li>
-              <li>{t('pages.manual.playback.li4')}</li>
+              {li('pages.manual.playback.li', 4).map((item) => (
+                <li key={item}>{item}</li>
+              ))}
               <li>
                 {t('pages.manual.playback.li5Prefix')}
                 <a href="#backing" className="underline mx-0.5">
@@ -169,45 +234,31 @@ const TabbeastManual = () => {
           <Section id="backing" title={t('pages.manual.backing.title')}>
             <p>{t('pages.manual.backing.intro')}</p>
 
-            <p className="font-bold text-slate-700 pt-1">{t('pages.manual.backing.loadTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.backing.loadLi1')}</li>
-              <li>{t('pages.manual.backing.loadLi2')}</li>
-              <li>{t('pages.manual.backing.loadLi3')}</li>
-            </ul>
+            <Sub>{t('pages.manual.backing.loadTitle')}</Sub>
+            <BulletList items={li('pages.manual.backing.loadLi', 4)} />
             <p className="text-xs text-slate-500">{t('pages.manual.backing.loadNote')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.backing.panelTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.backing.panelLi1')}</li>
-              <li>{t('pages.manual.backing.panelLi2')}</li>
-              <li>{t('pages.manual.backing.panelLi3')}</li>
-              <li>{t('pages.manual.backing.panelLi4')}</li>
-            </ul>
+            <Sub>{t('pages.manual.backing.youtubeTitle')}</Sub>
+            <p>{t('pages.manual.backing.youtubeP')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.backing.syncTitle')}</p>
+            <Sub>{t('pages.manual.backing.panelTitle')}</Sub>
+            <BulletList items={li('pages.manual.backing.panelLi', 5)} />
+
+            <Sub>{t('pages.manual.backing.syncTitle')}</Sub>
             <ol className="list-decimal pl-5 space-y-2">
-              <li>{t('pages.manual.backing.syncLi1')}</li>
-              <li>{t('pages.manual.backing.syncLi2')}</li>
-              <li>{t('pages.manual.backing.syncLi3')}</li>
+              {li('pages.manual.backing.syncLi', 3).map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ol>
             <p className="text-xs text-slate-500">{t('pages.manual.backing.syncNote')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.backing.seekTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.backing.seekLi1')}</li>
-              <li>{t('pages.manual.backing.seekLi2')}</li>
-            </ul>
+            <Sub>{t('pages.manual.backing.seekTitle')}</Sub>
+            <BulletList items={li('pages.manual.backing.seekLi', 2)} />
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.backing.otherTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.backing.otherLi1')}</li>
-              <li>{t('pages.manual.backing.otherLi2')}</li>
-              <li>{t('pages.manual.backing.otherLi3')}</li>
-              <li>{t('pages.manual.backing.otherLi4')}</li>
-            </ul>
+            <Sub>{t('pages.manual.backing.otherTitle')}</Sub>
+            <BulletList items={li('pages.manual.backing.otherLi', 4)} />
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.backing.mp4RelationTitle')}</p>
+            <Sub>{t('pages.manual.backing.mp4RelationTitle')}</Sub>
             <p>
               {t('pages.manual.backing.mp4RelationPrefix')}
               <a href="#mp4" className="underline mx-0.5">
@@ -220,7 +271,7 @@ const TabbeastManual = () => {
           <Section id="mp4" title={t('pages.manual.mp4.title')}>
             <p>{t('pages.manual.mp4.intro')}</p>
 
-            <p className="font-bold text-slate-700 pt-1">{t('pages.manual.mp4.stepsTitle')}</p>
+            <Sub>{t('pages.manual.mp4.stepsTitle')}</Sub>
             <ol className="list-decimal pl-5 space-y-3">
               <li>
                 {t('pages.manual.mp4.step1Prefix')}
@@ -232,19 +283,17 @@ const TabbeastManual = () => {
               <li>
                 {t('pages.manual.mp4.step2')}
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>{t('pages.manual.mp4.step2Li1')}</li>
-                  <li>{t('pages.manual.mp4.step2Li2')}</li>
-                  <li>{t('pages.manual.mp4.step2Li3')}</li>
+                  {li('pages.manual.mp4.step2Li', 3).map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
                 </ul>
               </li>
               <li>
                 {t('pages.manual.mp4.step3')}
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>{t('pages.manual.mp4.step3Li1')}</li>
-                  <li>{t('pages.manual.mp4.step3Li2')}</li>
-                  <li>{t('pages.manual.mp4.step3Li3')}</li>
-                  <li>{t('pages.manual.mp4.step3Li4')}</li>
-                  <li>{t('pages.manual.mp4.step3Li5')}</li>
+                  {li('pages.manual.mp4.step3Li', 8).map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
                 </ul>
               </li>
               <li>{t('pages.manual.mp4.step4')}</li>
@@ -253,26 +302,16 @@ const TabbeastManual = () => {
             </ol>
             <p className="text-xs text-slate-500">{t('pages.manual.mp4.stepsNote')}</p>
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.mp4.tipsTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.mp4.tipsLi1')}</li>
-              <li>{t('pages.manual.mp4.tipsLi2')}</li>
-              <li>{t('pages.manual.mp4.tipsLi3')}</li>
-            </ul>
-
+            <Sub>{t('pages.manual.mp4.tipsTitle')}</Sub>
+            <BulletList items={li('pages.manual.mp4.tipsLi', 4)} />
             <p className="text-xs text-slate-500">{t('pages.manual.mp4.demoNote')}</p>
           </Section>
 
           <Section id="io" title={t('pages.manual.io.title')}>
-            <p className="font-bold text-slate-700">{t('pages.manual.io.importTitle')}</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{t('pages.manual.io.importLi1')}</li>
-              <li>{t('pages.manual.io.importLi2')}</li>
-              <li>{t('pages.manual.io.importLi3')}</li>
-              <li>{t('pages.manual.io.importLi4')}</li>
-            </ul>
+            <Sub>{t('pages.manual.io.importTitle')}</Sub>
+            <BulletList items={li('pages.manual.io.importLi', 5)} />
 
-            <p className="font-bold text-slate-700 pt-2">{t('pages.manual.io.exportTitle')}</p>
+            <Sub>{t('pages.manual.io.exportTitle')}</Sub>
             <ul className="list-disc pl-5 space-y-1">
               <li>{t('pages.manual.io.exportLi1')}</li>
               <li>
@@ -283,6 +322,7 @@ const TabbeastManual = () => {
                 {t('pages.manual.io.exportLi2Suffix')}
               </li>
               <li>{t('pages.manual.io.exportLi3')}</li>
+              <li>{t('pages.manual.io.exportLi4')}</li>
             </ul>
             <p className="text-xs text-slate-500">{t('pages.manual.io.exportNote1')}</p>
             <p className="text-xs text-slate-500">{t('pages.manual.io.exportNote2')}</p>
@@ -290,28 +330,20 @@ const TabbeastManual = () => {
 
           <Section id="shortcuts" title={t('pages.manual.shortcuts.title')}>
             <p>{t('pages.manual.shortcuts.intro')}</p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-200 text-left">
-                    <th className="py-2 pr-4 font-extrabold text-slate-700">
-                      {t('pages.manual.shortcuts.colAction')}
-                    </th>
-                    <th className="py-2 font-extrabold text-slate-700">
-                      {t('pages.manual.shortcuts.colKey')}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-slate-600">
-                  {SHORTCUT_ROWS.map(({ action, key }) => (
-                    <tr key={action} className="border-b border-slate-100">
-                      <td className="py-2 pr-4">{t(action)}</td>
-                      <td className="py-2 font-mono text-xs">{key}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ShortcutTable
+              rows={SHORTCUT_ROWS}
+              colAction={t('pages.manual.shortcuts.colAction')}
+              colKey={t('pages.manual.shortcuts.colKey')}
+              t={t}
+            />
+
+            <Sub>{t('pages.manual.shortcuts.techTitle')}</Sub>
+            <ShortcutTable
+              rows={TECH_ROWS}
+              colAction={t('pages.manual.shortcuts.colAction')}
+              colKey={t('pages.manual.shortcuts.colKey')}
+              t={t}
+            />
             <p className="text-xs text-slate-500">{t('pages.manual.shortcuts.note')}</p>
           </Section>
         </div>
