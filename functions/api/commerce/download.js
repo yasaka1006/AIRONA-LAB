@@ -30,12 +30,12 @@ export async function onRequestGet(context) {
   const { session, response } = await requireSession(env, request);
   if (response) return response;
 
-  const url = new URL(request.url);
-  const channel = url.searchParams.get("channel") || "full_win";
+  const requestUrl = new URL(request.url);
+  const channel = requestUrl.searchParams.get("channel") || "full_win";
   if (!ALLOWED_CHANNELS.has(channel)) {
     return error(400, "invalid_channel", "Supported channel: full_win");
   }
-  const version = url.searchParams.get("version");
+  const version = requestUrl.searchParams.get("version");
   if (version && !/^[0-9A-Za-z][0-9A-Za-z._+-]{0,31}$/.test(version)) {
     return error(400, "invalid_version", "Unsupported version");
   }
