@@ -38,12 +38,13 @@ export async function logout() {
   }
 }
 
-export async function requestDownload(channel = "full_win") {
+export async function requestDownload(channel = "full_win", version) {
   try {
-    const res = await fetch(
-      `/api/commerce/download?channel=${encodeURIComponent(channel)}`,
-      { credentials: "include" },
-    );
+    const params = new URLSearchParams({ channel });
+    if (version) params.set("version", version);
+    const res = await fetch(`/api/commerce/download?${params}`, {
+      credentials: "include",
+    });
     const body = await readApiJson(res);
     if (!res.ok) {
       throw new Error(body.message || "Failed to create download link");

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useSiteLocale } from '../i18n/siteLocale';
 import { createCheckout, fetchDemoLinks, fetchMe, requestDownload } from '../lib/commerceApi';
 import { TermsContent } from './legal/LegalPages';
 
-const importFormats = ['MusicXML', '.tg', '.gp'];
-const exportFormats = ['MusicXML', '.tg', '.gp', 'MIDI', 'PDF', 'MP4'];
+const importFormats = ['.tg', '.gp', 'MusicXML'];
+const exportFormats = ['.tg', '.gp', 'MusicXML', 'MIDI', 'PDF', 'MP4'];
 
 /** Windows EXE ボタン用ダウンロードアイコン（矢印 + 受け皿） */
 const DownloadIcon = ({ className = 'h-4 w-4' }) => (
@@ -211,7 +211,8 @@ const SystemRequirements = () => {
           <tr className="border-b border-slate-200 text-slate-700">
             <th className="py-2 pr-4 text-left font-extrabold" scope="col" />
             <th className="py-2 px-3 text-center font-extrabold" scope="col">{t('pages.tabbeast.sysReqWindows')}</th>
-            <th className="py-2 pl-3 text-center font-extrabold" scope="col">{t('pages.tabbeast.sysReqMac')}</th>
+            <th className="py-2 px-3 text-center font-extrabold" scope="col">{t('pages.tabbeast.sysReqMac')}</th>
+            <th className="py-2 pl-3 text-center font-extrabold" scope="col">{t('pages.tabbeast.sysReqIos')}</th>
           </tr>
         </thead>
         <tbody>
@@ -220,12 +221,14 @@ const SystemRequirements = () => {
               {t('pages.tabbeast.sysReqExeRow')}
             </th>
             <td className="py-2.5 px-3 text-center">○</td>
+            <td className="py-2.5 px-3 text-center text-slate-400">—</td>
             <td className="py-2.5 pl-3 text-center text-slate-400">—</td>
           </tr>
           <tr>
             <th className="py-2.5 pr-4 text-left font-bold text-slate-700" scope="row">
               {t('pages.tabbeast.sysReqBrowserRow')}
             </th>
+            <td className="py-2.5 px-3 text-center">○</td>
             <td className="py-2.5 px-3 text-center">○</td>
             <td className="py-2.5 pl-3 text-center">○</td>
           </tr>
@@ -247,7 +250,6 @@ const SystemRequirements = () => {
         <ul className="list-disc pl-5 space-y-1">
           <li>{t('pages.tabbeast.sysReqBrowser1')}</li>
           <li>{t('pages.tabbeast.sysReqBrowser2')}</li>
-          <li>{t('pages.tabbeast.sysReqBrowser3')}</li>
         </ul>
       </div>
 
@@ -266,29 +268,191 @@ const SystemRequirements = () => {
   );
 };
 
-const FeatureSection = ({ title, description, imageSrc, reverse = false }) => (
-  <div
-    className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12 max-w-5xl mx-auto`}
-  >
-    <div className="flex-1 w-full flex flex-col gap-4 text-left">
-      <h3 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-snug">
-        {title}
-      </h3>
-      <p className="text-sm md:text-base text-slate-500 leading-relaxed whitespace-pre-line">
-        {description}
-      </p>
+const FeatureSection = ({ title, description, imageSrc, reverse = false, matchTitles = [], underline = '#2A6A7E' }) => {
+  const titleRef = useRef(null);
+  const barRef = useRef(null);
+  const shownRef = useRef(false);
+
+  useEffect(() => {
+    const el = titleRef.current;
+    const bar = barRef.current;
+    if (!el || !bar) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      shownRef.current = true;
+      bar.style.transform = 'scaleX(1)';
+      return;
+    }
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const off = rect.bottom <= 0 || rect.top >= vh;
+      if (off) {
+        shownRef.current = false;
+        bar.style.transition = 'none';
+        bar.style.transform = 'scaleX(0)';
+        return;
+      }
+      const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+      if (rect.height <= 0 || visible / rect.height < 0.6 || shownRef.current) return;
+      shownRef.current = true;
+      bar.style.transition = 'none';
+      bar.style.transform = 'scaleX(0)';
+      void bar.offsetWidth;
+      bar.style.transition = 'transform 500ms ease-out';
+      bar.style.transform = 'scaleX(1)';
+    };
+    update();
+    document.addEventListener('scroll', update, { passive: true, capture: true });
+    window.addEventListener('resize', update);
+    return () => {
+      document.removeEventListener('scroll', update, { capture: true });
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
+  return (
+    <div
+      className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-10`}
+    >
+      <div className="w-full md:w-min md:shrink-0 md:grid">
+        <div className="hidden md:flex invisible col-start-1 row-start-1 flex-col" aria-hidden="true">
+          {matchTitles.map((label) => (
+            <div key={label} className="whitespace-nowrap text-3xl font-extrabold leading-snug">
+              {label}
+            </div>
+          ))}
+        </div>
+        <div className="col-start-1 row-start-1 flex flex-col gap-4 text-left">
+          <h3
+            ref={titleRef}
+            className="relative mx-auto md:mx-0 w-fit text-2xl md:text-3xl font-extrabold text-slate-800 leading-snug md:whitespace-nowrap"
+          >
+            <span
+              ref={barRef}
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 -bottom-1.25 h-[calc(50%+0.3125rem)] origin-left"
+              style={{ backgroundImage: `linear-gradient(to top, ${underline} 0.3125rem, transparent)` }}
+            />
+            <span className="relative">{title}</span>
+          </h3>
+          <p className="text-sm md:text-base text-slate-500 leading-relaxed whitespace-pre-line">
+            {description}
+          </p>
+        </div>
+      </div>
+      <div className="w-full md:flex-1 md:min-w-0">
+        <img
+          src={imageSrc}
+          alt=""
+          className="w-full h-auto rounded-lg border border-slate-300 shadow-lg"
+        />
+      </div>
     </div>
-    <div className="flex-1 w-full">
-      <img
-        src={imageSrc}
-        alt=""
-        className="w-full h-auto rounded-lg border border-slate-300 shadow-lg"
-      />
+  );
+};
+
+const DemoButtons = ({ demoWin, demoWeb, t }) => (
+  <div className="flex w-full flex-col gap-3 md:flex-row md:items-center">
+    {demoWin ? (
+      <a
+        href={demoWin}
+        className="inline-flex h-11 w-full md:w-auto md:flex-1 whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-slate-200 to-slate-400 text-slate-700 text-sm font-bold px-4 rounded-full hover:from-slate-100 hover:to-slate-300 shadow-md leading-none"
+      >
+        <span className="leading-none">{t('pages.tabbeast.purchaseDemoWin')}</span>
+        <DownloadIcon className="h-4 w-4" />
+      </a>
+    ) : (
+      <button
+        type="button"
+        disabled
+        className="inline-flex h-11 w-full md:w-auto md:flex-1 whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-slate-200 to-slate-400 text-slate-700 text-sm font-bold px-4 rounded-full cursor-not-allowed shadow-md leading-none"
+        title={t('pages.tabbeast.purchaseDemoWinTitle')}
+      >
+        <span className="leading-none">{t('pages.tabbeast.purchaseDemoWin')}</span>
+        <DownloadIcon className="h-4 w-4" />
+      </button>
+    )}
+    {demoWeb ? (
+      <a
+        href={demoWeb}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex h-11 w-full md:w-auto md:flex-1 whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-slate-200 to-slate-400 text-slate-700 text-sm font-bold px-4 rounded-full hover:from-slate-100 hover:to-slate-300 shadow-md leading-none"
+      >
+        <span className="leading-none">{t('pages.tabbeast.purchaseDemoWeb')}</span>
+        <span className="leading-none" aria-hidden>▶</span>
+      </a>
+    ) : (
+      <button
+        type="button"
+        disabled
+        className="inline-flex h-11 w-full md:w-auto md:flex-1 whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-slate-200 to-slate-400 text-slate-700 text-sm font-bold px-4 rounded-full cursor-not-allowed shadow-md leading-none"
+        title={t('pages.tabbeast.purchaseDemoWebTitle')}
+      >
+        <span className="leading-none">{t('pages.tabbeast.purchaseDemoWebDisabled')}</span>
+        <span className="leading-none" aria-hidden>▶</span>
+      </button>
+    )}
+  </div>
+);
+
+const PurchaseOffer = ({ demoWin, demoWeb, t, path, busy, onBuy }) => (
+  <div className="flex flex-col items-center gap-6">
+    <div className="mb-3 flex w-full max-w-full flex-col items-stretch gap-3 md:w-fit md:gap-4">
+      <DemoButtons demoWin={demoWin} demoWeb={demoWeb} t={t} />
+      <button
+        type="button"
+        onClick={onBuy}
+        disabled={busy}
+        className="w-full text-white text-base md:text-xl font-extrabold px-6 md:px-14 py-3.5 md:py-4 rounded-full cursor-pointer disabled:opacity-60 shadow-lg bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
+      >
+        {t('pages.tabbeast.purchaseBuy')}
+      </button>
+    </div>
+    <p className="flex flex-col sm:flex-row sm:items-center justify-center gap-0.5 sm:gap-0 text-center text-xs md:text-sm text-slate-500 leading-relaxed">
+      <span>
+        <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformWin')}</span>
+        {' '}{t('pages.tabbeast.purchasePlatformWinDetail')}
+      </span>
+      <span className="hidden sm:inline mx-2.5 text-slate-300" aria-hidden>
+        ｜
+      </span>
+      <span>
+        <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformMac')}</span>
+        {' '}{t('pages.tabbeast.purchasePlatformMacDetail')}
+      </span>
+      <span className="hidden sm:inline mx-2.5 text-slate-300" aria-hidden>
+        ｜
+      </span>
+      <span>
+        <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformIos')}</span>
+        {' '}{t('pages.tabbeast.purchasePlatformIosDetail')}
+      </span>
+    </p>
+    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+      <Link
+        to={path('/tabbeast/guide')}
+        className="text-sm text-slate-500 underline hover:text-slate-700"
+      >
+        {t('common.guide')}
+      </Link>
+      <Link
+        to={path('/tabbeast/manual')}
+        className="text-sm text-slate-500 underline hover:text-slate-700"
+      >
+        {t('common.manual')}
+      </Link>
+      <Link
+        to={path('/tabbeast/contact')}
+        className="text-sm text-slate-500 underline hover:text-slate-700"
+      >
+        {t('common.contact')}
+      </Link>
     </div>
   </div>
 );
 
-const PurchaseBar = () => {
+const PurchaseBar = ({ children }) => {
   const { t, path, locale } = useSiteLocale();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -428,7 +592,8 @@ const PurchaseBar = () => {
   };
 
   return (
-    <div className="mt-12 bg-slate-100 py-6 px-4">
+    <>
+    <div className="mt-12 bg-[linear-gradient(to_bottom,var(--color-slate-50),var(--color-slate-100)_6rem)] px-4 pt-16 pb-6">
       {notice ? (
         <p className="text-center text-sm text-slate-600 mb-3">{notice}</p>
       ) : null}
@@ -454,7 +619,7 @@ const PurchaseBar = () => {
             </button>
             <a
               href="/app/"
-              className="inline-flex h-11 items-center justify-center text-white text-sm font-bold px-6 rounded-full bg-slate-700 hover:bg-slate-600 shadow-md leading-none"
+              className="inline-flex h-11 items-center justify-center text-white text-sm font-bold px-6 rounded-full shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
             >
               {t('pages.tabbeast.purchaseBrowser')}
             </a>
@@ -484,94 +649,30 @@ const PurchaseBar = () => {
           </div>
         </div>
       ) : (
-        <>
-          <div className="flex flex-col items-center gap-6">
-            <div className="mt-3 flex flex-wrap justify-center items-center gap-4 md:gap-10">
-              {demoWeb ? (
-                <a
-                  href={demoWeb}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-11 items-center justify-center bg-slate-600 text-white text-sm font-bold px-6 rounded-full hover:bg-slate-500 shadow-md leading-none"
-                >
-                  {t('pages.tabbeast.purchaseDemoWeb')}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  className="inline-flex h-11 items-center justify-center bg-slate-400 text-white text-sm font-bold px-6 rounded-full cursor-not-allowed shadow-md leading-none"
-                  title={t('pages.tabbeast.purchaseDemoWebTitle')}
-                >
-                  {t('pages.tabbeast.purchaseDemoWebDisabled')}
-                </button>
-              )}
-              {demoWin ? (
-                <a
-                  href={demoWin}
-                  className="inline-flex h-11 items-center justify-center gap-2 bg-slate-600 text-white text-sm font-bold px-6 rounded-full hover:bg-slate-500 shadow-md leading-none"
-                >
-                  <span className="leading-none">{t('pages.tabbeast.purchaseDemoWin')}</span>
-                  <DownloadIcon className="h-4 w-4" />
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  className="inline-flex h-11 items-center justify-center gap-2 bg-slate-400 text-white text-sm font-bold px-6 rounded-full cursor-not-allowed shadow-md leading-none"
-                  title={t('pages.tabbeast.purchaseDemoWinTitle')}
-                >
-                  <span className="leading-none">{t('pages.tabbeast.purchaseDemoWin')}</span>
-                  <DownloadIcon className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-            <div className="flex flex-col items-center gap-2.5">
-              <button
-                type="button"
-                onClick={openPurchaseDialog}
-                disabled={busy}
-                className="mb-5 text-white text-lg md:text-xl font-extrabold px-10 md:px-14 py-3.5 md:py-4 rounded-full cursor-pointer disabled:opacity-60 shadow-lg bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
-              >
-                {t('pages.tabbeast.purchaseBuy')}
-              </button>
-              <p className="flex flex-col sm:flex-row sm:items-center justify-center gap-0.5 sm:gap-0 text-center text-xs md:text-sm text-slate-500 leading-relaxed">
-                <span>
-                  <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformWin')}</span>
-                  {' '}{t('pages.tabbeast.purchasePlatformWinDetail')}
-                </span>
-                <span className="hidden sm:inline mx-2.5 text-slate-300" aria-hidden>
-                  ｜
-                </span>
-                <span>
-                  <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformMac')}</span>
-                  {' '}{t('pages.tabbeast.purchasePlatformMacDetail')}
-                </span>
-              </p>
-              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                <Link
-                  to={path('/tabbeast/guide')}
-                  className="text-sm text-slate-500 underline hover:text-slate-700"
-                >
-                  {t('common.guide')}
-                </Link>
-                <Link
-                  to={path('/tabbeast/manual')}
-                  className="text-sm text-slate-500 underline hover:text-slate-700"
-                >
-                  {t('common.manual')}
-                </Link>
-                <Link
-                  to={path('/tabbeast/contact')}
-                  className="text-sm text-slate-500 underline hover:text-slate-700"
-                >
-                  {t('common.contact')}
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {showDialog ? (
+        <PurchaseOffer
+          demoWin={demoWin}
+          demoWeb={demoWeb}
+          t={t}
+          path={path}
+          busy={busy}
+          onBuy={openPurchaseDialog}
+        />
+      )}
+    </div>
+    {children}
+    {owned ? null : (
+      <div className="mt-8 bg-[linear-gradient(to_bottom,var(--color-slate-50),var(--color-slate-100)_6rem)] px-4 pt-8 pb-10">
+        <PurchaseOffer
+          demoWin={demoWin}
+          demoWeb={demoWeb}
+          t={t}
+          path={path}
+          busy={busy}
+          onBuy={openPurchaseDialog}
+        />
+      </div>
+    )}
+    {showDialog ? (
             <div
               className={`fixed inset-0 z-50 flex items-center justify-center bg-black/20 p-4 ${
                 dialogClosing ? 'animate-dialog-backdrop-out' : 'animate-dialog-backdrop'
@@ -647,19 +748,22 @@ const PurchaseBar = () => {
                 </div>
               </div>
             </div>
-          ) : null}
-        </>
-      )}
-    </div>
+    ) : null}
+    </>
   );
 };
 
 const Tabbeast = () => {
   const { t } = useSiteLocale();
+  const featureTitles = [
+    t('pages.tabbeast.feature1Title'),
+    t('pages.tabbeast.feature2Title'),
+    t('pages.tabbeast.feature3Title'),
+  ];
 
   return (
-    <main className="my-4 mx-1">
-      <section className="py-12 rounded-xl ">
+    <main className="mt-4 mx-1">
+      <section className="pt-12 rounded-xl">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="flex items-center justify-center gap-3 md:gap-4 text-4xl md:text-6xl font-extrabold text-slate-800 tracking-tight mb-10">
             <img
@@ -673,13 +777,16 @@ const Tabbeast = () => {
             {t('pages.tabbeast.heroLine1')}
           </p>
           <p className="text-sm md:text-base text-slate-500 leading-relaxed">
-            {t('pages.tabbeast.heroLine2')}
+            {t('pages.tabbeast.heroLine2Prefix')}<a
+              href="https://www.youtube.com/@AironA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-slate-700"
+            >{t('pages.tabbeast.heroLine2Name')}</a>{t('pages.tabbeast.heroLine2Suffix')}
           </p>
         </div>
 
-        <PurchaseBar />
-
-
+        <PurchaseBar>
         <div className="relative  mx-auto">
           <img src="/tabbeast/haikei.jpg" alt="" className="w-full opacity-40 " />
           <div
@@ -707,21 +814,27 @@ const Tabbeast = () => {
           <FeatureSection
             title={t('pages.tabbeast.feature1Title')}
             description={t('pages.tabbeast.feature1Desc')}
-            imageSrc="/tabbeast/feature.png"
+            imageSrc="/tabbeast/sousa.gif"
+            matchTitles={featureTitles}
+            underline="#76BABC"
           />
         </div>
         <div className="mt-15 px-4 md:px-10 py-10 bg-slate-100 rounded-md">
           <FeatureSection
             title={t('pages.tabbeast.feature2Title')}
             description={t('pages.tabbeast.feature2Desc')}
-            imageSrc="/tabbeast/feature.png"
+            imageSrc="/tabbeast/mp4.gif"
+            matchTitles={featureTitles}
+            underline="#2A6A7E"
           />
         </div>
         <div className="mt-15 px-4 md:px-10 py-10 bg-slate-100 rounded-md">
           <FeatureSection
             title={t('pages.tabbeast.feature3Title')}
             description={t('pages.tabbeast.feature3Desc')}
-            imageSrc="/tabbeast/feature.png"
+            imageSrc="/tabbeast/audio.gif"
+            matchTitles={featureTitles}
+            underline="#EF976B"
           />
         </div>
 
@@ -734,12 +847,13 @@ const Tabbeast = () => {
           </div>
         </div>
 
-        <div className="mt-15 px-4 md:px-10 py-10">
+        <div className="mt-15 px-4 md:px-10 pt-10 pb-5">
           <h2 className="text-2xl font-extrabold text-slate-600 text-center mb-10">
             {t('pages.tabbeast.requirementsTitle')}
           </h2>
           <SystemRequirements />
         </div>
+        </PurchaseBar>
 
       </section>
     </main>

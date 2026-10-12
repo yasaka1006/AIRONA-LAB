@@ -37,7 +37,7 @@ export function purchaseEmail(locale, mypageUrl) {
     return {
       subject: "Thank you for purchasing TABbeast",
       html: `<p>Thank you for purchasing TABbeast (¥2,480 incl. tax).</p>
-<p>Your license has been added to your account. Open My page to use the browser edition or download the Windows edition.</p>
+<p>Your license has been added to your account. Open My page to use the web edition or download the Windows edition.</p>
 <p><a href="${url}">${url}</a></p>
 <p>On another device or browser, log in with the same Google account or the magic link sent to your email.</p>`,
     };
@@ -45,7 +45,7 @@ export function purchaseEmail(locale, mypageUrl) {
   return {
     subject: "TABbeast のご購入ありがとうございます",
     html: `<p>TABbeast のご購入ありがとうございました（税込 ¥2,480）。</p>
-<p>ご購入アカウントに権利が付与されています。マイページからブラウザ版の利用、および Windows 版のダウンロードができます。</p>
+<p>ご購入アカウントに権利が付与されています。マイページからWeb版の利用、および Windows 版のダウンロードができます。</p>
 <p><a href="${url}">${url}</a></p>
 <p>別の端末やブラウザから開く場合は、同じアカウントで Google ログイン、またはメールのマジックリンクでログインしてください。</p>`,
   };
@@ -95,14 +95,14 @@ export function changeEmailConfirmation(locale, newEmail, url) {
 const CONTACT_CATEGORY_LABELS = {
   ja: {
     purchase_download: "購入・ダウンロード",
-    browser: "ブラウザ版",
+    browser: "Web版",
     payment: "決済トラブル",
     bug: "不具合・要望",
     other: "その他",
   },
   en: {
     purchase_download: "Purchase / download",
-    browser: "Browser edition",
+    browser: "Web edition",
     payment: "Payment issue",
     bug: "Bug / feature request",
     other: "Other",

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useSiteLocale } from '../i18n/siteLocale';
 
 const cardClass =
   'block rounded-xl overflow-hidden bg-white shadow-[6px_6px_0_0_#94a3b8] hover:shadow-[8px_8px_0_0_#64748b] transition-all duration-100';
@@ -57,9 +58,9 @@ const otherCards = [
   },
 ];
 
-const HomeCard = ({ to, src, title, description }) => (
+const HomeCard = ({ to, src, title, description, imageClassName = 'h-40 md:h-48' }) => (
   <Link to={to} className={`${cardClass} h-full`}>
-    <div className="w-full h-40 md:h-48 bg-slate-200 overflow-hidden">
+    <div className={`w-full bg-slate-200 overflow-hidden ${imageClassName}`}>
       <img src={src} alt={title} className="w-full h-full object-cover" />
     </div>
     <div className="p-3 md:p-4">
@@ -120,6 +121,8 @@ const HorizontalCardRow = ({ cards }) => {
 };
 
 const Home = () => {
+  const { t, path } = useSiteLocale();
+
   return (
     <main className="my-4 space-y-4 mx-1">
       {/* ウェルカムセクション */}
@@ -149,6 +152,27 @@ const Home = () => {
             ようこそ！自分用のソフトやゲームを作ってます。みなさんも使ってみてください！
           </p>
         </div>
+      </section>
+
+      <section className={sectionClass}>
+        <Link to={path('/tabbeast')} className={cardClass}>
+          <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 p-5 md:p-8">
+            <div className="w-full md:w-80 md:shrink-0 text-left">
+              <div className="flex items-center gap-3 mb-3">
+                <img src="/tabbeast/appIcon.SVG" alt="" className="h-12 w-12 md:h-16 md:w-16 shrink-0" />
+                <h3 className="text-3xl md:text-4xl font-extrabold text-slate-800">TABbeast</h3>
+              </div>
+              <p className="text-sm md:text-base text-slate-600">{t('home.tabbeastDescription')}</p>
+            </div>
+            <div className="w-full md:flex-1 md:min-w-0">
+              <img
+                src="/tabbeast/soft.png"
+                alt="TABbeast"
+                className="w-full h-auto rounded-lg border border-slate-200"
+              />
+            </div>
+          </div>
+        </Link>
       </section>
 
       {/* ゲーム一覧 */}

@@ -5,7 +5,7 @@ const menuItemClass =
   'block font-bold text-gray-600 hover:text-gray-800 hover:bg-slate-300 rounded-md px-4 py-3 transition-colors duration-100';
 
 const Sidebar = ({ isOpen, onClose }) => {
-  const { t } = useSiteLocale();
+  const { t, path } = useSiteLocale();
 
   return (
     <>
@@ -32,6 +32,9 @@ const Sidebar = ({ isOpen, onClose }) => {
           </Link>
           <Link to="/minigames" className={menuItemClass} onClick={onClose}>
             {t('nav.games')}
+          </Link>
+          <Link to={path('/tabbeast')} className={menuItemClass} onClick={onClose}>
+            {t('nav.tabbeast')}
           </Link>
           <Link to="/ranking" className={menuItemClass} onClick={onClose}>
             {t('sidebar.ranking')}

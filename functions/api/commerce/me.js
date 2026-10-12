@@ -4,6 +4,7 @@ import {
   json,
   latestFullReleases,
   listEntitlements,
+  listFullWinReleases,
   methodNotAllowed,
   requireSession,
 } from "../../_lib/commerce.js";
@@ -21,9 +22,10 @@ export async function onRequestGet(context) {
   const { session, response } = await requireSession(env, request);
   if (response) return response;
 
-  const [entitlements, latest] = await Promise.all([
+  const [entitlements, latest, windowsReleases] = await Promise.all([
     listEntitlements(db, session.customerId),
     latestFullReleases(db),
+    listFullWinReleases(db),
   ]);
 
   return json({
@@ -31,6 +33,7 @@ export async function onRequestGet(context) {
     authUserId: session.authUserId,
     entitlements,
     latest,
+    windowsReleases,
   });
 }
 

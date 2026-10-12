@@ -9,8 +9,8 @@ const menuItems =
 const dropdownItemClass =
   'flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-100 transition-colors';
 
-/** Header 右上のアカウント／マイページアイコン。true で再表示 */
-const SHOW_ACCOUNT_MENU = false;
+/** Header 右上のアカウント／マイページアイコン */
+const SHOW_ACCOUNT_MENU = true;
 
 const Header = ({ onMenuClick }) => {
   const { t, path } = useSiteLocale();
@@ -109,6 +109,9 @@ const Header = ({ onMenuClick }) => {
             </Link>
             <Link to="/minigames" className={menuItems}>
               {t('nav.games')}
+            </Link>
+            <Link to={path('/tabbeast')} className={menuItems}>
+              {t('nav.tabbeast')}
             </Link>
           </div>
         </div>

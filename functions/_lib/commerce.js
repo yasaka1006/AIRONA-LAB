@@ -223,6 +223,18 @@ export async function getLatestRelease(db, productId, channel) {
     .first();
 }
 
+export async function getRelease(db, productId, channel, version) {
+  return db
+    .prepare(
+      `SELECT product_id, channel, version, r2_key, public_url
+       FROM releases
+       WHERE product_id = ? AND channel = ? AND version = ?
+       LIMIT 1`,
+    )
+    .bind(productId, channel, version)
+    .first();
+}
+
 export function filenameFromR2Key(r2Key, fallback = "download.zip") {
   if (!r2Key) return fallback;
   const parts = r2Key.split("/").filter(Boolean);
@@ -656,6 +668,23 @@ export async function listEntitlements(db, customerId) {
     .bind(customerId)
     .all();
   return results ?? [];
+}
+
+export async function listFullWinReleases(db) {
+  const { results } = await db
+    .prepare(
+      `SELECT version, is_latest AS isLatest
+       FROM releases
+       WHERE product_id = ? AND channel = 'full_win'
+         AND r2_key IS NOT NULL AND r2_key != ''
+       ORDER BY published_at DESC, id DESC`,
+    )
+    .bind(PRODUCT_ID_FULL)
+    .all();
+  return (results ?? []).map((row) => ({
+    version: row.version,
+    latest: Number(row.isLatest) === 1,
+  }));
 }
 
 export async function latestFullReleases(db) {

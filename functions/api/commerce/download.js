@@ -7,6 +7,7 @@ import {
   error,
   filenameFromR2Key,
   getLatestRelease,
+  getRelease,
   hasActiveFullEntitlement,
   json,
   methodNotAllowed,
@@ -29,9 +30,14 @@ export async function onRequestGet(context) {
   const { session, response } = await requireSession(env, request);
   if (response) return response;
 
-  const channel = new URL(request.url).searchParams.get("channel") || "full_win";
+  const url = new URL(request.url);
+  const channel = url.searchParams.get("channel") || "full_win";
   if (!ALLOWED_CHANNELS.has(channel)) {
     return error(400, "invalid_channel", "Supported channel: full_win");
+  }
+  const version = url.searchParams.get("version");
+  if (version && !/^[0-9A-Za-z][0-9A-Za-z._+-]{0,31}$/.test(version)) {
+    return error(400, "invalid_version", "Unsupported version");
   }
 
   const entitled = await hasActiveFullEntitlement(db, session.customerId);
@@ -39,7 +45,9 @@ export async function onRequestGet(context) {
     return error(403, "forbidden", "Active entitlement required");
   }
 
-  const release = await getLatestRelease(db, PRODUCT_ID_FULL, channel);
+  const release = version
+    ? await getRelease(db, PRODUCT_ID_FULL, channel, version)
+    : await getLatestRelease(db, PRODUCT_ID_FULL, channel);
   if (!release?.r2_key) {
     return error(404, "not_found", "No latest release for this channel");
   }

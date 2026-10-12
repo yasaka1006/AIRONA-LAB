@@ -83,7 +83,7 @@ function placeholderHtml(version) {
 <body>
   <main>
     <div class="badge">full_web placeholder · ${version}</div>
-    <h1>TABbeast ブラウザ版</h1>
+    <h1>TABbeast Web版</h1>
     <p>ゲートと権利チェックは通っています。ここに本番の Vite ビルド（base: /app/）を R2 へ置けば、本体 UI が表示されます。</p>
     <p><a href="/mypage">マイページへ戻る</a></p>
   </main>

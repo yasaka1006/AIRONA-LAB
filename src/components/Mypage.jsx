@@ -75,6 +75,7 @@ const Mypage = () => {
   const [email, setEmail] = useState('');
   const [busy, setBusy] = useState(false);
   const [busyAction, setBusyAction] = useState('');
+  const [pastWindowsVersion, setPastWindowsVersion] = useState('');
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [googleAvailable, setGoogleAvailable] = useState(false);
@@ -83,6 +84,10 @@ const Mypage = () => {
   const afterLoginPath = safeNextPath(searchParams.get('next'), mypagePath);
   const catalog = productCatalog(t);
   const products = me ? ownedProducts(me, catalog) : [];
+  const latestWindowsVersion = me?.latest?.full_win?.version || '';
+  const pastWindowsVersions = (me?.windowsReleases || [])
+    .filter((item) => item?.version && !item.latest && item.version !== latestWindowsVersion)
+    .map((item) => item.version);
 
   const loadMe = async () => {
     try {
@@ -174,12 +179,12 @@ const Mypage = () => {
     }
   };
 
-  const onDownload = async (channel, actionKey) => {
+  const onDownload = async (channel, actionKey, version) => {
     setBusy(true);
     setBusyAction(actionKey);
     setError('');
     try {
-      const result = await requestDownload(channel);
+      const result = await requestDownload(channel, version);
       window.location.assign(result.url);
     } catch (err) {
       setError(err.message);
@@ -334,7 +339,7 @@ const Mypage = () => {
                                   type="button"
                                   onClick={() => onDownload(action.channel, actionKey)}
                                   disabled={busy}
-                                  className="bg-slate-800 text-white px-5 py-2 rounded-full cursor-pointer hover:bg-slate-700 disabled:opacity-60 text-sm"
+                                  className="bg-gradient-to-r from-teal-500 to-teal-700 text-white px-5 py-2 rounded-full cursor-pointer hover:from-teal-400 hover:to-teal-600 disabled:opacity-60 text-sm"
                                 >
                                   {busyAction === actionKey
                                     ? t('common.preparing')
@@ -348,13 +353,49 @@ const Mypage = () => {
                               <a
                                 key={actionKey}
                                 href={action.href}
-                                className="inline-flex justify-center bg-slate-800 text-white px-5 py-2 rounded-full hover:bg-slate-700 text-sm"
+                                className="inline-flex justify-center bg-gradient-to-r from-teal-500 to-teal-700 text-white px-5 py-2 rounded-full hover:from-teal-400 hover:to-teal-600 text-sm"
                               >
                                 {version ? `${action.label} (${version})` : action.label}
                               </a>
                             );
                           })}
                         </div>
+                        {product.id === 'tabbeast_full' && pastWindowsVersions.length > 0 ? (
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                            <label className="text-xs font-bold text-slate-600 shrink-0" htmlFor="past-windows-version">
+                              {t('pages.mypage.pastWindowsLabel')}
+                            </label>
+                            <select
+                              id="past-windows-version"
+                              value={pastWindowsVersion}
+                              onChange={(event) => setPastWindowsVersion(event.target.value)}
+                              className="min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
+                            >
+                              <option value="">{t('pages.mypage.pastWindowsPlaceholder')}</option>
+                              {pastWindowsVersions.map((version) => (
+                                <option key={version} value={version}>
+                                  {version}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              type="button"
+                              disabled={busy || !pastWindowsVersion}
+                              onClick={() =>
+                                onDownload(
+                                  'full_win',
+                                  `tabbeast_full:past:${pastWindowsVersion}`,
+                                  pastWindowsVersion,
+                                )
+                              }
+                              className="bg-gradient-to-r from-teal-500 to-teal-700 text-white px-5 py-2 rounded-full cursor-pointer hover:from-teal-400 hover:to-teal-600 disabled:opacity-60 text-sm"
+                            >
+                              {busyAction === `tabbeast_full:past:${pastWindowsVersion}`
+                                ? t('common.preparing')
+                                : t('pages.mypage.pastWindowsDownload')}
+                            </button>
+                          </div>
+                        ) : null}
                         {product.id === 'tabbeast_full' ? (
                           <>
                             <p className="text-xs text-slate-500 leading-relaxed">
