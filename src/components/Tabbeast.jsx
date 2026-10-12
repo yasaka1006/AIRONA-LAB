@@ -842,8 +842,16 @@ const Tabbeast = () => {
           <h2 className="text-2xl font-extrabold text-slate-600 text-center mb-10">
             {t('pages.tabbeast.videoTitle')}
           </h2>
-          <div className="flex flex-col sm:flex-row justify-center items-start gap-10 sm:gap-24">
-            <iframe src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div className="relative mx-auto w-full max-w-3xl aspect-video">
+            <iframe
+              className="absolute top-0 left-0 h-full w-full rounded-md"
+              src="https://www.youtube.com/embed/etUy39hHyPE"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
 
