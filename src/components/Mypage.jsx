@@ -361,7 +361,7 @@ const Mypage = () => {
                           })}
                         </div>
                         {product.id === 'tabbeast_full' && pastWindowsVersions.length > 0 ? (
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                          <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2">
                             <label className="text-xs font-bold text-slate-600 shrink-0" htmlFor="past-windows-version">
                               {t('pages.mypage.pastWindowsLabel')}
                             </label>
@@ -388,7 +388,7 @@ const Mypage = () => {
                                   pastWindowsVersion,
                                 )
                               }
-                              className="bg-gradient-to-r from-teal-500 to-teal-700 text-white px-5 py-2 rounded-full cursor-pointer hover:from-teal-400 hover:to-teal-600 disabled:opacity-60 text-sm"
+                              className="bg-gradient-to-r from-slate-400 to-slate-600 text-white px-5 py-2 rounded-full cursor-pointer hover:from-slate-300 hover:to-slate-500 disabled:opacity-60 disabled:cursor-not-allowed text-sm"
                             >
                               {busyAction === `tabbeast_full:past:${pastWindowsVersion}`
                                 ? t('common.preparing')
