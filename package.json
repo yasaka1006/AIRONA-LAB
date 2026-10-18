@@ -15,6 +15,7 @@
     "db:commerce:auth:remote": "wrangler d1 execute airona-commerce --remote --file=./migrations/commerce/003_better_auth.sql",
     "db:commerce:seed:local": "wrangler d1 execute airona-commerce --local --file=./migrations/commerce/002_seed_releases.sql",
     "db:commerce:seed:remote": "wrangler d1 execute airona-commerce --remote --file=./migrations/commerce/002_seed_releases.sql",
+    "db:ranking:top100": "wrangler d1 execute ranking --remote --file=./migrations/ranking/001_top100.sql",
     "r2:placeholder:local": "wrangler r2 object put tabbeast-products/tabbeast/full/win/0.1.0/TABbeast_0.1.0_x64.zip --file=./fixtures/TABbeast_0.1.0_x64.placeholder.zip --local",
     "r2:placeholder:remote": "wrangler r2 object put tabbeast-products/tabbeast/full/win/0.1.0/TABbeast_0.1.0_x64.zip --file=./fixtures/TABbeast_0.1.0_x64.placeholder.zip --remote",
     "r2:web:placeholder:remote": "wrangler r2 object put tabbeast-products/tabbeast/full/web/0.1.0/index.html --file=./fixtures/full_web/0.1.0/index.html --content-type=text/html --remote"

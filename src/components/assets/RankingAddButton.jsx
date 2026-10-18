@@ -28,13 +28,16 @@ const RankingAddButton = ({ gameid, cleartime, onSuccess }) => {
         }),
       });
 
-      if (response.ok) {
+      const message = (await response.text()).trim();
+      if (response.status === 201) {
         alert('ランキングに登録しました！');
         setShowRankingInput(false);
         setRankingName('');
         if (onSuccess) {
           onSuccess();
         }
+      } else if (response.ok) {
+        alert(message || 'ランキングは更新されませんでした');
       } else {
         alert('ランキングの登録に失敗しました');
       }

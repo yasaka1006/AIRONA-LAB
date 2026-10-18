@@ -1,15 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+const MOCK_RANKINGS = [
+  { id: 1, gameid: 'element', user: 'テストユーザー1', cleartime: 300, data: '2024-01-01 12:00:00' },
+  { id: 2, gameid: 'element', user: 'テストユーザー2', cleartime: 450, data: '2024-01-02 12:00:00' },
+  { id: 3, gameid: 'tokyo', user: 'テストユーザー3', cleartime: 600, data: '2024-01-03 12:00:00' },
+];
+
+function rankingRequestUrl(apiUrl, gameid) {
+  const isAbsolute = /^https?:\/\//i.test(apiUrl);
+  const url = new URL(apiUrl, window.location.origin);
+  url.searchParams.set('gameid', gameid);
+  return isAbsolute ? url.toString() : `${url.pathname}${url.search}`;
+}
 
 const Ranking = () => {
   const [searchParams] = useSearchParams();
   const urlGameId = searchParams.get('gameid');
   
   const [rankings, setRankings] = useState([]);
-  const [allRankings, setAllRankings] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(urlGameId || 'element');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const requestSeq = useRef(0);
 
   // ゲーム名のマッピング
   const gameNames = {
@@ -35,41 +48,19 @@ const Ranking = () => {
   // プルダウン用のゲームIDリスト（gameNamesから取得）
   const rankingList = Object.keys(gameNames);
 
-  useEffect(() => {
-    fetchRankings();
-  }, []);
-
-  // URLパラメータが変更されたときに選択状態を更新
-  useEffect(() => {
-    if (urlGameId) {
-      setSelectedGameId(urlGameId);
-    }
-  }, [urlGameId]);
-
-  useEffect(() => {
-    // 選択したgameidでフィルター
-    setRankings(allRankings.filter(r => r.gameid === selectedGameId));
-  }, [allRankings, selectedGameId]);
-
-  const fetchRankings = async () => {
+  const fetchRankings = useCallback(async (gameid) => {
+    const seq = ++requestSeq.current;
     try {
       setLoading(true);
-      // APIのベースURLを環境変数から取得、なければデフォルト値を使用
+      setError(null);
       const apiUrl = import.meta.env.VITE_RANKING_API_URL || '/api/ranking';
+      const response = await fetch(rankingRequestUrl(apiUrl, gameid));
+      if (seq !== requestSeq.current) return;
 
-      const response = await fetch(apiUrl);
-
-      // 開発環境でHTMLが返ってきた場合（404など）はモックデータを使用
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         console.warn('APIがJSONを返しませんでした。開発用モックデータを使用します。');
-        // 開発用モックデータ
-        const mockData = [
-          { id: 1, gameid: 'element', user: 'テストユーザー1', cleartime: 300, data: '2024-01-01 12:00:00' },
-          { id: 2, gameid: 'element', user: 'テストユーザー2', cleartime: 450, data: '2024-01-02 12:00:00' },
-          { id: 3, gameid: 'tokyo', user: 'テストユーザー3', cleartime: 600, data: '2024-01-03 12:00:00' },
-        ];
-        setAllRankings(mockData);
+        setRankings(MOCK_RANKINGS.filter((row) => row.gameid === gameid));
         return;
       }
 
@@ -78,25 +69,31 @@ const Ranking = () => {
       }
 
       const data = await response.json();
-      setAllRankings(data);
+      if (seq !== requestSeq.current) return;
+      setRankings(Array.isArray(data) ? data : []);
     } catch (err) {
+      if (seq !== requestSeq.current) return;
       console.error('Error fetching rankings:', err);
-      // 開発環境ではエラーでもモックデータを表示
       if (import.meta.env.DEV) {
-        const mockData = [
-          { id: 1, gameid: 'element', user: 'テストユーザー1', cleartime: 300, data: '2024-01-01 12:00:00' },
-          { id: 2, gameid: 'element', user: 'テストユーザー2', cleartime: 450, data: '2024-01-02 12:00:00' },
-          { id: 3, gameid: 'tokyo', user: 'テストユーザー3', cleartime: 600, data: '2024-01-03 12:00:00' },
-        ];
-        setAllRankings(mockData);
-        setError(null); // エラーをクリアしてモックデータを表示
+        setRankings(MOCK_RANKINGS.filter((row) => row.gameid === gameid));
+        setError(null);
       } else {
         setError(err.message);
       }
     } finally {
-      setLoading(false);
+      if (seq === requestSeq.current) setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (urlGameId) {
+      setSelectedGameId(urlGameId);
+    }
+  }, [urlGameId]);
+
+  useEffect(() => {
+    fetchRankings(selectedGameId);
+  }, [selectedGameId, fetchRankings]);
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -114,22 +111,6 @@ const Ranking = () => {
       day: '2-digit',
     });
   };
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-xl font-bold">Loading...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-red-500 text-xl font-bold">{error}</div>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full max-w-4xl mx-auto p-2 md:p-4">
@@ -152,7 +133,15 @@ const Ranking = () => {
         </div>
       )}
 
-      {rankings.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center py-16">
+          <div className="text-xl font-bold">Loading...</div>
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center py-16">
+          <div className="text-red-500 text-xl font-bold">{error}</div>
+        </div>
+      ) : rankings.length === 0 ? (
         <div className="text-center text-gray-500 text-base md:text-lg">
           まだランキングデータがありません
         </div>
@@ -229,7 +218,7 @@ const Ranking = () => {
 
       <div className="mt-6 text-center">
         <button
-          onClick={fetchRankings}
+          onClick={() => fetchRankings(selectedGameId)}
           className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold"
         >
           更新
