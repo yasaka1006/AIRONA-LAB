@@ -587,6 +587,8 @@ const PurchaseBar = ({ children }) => {
       window.location.assign(result.url);
     } catch (err) {
       setError(err.message);
+    } finally {
+      // ダウンロードはページ遷移しないので、URL を渡したら元に戻す
       setBusy(false);
     }
   };
