@@ -1,3 +1,143 @@
+import { useRef, useState } from 'react';
+
+function GearSlider({ items, variant = "product" }) {
+  const [selected, setSelected] = useState(0);
+  const scrollerRef = useRef(null);
+  const item = items[selected] ?? items[0];
+  const photo = variant === "photo";
+
+  const slide = (direction) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const cards = [...scroller.querySelectorAll(":scope > button")];
+    if (cards.length === 0) return;
+
+    const scrollerRect = scroller.getBoundingClientRect();
+    const arrow = scroller.parentElement?.querySelector("button");
+    const arrowWidth = arrow?.offsetWidth ?? 0;
+    const padLeft = parseFloat(getComputedStyle(scroller).paddingLeft) || 0;
+    const visibleLeft = scrollerRect.left + arrowWidth;
+    const visibleRight = scrollerRect.right - arrowWidth;
+    const contentLeft = (card) => card.getBoundingClientRect().left - scrollerRect.left + scroller.scrollLeft;
+    const alignTo = (card) => {
+      scroller.scrollTo({ left: Math.max(0, contentLeft(card) - padLeft), behavior: "smooth" });
+    };
+
+    if (direction > 0) {
+      const target = cards.find((card) => card.getBoundingClientRect().right > visibleRight + 1);
+      if (target) alignTo(target);
+      return;
+    }
+
+    const currentStart = cards.find((card) => card.getBoundingClientRect().left >= visibleLeft - 1) ?? cards[0];
+    const pageSpan = scrollerRect.width - padLeft - arrowWidth;
+    const desired = contentLeft(currentStart) - pageSpan;
+    let target = cards[0];
+    for (const card of cards) {
+      if (card === currentStart) break;
+      if (contentLeft(card) <= desired + 1) target = card;
+    }
+    alignTo(target);
+  };
+
+  return (
+    <div>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => slide(-1)}
+          aria-label="前の商品"
+          className="absolute top-1/2 left-0 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-700 shadow ring-1 ring-slate-200 hover:text-cyan-700"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M14.75 7 L9.25 12 L14.75 17" />
+          </svg>
+        </button>
+        <div
+          ref={scrollerRef}
+          className="flex gap-3 overflow-x-auto scroll-smooth px-11 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {items.map((gear, index) => (
+            <button
+              key={`${gear.name}-${index}`}
+              type="button"
+              aria-pressed={index === selected}
+              onClick={() => setSelected(index)}
+              className={`w-28 shrink-0 overflow-hidden rounded-xl bg-white ring-2 transition md:w-36 ${index === selected ? "ring-cyan-500" : "ring-slate-200 hover:ring-slate-300"}`}
+            >
+              <img
+                src={gear.image}
+                alt=""
+                className={`w-full ${photo ? "aspect-[16/10] object-cover" : "aspect-square object-contain p-2"}`}
+              />
+            </button>
+          ))}
+          <div aria-hidden="true" className="w-[calc(100%-7rem-0.75rem)] shrink-0 md:w-[calc(100%-9rem-0.75rem)]" />
+        </div>
+        <button
+          type="button"
+          onClick={() => slide(1)}
+          aria-label="次の商品"
+          className="absolute top-1/2 right-0 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-700 shadow ring-1 ring-slate-200 hover:text-cyan-700"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M9.25 7 L14.75 12 L9.25 17" />
+          </svg>
+        </button>
+      </div>
+
+      <div className="mt-5 border-l-2 border-slate-200 px-4">
+        {item.category && <p className="text-xs font-semibold tracking-wide text-cyan-700">{item.category}</p>}
+        <h3 className="mt-1 text-xl font-bold text-slate-800 sm:text-2xl">{item.name}</h3>
+        <p
+          className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base"
+          dangerouslySetInnerHTML={{ __html: item.description }}
+        />
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-400 hover:text-cyan-700"
+          >
+            <img src="/equipments/external-link.svg" alt="" className="h-4 w-4" />
+            商品ページ{item.page || ""}
+          </a>
+          {item.link2 && (
+            <a
+              href={item.link2}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-400 hover:text-cyan-700"
+            >
+              <img src="/equipments/external-link.svg" alt="" className="h-4 w-4" />
+              代替品
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionTitle({ en, ja, tone }) {
+  return (
+    <>
+      <div className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tone}`} />
+      <div className="mb-10 text-center">
+        <h2 className="text-3xl font-bold text-slate-800 md:text-4xl">
+          {en}
+          <br />
+          <span className="text-xl font-medium text-slate-500">{ja}</span>
+        </h2>
+        <div className="mx-auto mt-4 h-px w-16 bg-slate-300" />
+      </div>
+    </>
+  );
+}
+
+const sectionClass = "relative scroll-mt-20 overflow-hidden rounded-xl bg-white px-4 py-8 shadow-lg md:px-8";
+
 const Equipments = () => {
 
   const guitars = [
@@ -40,10 +180,10 @@ const Equipments = () => {
       link: 'https://www.digimart.net/search?keywordAnd=GIBSON+LES+PAUL+SPECIAL',
     },
     {
-      name: 'Ibanez PF12MHCE',
+      name: 'YAMAHA STORIA I',
       image: '/equipments/guitarAco.webp',
-      description: 'Color: Open Pore Natural<br />2020年に購入<br />やすい。色おしゃれ。<br />使用ジャンル: J-POPなど',
-      link: 'https://store.ishibashi.co.jp/ec/product/4515276967439',
+      description: '2026年に購入<br />前のアコギのブリッジが折れたので買いました<br />使用ジャンル: J-POPなど',
+      link: 'https://amzn.to/47S93vk',
     },
     {
       name: 'Bacchus WL4-AGED/RSM',
@@ -134,7 +274,7 @@ const Equipments = () => {
       name: 'Jim Dunrop JazzⅢ ULTEX',
       image: '/equipments/pick.webp',
       description: 'このタイプならこいつで間違いないです！',
-      link: 'https://amzn.to/45Eji5B',
+      link: 'https://amzn.to/4z8pRtn',
       page: '(Amazon)'
     },
     {
@@ -142,7 +282,7 @@ const Equipments = () => {
       name: 'Elixor エリクサー OPTIWEB Light .010-.046',
       image: '/equipments/string.webp',
       description: 'ズボラなのでこれで1年は持たせます(本当は3ヶ月に1回変えたい)',
-      link: 'https://amzn.to/4aF9AU0',
+      link: 'https://amzn.to/3WC1h6h',
       page: '(Amazon)'
     },
     {
@@ -206,17 +346,17 @@ const Equipments = () => {
     },
     {
       category: 'デスクチェア',
-      name: 'CORSAIR T-3 RUSH V2 Charcoal',
+      name: 'FLEXISPOT HC4',
       image: '/equipments/chair.webp',
-      description: 'ギター演奏のために肘置きは外してます。夏でも蒸れないのがいい。',
-      link: 'https://amzn.to/3NRe4NL',
+      description: '座面広くて気に入っています。ギター弾きやすいです',
+      link: 'https://amzn.to/4zcoH0B',
       page: '(Amazon)'
     },
     {
       category: 'メインモニター',
       name: 'Acer VG272Xbmiipx 27型 IPS 240hz',
       image: '/equipments/monitor.webp',
-      description: '144hzと240hzで迷いましたが、ブラウザとかでスクロールしたときヌメヌメ感が違いすぎてこっちにしました',
+      description: '144hzと240hzで迷いましたが、ブラウザとかでスクロールしたときヌルヌル感が違いすぎてこっちにしました',
       link: 'https://amzn.to/3LjJXxC',
       page: '(Amazon)'
     },
@@ -254,17 +394,17 @@ const Equipments = () => {
     },
     {
       category: 'オーディオインターフェイス',
-      name: 'Focusrite Scarlett Solo',
+      name: 'MOTU M4 4in 4out',
       image: '/equipments/audiointerface.webp',
-      description: 'これの2世代目を使ってます<br />だいぶ価格が高騰してるので、別のを選んでもいいかも',
-      link: 'https://amzn.to/49CNvEt',
+      description: 'デザインが好き 3-4に外部音取り込んでます',
+      link: 'https://amzn.to/4e1gBzw',
       page: '(Amazon)'
     },
     {
       category: 'オーディオミキサー',
       name: 'Behringer XENYX 502',
       image: '/equipments/mixer.webp',
-      description: 'PC,Switch,Alexaの音をこれでミックスしてスピーカーに出力しています',
+      description: 'PC,Switch,Alexaの音をこれでミックスしてオーディオインターフェイスに送っています',
       link: 'https://amzn.to/4suNslS',
       page: '(Amazon)'
     },
@@ -281,12 +421,19 @@ const Equipments = () => {
       name: 'SwitchBot Hub Mini',
       image: '/equipments/switchbot.webp',
       description: '必須レベル 生活からリモコンがなくせます<br />外出先からエアコンを制御したり、PC起動ができるようになります',
-      link: 'https://amzn.to/49C1dYi',
+      link: 'https://amzn.to/4eY4CCY',
       page: '(Amazon)'
     },
   ];
 
   const softs = [
+    {
+      category: 'TAB譜製作ソフト',
+      name: 'TABbeast',
+      image: '/equipments/tabbeast.webp',
+      description: '私がつくったTAB制作ソフトです。操作感はTuxベースで、やりたかった操作全部つめました。',
+      link: 'https://airona-lab.com/tabbeast',
+    },
     {
       category: 'DAW',
       name: 'Cakewalk Sonar',
@@ -304,16 +451,8 @@ const Equipments = () => {
       page: '(公式サイト)'
     },
     {
-      category: 'TAB譜製作ソフト',
-      name: 'TuxGuitar',
-      image: '/equipments/tuxguitar.webp',
-      description: '無料です<br />初心者のときからUltimateGuitarsでTABダウンロードして使ってました<br />アプデが入って格段に作りやすくなった',
-      link: 'https://www.tuxguitar.app/#download',
-      page: '(DLサイト)'
-    },
-    {
       category: 'アンプシミュレーター',
-      name: 'Positive GridBIAS FX 2',
+      name: 'Positive Grid BIAS FX 2',
       image: '/equipments/biasfx2.webp',
       description: 'ギタートーンはほぼ、このソフトで作っています<br />後継機(BIAS X)が出たみたいで、もう買えないみたいです。。。<br />いずれ後継機に移行したい',
       link: 'https://jp.positivegrid.com/pages/shop',
@@ -433,156 +572,83 @@ const Equipments = () => {
       </section>
 
       {/* ギターセクション */}
-      <section id="guitars" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <div>
-          <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-            Guitars
-            <br />
-            <span className="text-xl text-slate-500">ギター本体</span>
-          </h2>
-        </div>
+      <section id="guitars" className={sectionClass}>
+        <SectionTitle en="Guitars" ja="ギター本体" tone="from-cyan-500 to-cyan-200" />
 
-        {guitars.map((guitar, index) => (
-          <div key={index}>
-            {index > 0 && <div className="block h-px bg-slate-200 my-6 lg:my-10"></div>}
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-600 italic mb-3 md:mb-4 bg-slate-100 p-2 rounded-md px-3 text-center">{guitar.name}</h3>
-            <div className={`xl:flex xl:items-start gap-4 md:gap-6 xl:gap-8 mb-6 xl:mb-10`}>
-              <div className="w-full md:w-[70%] mx-auto xl:w-[45%] aspect-[5/3] xl:aspect-[5/3] bg-slate-200 overflow-hidden rounded-xl shadow-md mb-4 xl:mb-0">
-                <img src={guitar.image} alt={guitar.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="w-full xl:w-[55%]">
-                
-                <div className="px-4">
-                  <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: guitar.description }}></p>
-                  <a href={guitar.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ
-                  </a>
-                  {guitar.link2 && (
-                    <>
-                      <p className="text-sm sm:text-base md:text-md text-slate-600 leading-relaxed mt-2">代替品はこちらがおすすめ</p>
-                      <a href={guitar.link2} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors font-bold">
-                        <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                        商品ページ
+        <div className="space-y-8 md:space-y-10">
+          {guitars.map((guitar, index) => (
+            <article key={guitar.name}>
+              <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:gap-8">
+                <div className="relative w-full overflow-hidden rounded-2xl bg-slate-900 shadow-md ring-1 ring-slate-200 xl:w-[48%]">
+                  <img
+                    src={guitar.image}
+                    alt={guitar.name}
+                    className="aspect-[16/10] w-full object-cover"
+                  />
+                  <span className="absolute top-3 left-3 rounded-full bg-black/50 px-3 py-1 text-xs font-semibold tracking-[0.22em] text-white backdrop-blur-sm">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="w-full border-l-2 border-slate-200 px-4 xl:w-[52%] xl:py-2">
+                  <h3 className="text-xl font-bold tracking-tight text-slate-800 sm:text-2xl">{guitar.name}</h3>
+                  <p
+                    className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base"
+                    dangerouslySetInnerHTML={{ __html: guitar.description }}
+                  />
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <a
+                      href={guitar.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-400 hover:text-cyan-700"
+                    >
+                      <img src="/equipments/external-link.svg" alt="" className="h-4 w-4" />
+                      商品ページ
+                    </a>
+                    {guitar.link2 && (
+                      <a
+                        href={guitar.link2}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 transition-colors hover:border-cyan-400 hover:text-cyan-700"
+                      >
+                        <img src="/equipments/external-link.svg" alt="" className="h-4 w-4" />
+                        代替品
                       </a>
-                    </>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </article>
+          ))}
+        </div>
       </section>
 
       {/* ギター アクセサリーセクション */}
-      <section id="guitarGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          Guitar Accessories
-          <br />
-          <span className="text-xl text-slate-500">ギター周辺機器</span>
-        </h2>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2">
-          {guitarGears.map((gear, index) => (
-            <div key={index} className="p-1 lg:px-6">
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
-              <div className="flex items-center">
-                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
-                </a>
-                <div>
-                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
-                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ{gear.page}
-                  </a>
-                </div>
-              </div>
-              <span className="block h-px bg-slate-200 my-8"></span>
-            </div>
-          ))}
-        </div>
+      <section id="guitarGears" className={sectionClass}>
+        <SectionTitle en="Guitar Accessories" ja="ギター周辺機器" tone="from-orange-500 to-orange-200" />
+        <GearSlider items={guitarGears} />
       </section>
 
       {/* エフェクター セクション */}
-      <section id="effectors" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          Effectors
-          <br />
-          <span className="text-xl text-slate-500">アンプ・エフェクター</span>
-        </h2>
-        <img src="/equipments/effector.jpg" alt="デスク" className="xl:w-[70%] mx-auto rounded-xl mb-8 shadow-lg" />
-
-        <div className="grid grid-cols-1 xl:grid-cols-2">
-          {effectors.map((gear, index) => (
-            <div key={index} className="p-1 lg:px-6">
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
-              <div className="flex items-center">
-                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
-                </a>
-                <div>
-                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
-                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ{gear.page}
-                  </a>
-                </div>
-              </div>
-              <span className="block h-px bg-slate-200 my-8"></span>
-            </div>
-          ))}
-        </div>
+      <section id="effectors" className={sectionClass}>
+        <SectionTitle en="Effectors" ja="アンプ・エフェクター" tone="from-emerald-600 to-emerald-200" />
+        <img src="/equipments/effector.jpg" alt="エフェクターボード" className="mx-auto mb-8 rounded-xl shadow-lg xl:w-[70%]" />
+        <GearSlider items={effectors} />
       </section>
 
 
 
       {/* デスク アクセサリーセクション */}
-      <section id="deskAudioGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          Desk Gears
-          <br />
-          <span className="text-xl text-slate-500">デスク周辺機器</span>
-        </h2>
-        <img src="/equipments/deskBanner.jpg" alt="デスク" className="xl:w-[70%] mx-auto rounded-xl mb-8 shadow-lg" />
-
-        <div className="grid grid-cols-1 xl:grid-cols-2">
-          {deskGears.map((gear, index) => (
-            <div key={index} className="p-1 lg:px-6">
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
-              <div className="flex items-center">
-                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
-                </a>
-                <div>
-                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
-                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ{gear.page}
-                  </a>
-                </div>
-              </div>
-              <span className="block h-px bg-slate-200 my-8"></span>
-            </div>
-          ))}
-        </div>
+      <section id="deskAudioGears" className={sectionClass}>
+        <SectionTitle en="Desk Gears" ja="デスク周辺機器" tone="from-violet-600 to-violet-200" />
+        <img src="/equipments/deskBanner.jpg" alt="デスク" className="mx-auto mb-8 rounded-xl shadow-lg xl:w-[70%]" />
+        <GearSlider items={deskGears} />
       </section>
 
       {/* PCパーツ セクション */}
-      <section id="pcSpecs" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          PC Specs
-          <br />
-          <span className="text-xl text-slate-500">PCスペック</span>
-        </h2>
+      <section id="pcSpecs" className={sectionClass}>
+        <SectionTitle en="PC Specs" ja="PCスペック" tone="from-rose-500 to-rose-200" />
         <img src="/equipments/PCBanner.jpg" alt="PC" className="xl:w-[50%] mx-auto rounded-xl mb-6" />
 
         <div className="mx-auto xl:w-[55%]">
@@ -602,67 +668,15 @@ const Equipments = () => {
       </section>
 
       {/* ソフトウェアセクション */}
-      <section id="softs" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          Softwares
-          <br />
-          <span className="text-xl text-slate-500">ソフトウェア</span>
-        </h2>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2">
-          {softs.map((gear, index) => (
-            <div key={index} className="p-1 lg:px-6">
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
-              <div className="flex items-center">
-                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
-                </a>
-                <div>
-                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
-                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ{gear.page}
-                  </a>
-                </div>
-              </div>
-              <span className="block h-px bg-slate-200 my-8"></span>
-            </div>
-          ))}
-        </div>
+      <section id="softs" className={sectionClass}>
+        <SectionTitle en="Softwares" ja="ソフトウェア" tone="from-blue-600 to-blue-200" />
+        <GearSlider items={softs} />
       </section>
 
       {/* カメラ アクセサリーセクション */}
-      <section id="cameraGears" className="bg-white py-6 px-4 md:px-8 rounded-xl shadow-lg scroll-mt-20 relative">
-        <a href="#top" className="text-xs md:text-base text-blue-800 absolute top-19 right-3 md:right-16 hover:text-blue-700 transition-colors underline">{"<目次に戻る>"}</a>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-6">
-          Camera Gears
-          <br />
-          <span className="text-xl text-slate-500">カメラ周辺機器</span>
-        </h2>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2">
-          {cameraGears.map((gear, index) => (
-            <div key={index} className="p-1 lg:px-6">
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 bg-slate-100 p-2 rounded-md mb-4">・{gear.category}</h3>
-              <h3 className="font-bold text-slate-800 mb-3 md:mb-4 px-4">{gear.name}</h3>
-              <div className="flex items-center">
-                <a href={gear.link} target="_blank" rel="noopener noreferrer" className="w-24 h-24 lg:w-32 lg:h-32 mr-4 lg:mr-8 flex-shrink-0 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={gear.image} alt={gear.name} className="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
-                </a>
-                <div>
-                  <p className="text-md text-slate-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: gear.description }}></p>
-                  <br /><a href={gear.link} target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 transition-colors">
-                    <img src="/equipments/external-link.svg" alt="" className="w-4 h-4" />
-                    商品ページ{gear.page}
-                  </a>
-                </div>
-              </div>
-              <span className="block h-px bg-slate-200 my-8"></span>
-            </div>
-          ))}
-        </div>
+      <section id="cameraGears" className={sectionClass}>
+        <SectionTitle en="Camera Gears" ja="カメラ周辺機器" tone="from-fuchsia-500 to-fuchsia-200" />
+        <GearSlider items={cameraGears} />
       </section>
 
       <div className="h-10"></div>
