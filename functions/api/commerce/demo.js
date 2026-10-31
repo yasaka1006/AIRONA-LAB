@@ -7,7 +7,7 @@ import {
 
 /**
  * GET /api/commerce/demo
- * Public: DEMO Web / DEMO Win URLs (no auth).
+ * Public: DEMO Web / DEMO Win / DEMO Mac URLs (no auth).
  */
 export async function onRequestGet(context) {
   const { env } = context;
@@ -15,6 +15,8 @@ export async function onRequestGet(context) {
 
   let demoWeb = env.DEMO_WEB_URL || null;
   let demoWin = env.DEMO_WIN_URL || null;
+  /** Mac 版はリリースが登録されるまでボタンを出さない */
+  let demoMac = null;
   let version = null;
 
   if (db) {
@@ -23,7 +25,7 @@ export async function onRequestGet(context) {
         `SELECT channel, version, public_url AS publicUrl
          FROM releases
          WHERE product_id = ? AND is_latest = 1
-           AND channel IN ('demo_web', 'demo_win')`,
+           AND channel IN ('demo_web', 'demo_win', 'demo_mac')`,
       )
       .bind(PRODUCT_ID_DEMO)
       .all();
@@ -36,12 +38,16 @@ export async function onRequestGet(context) {
       if (row.channel === "demo_win" && row.publicUrl) {
         demoWin = row.publicUrl;
       }
+      if (row.channel === "demo_mac") {
+        demoMac = row.publicUrl || env.DEMO_MAC_URL || "/api/commerce/demo-mac";
+      }
     }
   }
 
   return json({
     demoWeb,
     demoWin,
+    demoMac,
     version,
   });
 }

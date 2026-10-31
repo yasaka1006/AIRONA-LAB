@@ -9,7 +9,7 @@ import {
 
 /**
  * GET /api/commerce/releases/latest
- * Logged-in users get full_win / full_web latest metadata.
+ * Logged-in users get full_win / full_mac / full_web latest metadata.
  */
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -26,7 +26,7 @@ export async function onRequestGet(context) {
       `SELECT channel, version, public_url AS publicUrl
        FROM releases
        WHERE product_id = ? AND is_latest = 1
-         AND channel IN ('full_win', 'full_web')`,
+         AND channel IN ('full_win', 'full_mac', 'full_web')`,
     )
     .bind(PRODUCT_ID_FULL)
     .all();

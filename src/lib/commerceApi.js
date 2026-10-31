@@ -93,7 +93,7 @@ export async function fetchDemoLinks() {
     return body;
   } catch (err) {
     if (err.message === API_UNAVAILABLE) {
-      return { demoWeb: null, demoWin: null, version: null };
+      return { demoWeb: null, demoWin: null, demoMac: null, version: null };
     }
     throw err;
   }

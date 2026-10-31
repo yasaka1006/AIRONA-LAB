@@ -96,7 +96,7 @@ Google コールバック: `{APP_BASE_URL}/api/auth/callback/google`
 
 ## P3（ダウンロード）
 
-- `GET /api/commerce/download?channel=full_win` … 要ログイン + active → 短命 URL
+- `GET /api/commerce/download?channel=full_win` … 要ログイン + active → 短命 URL（Mac 版は `channel=full_mac`）
 - `GET /api/commerce/artifact?token=` … R2 から zip を返す
 - seed: `npm run db:commerce:seed:local`（remote も同様）
 - プレースホルダ: `npm run r2:placeholder:local`
@@ -116,7 +116,9 @@ Google コールバック: `{APP_BASE_URL}/api/auth/callback/google`
 
 - `/legal/terms` / `/legal/tokushoho` … 本文骨組み（販売者氏名等は本番前に記入）
 - `/tabbeast` … DEMO Web（`DEMO_WEB_URL` / releases）、DEMO Win（`DEMO_WIN_URL`）
-- `GET /api/commerce/demo` … 公開の DEMO URL
+- `GET /api/commerce/demo` … 公開の DEMO URL（`demo_mac` が登録されると `demoMac` も返す）
+- `GET /api/commerce/demo-mac` … Private R2 の latest `demo_mac`（dmg）を配信
+- Mac 版のボタン（`/tabbeast` の体験版・購入済みダウンロード、`/mypage`）は `demo_mac` / `full_mac` のリリースが D1 に入るまで出ない
 - Footer から規約・特商法・PP へ辿れる
 
 ## P6（リリース半自動）
@@ -128,6 +130,14 @@ npm run release:plan
 npm run release:web:local
 npm run release -- --channels=full_win
 ```
+
+Mac 版（Mac で実行。dmg は Mac でしか作れない）:
+
+```bash
+npm run release:mac   # = --channels=full_mac,demo_mac
+```
+
+署名・公証には `APPLE_SIGNING_IDENTITY`, `APPLE_ID`, `APPLE_PASSWORD`, `APPLE_TEAM_ID` を環境変数で渡す。R2 キーは `tabbeast/{full|demo}/mac/{version}/TABbeast[_Demo]_{version}.dmg`。
 
 設定: `HexaTAB/scripts/release/release.config.json`
 

@@ -14,10 +14,14 @@ import {
   requireSession,
 } from "../../_lib/commerce.js";
 
-const ALLOWED_CHANNELS = new Set(["full_win"]);
+/** チャネル → R2 キーからファイル名が取れないときの代わり */
+const FALLBACK_FILENAME = {
+  full_win: (version) => `TABbeast_${version}_x64.zip`,
+  full_mac: (version) => `TABbeast_${version}.dmg`,
+};
 
 /**
- * GET /api/commerce/download?channel=full_win
+ * GET /api/commerce/download?channel=full_win|full_mac
  * Returns a short-lived same-origin download URL (HMAC token → /api/commerce/artifact).
  */
 export async function onRequestGet(context) {
@@ -32,8 +36,8 @@ export async function onRequestGet(context) {
 
   const requestUrl = new URL(request.url);
   const channel = requestUrl.searchParams.get("channel") || "full_win";
-  if (!ALLOWED_CHANNELS.has(channel)) {
-    return error(400, "invalid_channel", "Supported channel: full_win");
+  if (!Object.hasOwn(FALLBACK_FILENAME, channel)) {
+    return error(400, "invalid_channel", "Supported channel: full_win, full_mac");
   }
   const version = requestUrl.searchParams.get("version");
   if (version && !/^[0-9A-Za-z][0-9A-Za-z._+-]{0,31}$/.test(version)) {
@@ -54,7 +58,7 @@ export async function onRequestGet(context) {
 
   const filename = filenameFromR2Key(
     release.r2_key,
-    `TABbeast_${release.version}_x64.zip`,
+    FALLBACK_FILENAME[channel](release.version),
   );
   const token = await createDownloadToken(env, {
     customerId: session.customerId,

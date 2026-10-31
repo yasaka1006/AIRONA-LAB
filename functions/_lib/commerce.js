@@ -693,7 +693,7 @@ export async function latestFullReleases(db) {
       `SELECT channel, version
        FROM releases
        WHERE product_id = ? AND is_latest = 1
-         AND channel IN ('full_win', 'full_web')`,
+         AND channel IN ('full_win', 'full_mac', 'full_web')`,
     )
     .bind(PRODUCT_ID_FULL)
     .all();

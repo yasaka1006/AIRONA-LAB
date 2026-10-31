@@ -11,6 +11,8 @@ import {
 const PRODUCT_BY_CHANNEL = {
   full_win: PRODUCT_ID_FULL,
   demo_win: PRODUCT_ID_DEMO,
+  full_mac: PRODUCT_ID_FULL,
+  demo_mac: PRODUCT_ID_DEMO,
 };
 
 /** デスクトップアプリ（tauri://localhost 等）から読むので CORS は全許可。返すのは版番号だけ */
@@ -28,9 +30,15 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const channel =
     new URL(request.url).searchParams.get("channel") || "full_win";
-  const productId = PRODUCT_BY_CHANNEL[channel];
+  const productId = Object.hasOwn(PRODUCT_BY_CHANNEL, channel)
+    ? PRODUCT_BY_CHANNEL[channel]
+    : null;
   if (!productId) {
-    return error(400, "invalid_channel", "Supported channel: full_win, demo_win");
+    return error(
+      400,
+      "invalid_channel",
+      `Supported channel: ${Object.keys(PRODUCT_BY_CHANNEL).join(", ")}`,
+    );
   }
   const db = commerceDb(env);
   if (!db) {

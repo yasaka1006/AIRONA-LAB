@@ -19,6 +19,13 @@ function productCatalog(t) {
           versionKey: 'full_win',
         },
         {
+          kind: 'download',
+          label: t('pages.mypage.actionDownloadMac'),
+          channel: 'full_mac',
+          versionKey: 'full_mac',
+          hideUntilReleased: true,
+        },
+        {
           kind: 'link',
           label: t('pages.mypage.actionBrowser'),
           href: '/app/',
@@ -333,6 +340,7 @@ const Mypage = () => {
                               action.versionKey && me.latest?.[action.versionKey]
                                 ? me.latest[action.versionKey].version
                                 : null;
+                            if (action.hideUntilReleased && !version) return null;
                             const actionKey = `${product.id}:${action.label}`;
                             if (action.kind === 'download') {
                               return (

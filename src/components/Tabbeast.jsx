@@ -351,7 +351,7 @@ const FeatureSection = ({ title, description, imageSrc, reverse = false, matchTi
   );
 };
 
-const DemoButtons = ({ demoWin, demoWeb, t }) => (
+const DemoButtons = ({ demoWin, demoMac, demoWeb, t }) => (
   <div className="flex w-full flex-col gap-3 md:flex-row md:items-center">
     {demoWin ? (
       <a
@@ -372,6 +372,15 @@ const DemoButtons = ({ demoWin, demoWeb, t }) => (
         <DownloadIcon className="h-4 w-4" />
       </button>
     )}
+    {demoMac ? (
+      <a
+        href={demoMac}
+        className="inline-flex h-11 w-full md:w-auto md:flex-1 whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-slate-200 to-slate-400 text-slate-700 text-sm font-bold px-4 rounded-full hover:from-slate-100 hover:to-slate-300 shadow-md leading-none"
+      >
+        <span className="leading-none">{t('pages.tabbeast.purchaseDemoMac')}</span>
+        <DownloadIcon className="h-4 w-4" />
+      </a>
+    ) : null}
     {demoWeb ? (
       <a
         href={demoWeb}
@@ -396,10 +405,10 @@ const DemoButtons = ({ demoWin, demoWeb, t }) => (
   </div>
 );
 
-const PurchaseOffer = ({ demoWin, demoWeb, t, path, busy, onBuy }) => (
+const PurchaseOffer = ({ demoWin, demoMac, demoWeb, t, path, busy, onBuy }) => (
   <div className="flex flex-col items-center gap-6">
     <div className="mb-3 flex w-full max-w-full flex-col items-stretch gap-3 md:w-fit md:gap-4">
-      <DemoButtons demoWin={demoWin} demoWeb={demoWeb} t={t} />
+      <DemoButtons demoWin={demoWin} demoMac={demoMac} demoWeb={demoWeb} t={t} />
       <button
         type="button"
         onClick={onBuy}
@@ -419,7 +428,12 @@ const PurchaseOffer = ({ demoWin, demoWeb, t, path, busy, onBuy }) => (
       </span>
       <span>
         <span className="font-bold text-slate-600">{t('pages.tabbeast.purchasePlatformMac')}</span>
-        {' '}{t('pages.tabbeast.purchasePlatformMacDetail')}
+        {' '}
+        {t(
+          demoMac
+            ? 'pages.tabbeast.purchasePlatformMacDetailDesktop'
+            : 'pages.tabbeast.purchasePlatformMacDetail',
+        )}
       </span>
       <span className="hidden sm:inline mx-2.5 text-slate-300" aria-hidden>
         ｜
@@ -466,6 +480,9 @@ const PurchaseBar = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [demoWeb, setDemoWeb] = useState('');
   const [demoWin, setDemoWin] = useState('');
+  const [demoMac, setDemoMac] = useState('');
+  const [hasFullMac, setHasFullMac] = useState(false);
+  const [busyChannel, setBusyChannel] = useState('');
 
   useEffect(() => {
     fetchMe().then((me) => {
@@ -474,11 +491,13 @@ const PurchaseBar = ({ children }) => {
         (item) => item.productId === 'tabbeast_full' && item.status === 'active',
       );
       setOwned(Boolean(hasFull));
+      setHasFullMac(Boolean(me?.latest?.full_mac?.version));
     }).catch(() => {});
 
     fetchDemoLinks().then((demo) => {
       setDemoWeb(demo.demoWeb || '');
       setDemoWin(demo.demoWin || '');
+      setDemoMac(demo.demoMac || '');
     }).catch(() => {});
   }, []);
 
@@ -578,18 +597,20 @@ const PurchaseBar = ({ children }) => {
     }
   };
 
-  const onFullWinDownload = async () => {
+  const onFullDownload = async (channel) => {
     setBusy(true);
+    setBusyChannel(channel);
     setError('');
     setNotice('');
     try {
-      const result = await requestDownload('full_win');
+      const result = await requestDownload(channel);
       window.location.assign(result.url);
     } catch (err) {
       setError(err.message);
     } finally {
       // ダウンロードはページ遷移しないので、URL を渡したら元に戻す
       setBusy(false);
+      setBusyChannel('');
     }
   };
 
@@ -610,15 +631,32 @@ const PurchaseBar = ({ children }) => {
           <div className="flex flex-wrap justify-center items-center gap-3 md:gap-5">
             <button
               type="button"
-              onClick={onFullWinDownload}
+              onClick={() => onFullDownload('full_win')}
               disabled={busy}
               className="inline-flex h-11 items-center justify-center gap-2 text-white text-sm font-bold px-6 rounded-full cursor-pointer disabled:opacity-60 shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
             >
               <span className="leading-none">
-                {busy ? t('common.preparing') : t('pages.tabbeast.purchaseWinDownload')}
+                {busyChannel === 'full_win'
+                  ? t('common.preparing')
+                  : t('pages.tabbeast.purchaseWinDownload')}
               </span>
-              {!busy ? <DownloadIcon className="h-4 w-4" /> : null}
+              {busyChannel !== 'full_win' ? <DownloadIcon className="h-4 w-4" /> : null}
             </button>
+            {hasFullMac ? (
+              <button
+                type="button"
+                onClick={() => onFullDownload('full_mac')}
+                disabled={busy}
+                className="inline-flex h-11 items-center justify-center gap-2 text-white text-sm font-bold px-6 rounded-full cursor-pointer disabled:opacity-60 shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
+              >
+                <span className="leading-none">
+                  {busyChannel === 'full_mac'
+                    ? t('common.preparing')
+                    : t('pages.tabbeast.purchaseMacDownload')}
+                </span>
+                {busyChannel !== 'full_mac' ? <DownloadIcon className="h-4 w-4" /> : null}
+              </button>
+            ) : null}
             <a
               href="/app/"
               className="inline-flex h-11 items-center justify-center text-white text-sm font-bold px-6 rounded-full shadow-md leading-none bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-400 hover:to-teal-600"
@@ -653,6 +691,7 @@ const PurchaseBar = ({ children }) => {
       ) : (
         <PurchaseOffer
           demoWin={demoWin}
+          demoMac={demoMac}
           demoWeb={demoWeb}
           t={t}
           path={path}
@@ -666,6 +705,7 @@ const PurchaseBar = ({ children }) => {
       <div className="mt-8 bg-[linear-gradient(to_bottom,var(--color-slate-50),var(--color-slate-100)_6rem)] px-4 pt-8 pb-10">
         <PurchaseOffer
           demoWin={demoWin}
+          demoMac={demoMac}
           demoWeb={demoWeb}
           t={t}
           path={path}
