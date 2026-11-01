@@ -75,6 +75,49 @@ function GoogleMark({ className = 'h-5 w-5' }) {
   );
 }
 
+/** 最新版を除いた過去バージョン（新しい順） */
+function pastVersionsOf(releases, latestVersion) {
+  return (releases || [])
+    .filter((item) => item?.version && !item.latest && item.version !== latestVersion)
+    .map((item) => item.version);
+}
+
+function PastVersionPicker({ id, label, versions, channel, busy, busyAction, onDownload, t }) {
+  const [version, setVersion] = useState('');
+  if (versions.length === 0) return null;
+  const actionKey = `tabbeast_full:past:${channel}:${version}`;
+  return (
+    <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2">
+      <label className="text-xs font-bold text-slate-600 shrink-0" htmlFor={id}>
+        {label}
+      </label>
+      <select
+        id={id}
+        value={version}
+        onChange={(event) => setVersion(event.target.value)}
+        className="min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
+      >
+        <option value="">{t('pages.mypage.pastWindowsPlaceholder')}</option>
+        {versions.map((item) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+      <button
+        type="button"
+        disabled={busy || !version}
+        onClick={() => onDownload(channel, actionKey, version)}
+        className="bg-gradient-to-r from-slate-400 to-slate-600 text-white px-5 py-2 rounded-full cursor-pointer hover:from-slate-300 hover:to-slate-500 disabled:opacity-60 disabled:cursor-not-allowed text-sm"
+      >
+        {busyAction === actionKey
+          ? t('common.preparing')
+          : t('pages.mypage.pastWindowsDownload')}
+      </button>
+    </div>
+  );
+}
+
 const Mypage = () => {
   const { t, path } = useSiteLocale();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -82,7 +125,6 @@ const Mypage = () => {
   const [email, setEmail] = useState('');
   const [busy, setBusy] = useState(false);
   const [busyAction, setBusyAction] = useState('');
-  const [pastWindowsVersion, setPastWindowsVersion] = useState('');
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [googleAvailable, setGoogleAvailable] = useState(false);
@@ -91,10 +133,14 @@ const Mypage = () => {
   const afterLoginPath = safeNextPath(searchParams.get('next'), mypagePath);
   const catalog = productCatalog(t);
   const products = me ? ownedProducts(me, catalog) : [];
-  const latestWindowsVersion = me?.latest?.full_win?.version || '';
-  const pastWindowsVersions = (me?.windowsReleases || [])
-    .filter((item) => item?.version && !item.latest && item.version !== latestWindowsVersion)
-    .map((item) => item.version);
+  const pastWindowsVersions = pastVersionsOf(
+    me?.windowsReleases,
+    me?.latest?.full_win?.version || '',
+  );
+  const pastMacVersions = pastVersionsOf(
+    me?.macReleases,
+    me?.latest?.full_mac?.version || '',
+  );
 
   const loadMe = async () => {
     try {
@@ -370,41 +416,29 @@ const Mypage = () => {
                             );
                           })}
                         </div>
-                        {product.id === 'tabbeast_full' && pastWindowsVersions.length > 0 ? (
-                          <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2">
-                            <label className="text-xs font-bold text-slate-600 shrink-0" htmlFor="past-windows-version">
-                              {t('pages.mypage.pastWindowsLabel')}
-                            </label>
-                            <select
+                        {product.id === 'tabbeast_full' ? (
+                          <>
+                            <PastVersionPicker
                               id="past-windows-version"
-                              value={pastWindowsVersion}
-                              onChange={(event) => setPastWindowsVersion(event.target.value)}
-                              className="min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
-                            >
-                              <option value="">{t('pages.mypage.pastWindowsPlaceholder')}</option>
-                              {pastWindowsVersions.map((version) => (
-                                <option key={version} value={version}>
-                                  {version}
-                                </option>
-                              ))}
-                            </select>
-                            <button
-                              type="button"
-                              disabled={busy || !pastWindowsVersion}
-                              onClick={() =>
-                                onDownload(
-                                  'full_win',
-                                  `tabbeast_full:past:${pastWindowsVersion}`,
-                                  pastWindowsVersion,
-                                )
-                              }
-                              className="bg-gradient-to-r from-slate-400 to-slate-600 text-white px-5 py-2 rounded-full cursor-pointer hover:from-slate-300 hover:to-slate-500 disabled:opacity-60 disabled:cursor-not-allowed text-sm"
-                            >
-                              {busyAction === `tabbeast_full:past:${pastWindowsVersion}`
-                                ? t('common.preparing')
-                                : t('pages.mypage.pastWindowsDownload')}
-                            </button>
-                          </div>
+                              label={t('pages.mypage.pastWindowsLabel')}
+                              versions={pastWindowsVersions}
+                              channel="full_win"
+                              busy={busy}
+                              busyAction={busyAction}
+                              onDownload={onDownload}
+                              t={t}
+                            />
+                            <PastVersionPicker
+                              id="past-mac-version"
+                              label={t('pages.mypage.pastMacLabel')}
+                              versions={pastMacVersions}
+                              channel="full_mac"
+                              busy={busy}
+                              busyAction={busyAction}
+                              onDownload={onDownload}
+                              t={t}
+                            />
+                          </>
                         ) : null}
                         {product.id === 'tabbeast_full' ? (
                           <>

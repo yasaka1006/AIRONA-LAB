@@ -670,16 +670,17 @@ export async function listEntitlements(db, customerId) {
   return results ?? [];
 }
 
-export async function listFullWinReleases(db) {
+/** 製品版デスクトップ（full_win / full_mac）の配布済みバージョン一覧。新しい順 */
+export async function listFullDesktopReleases(db, channel) {
   const { results } = await db
     .prepare(
       `SELECT version, is_latest AS isLatest
        FROM releases
-       WHERE product_id = ? AND channel = 'full_win'
+       WHERE product_id = ? AND channel = ?
          AND r2_key IS NOT NULL AND r2_key != ''
        ORDER BY published_at DESC, id DESC`,
     )
-    .bind(PRODUCT_ID_FULL)
+    .bind(PRODUCT_ID_FULL, channel)
     .all();
   return (results ?? []).map((row) => ({
     version: row.version,

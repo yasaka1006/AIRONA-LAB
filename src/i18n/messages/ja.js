@@ -451,6 +451,7 @@ export const ja = {
       actionDownloadMac: 'Mac Download',
       actionBrowser: 'Web版',
       pastWindowsLabel: '過去の Windows 版',
+      pastMacLabel: '過去の Mac 版',
       pastWindowsPlaceholder: 'バージョンを選択',
       pastWindowsDownload: 'ダウンロード',
     },

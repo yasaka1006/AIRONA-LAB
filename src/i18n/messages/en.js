@@ -452,6 +452,7 @@ export const en = {
       actionDownloadMac: 'Mac Download',
       actionBrowser: 'Web edition',
       pastWindowsLabel: 'Older Windows versions',
+      pastMacLabel: 'Older Mac versions',
       pastWindowsPlaceholder: 'Choose a version',
       pastWindowsDownload: 'Download',
     },
