@@ -162,6 +162,12 @@ const Equipments = () => {
       link: 'https://store.ishibashi.co.jp/search?q=Gibson+Les+Paul+Standard+Unburst',
     },
     {
+      name: 'Gibson Lespaul Special',
+      image: '/equipments/guitarGibSpe.webp',
+      description: 'Color: TV Yellow<br />2026年に購入<br />昔から欲しくてやっと購入できました BUMPのイメージが強いですね<br />使用ジャンル: 洋楽など',
+      link: 'https://www.digimart.net/search?keywordAnd=GIBSON+LES+PAUL+SPECIAL',
+    },
+    {
       name: 'Ibanez RG450DXB',
       image: '/equipments/guitarIbanez.webp',
       description: 'Color: White<br />2013年に購入<br />初心者の頃から使ってます<br />このギターのパワーコードの音がめちゃくちゃ好き<br />使用ジャンル: ロック, ゲーム曲など',
@@ -172,12 +178,6 @@ const Equipments = () => {
       image: '/equipments/guitarEpi.webp',
       description: 'Color: Trans Blue<br />2014年に購入<br />某弾いてみた投稿者に憧れてBUMP専用機として使用しています<br />ピックアップはSEYMOUR DUNCAN製に載せ替えています<br />使用ジャンル: BUMP',
       link: 'https://www.google.com/search?q=Epiphone+Lespaul+Standard+Trans+Blue&sca_esv=75d7ba9b8a0ac0c1&udm=28&biw=1920&bih=911&sxsrf=AE3TifNLiTC1qnHwG61rGLD1zx2TER0ZQA%3A1767574573309&ei=LQxbaYzUEtSi1e8P_rqp4Ac&ved=0ahUKEwjMnrm0mPORAxVUUfUHHX5dCnwQ4dUDCBE&oq=Epiphone+Lespaul+Standard+Trans+Blue&gs_lp=Ehlnd3Mtd2l6LW1vZGVsZXNzLXNob3BwaW5nIiRFcGlwaG9uZSBMZXNwYXVsIFN0YW5kYXJkIFRyYW5zIEJsdWUyBxAjGLQEGCdI9whQywFYywFwAXgBkAEAmAFYoAFYqgEBMbgBDMgBAPgBAZgCAqACXcICChAAGLADGNYEGEeYAwCIBgGQBgSSBwEyoAecArIHATG4B1vCBwMwLjLIBwOACAA&sclient=gws-wiz-modeless-shopping',
-    },
-    {
-      name: 'Gibson Lespaul Special',
-      image: '/equipments/guitarGibSpe.webp',
-      description: 'Color: TV Yellow<br />2026年に購入<br />昔から欲しくてやっと購入できました BUMPのイメージが強いですね<br />使用ジャンル: 洋楽など',
-      link: 'https://www.digimart.net/search?keywordAnd=GIBSON+LES+PAUL+SPECIAL',
     },
     {
       name: 'YAMAHA STORIA I',
